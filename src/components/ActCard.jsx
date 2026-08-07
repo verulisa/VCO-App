@@ -16,7 +16,7 @@ export default function ActCard({ act, saved, onToggleSave, now = new Date() }) 
         <span className="text-[10.5px] text-[var(--vco-text-faint)]">{act.endTime}</span>
       </div>
 
-      <div className="perf" />
+      <div className="perf" style={{ gridColumn: 2, gridRow: live ? "1 / 3" : "1 / 2" }} />
 
       <div className="min-w-0 px-3 py-3">
         <p className="truncate font-bold text-[13.5px] text-[var(--vco-text)]">{act.name}</p>
