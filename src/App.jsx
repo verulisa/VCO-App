@@ -2,7 +2,6 @@ import { useState } from "react";
 import Header from "./components/Header";
 import BottomNav from "./components/BottomNav";
 import InstallBanner from "./components/InstallBanner";
-import BackupNudge from "./components/BackupNudge";
 import NicknamePrompt from "./components/NicknamePrompt";
 import ProfileSheet from "./components/ProfileSheet";
 import MoreMenu from "./components/MoreMenu";
@@ -19,10 +18,12 @@ import { useSchedule } from "./hooks/useSchedule";
 import { useNotifications } from "./hooks/useNotifications";
 import { useVendorRatings } from "./hooks/useVendorRatings";
 import { useLocalStorage } from "./hooks/useLocalStorage";
+import { useAppUpdate } from "./hooks/useAppUpdate";
 import { writeTentPin } from "./utils/backup";
 
 export default function App() {
-  const { lineup, vendors, info, status } = useFestivalData();
+  const { lineup, vendors, info, status, reload } = useFestivalData();
+  const appUpdate = useAppUpdate();
   const { nickname, emoji, hasNickname, rename } = useNickname();
   const { theme, toggleTheme } = useTheme();
   const [tab, setTab] = useState("home");
@@ -56,11 +57,6 @@ export default function App() {
         onToggleTheme={toggleTheme}
       />
       <InstallBanner />
-      <BackupNudge
-        hasData={schedule.savedIds.length > 0 || Object.keys(vendorRatings.ratings).length > 0}
-        lastBackupAt={lastBackupAt}
-        onOpen={() => setShowProfile(true)}
-      />
 
       {status === "loading" && <SkeletonScreen />}
       {status === "error" && (
@@ -83,7 +79,19 @@ export default function App() {
 
       <BottomNav active={tab} onChange={setTab} />
 
-      {showMenu && <MoreMenu info={info} onClose={() => setShowMenu(false)} />}
+      {showMenu && (
+        <MoreMenu
+          info={info}
+          onClose={() => setShowMenu(false)}
+          onReloadData={reload}
+          appUpdate={appUpdate}
+          lastBackupAt={lastBackupAt}
+          onOpenProfile={() => {
+            setShowMenu(false);
+            setShowProfile(true);
+          }}
+        />
+      )}
 
       {showProfile && (
         <ProfileSheet

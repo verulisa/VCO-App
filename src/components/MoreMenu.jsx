@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { X, Share2, Smartphone, MapPinned, HelpCircle, Info, Clipboard } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { X, Share2, Smartphone, MapPinned, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
 
@@ -17,9 +17,31 @@ function Section({ icon: Icon, title, children }) {
   );
 }
 
-export default function MoreMenu({ info, onClose }) {
+export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastBackupAt, onOpenProfile }) {
   const [qrDataUrl, setQrDataUrl] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [refreshState, setRefreshState] = useState("idle"); // idle | checking | current
+  const fallbackTimer = useRef(null);
+
+  // registerSW's onNeedRefresh fires asynchronously (a moment after
+  // reg.update() resolves), so react to it via props instead of reading a
+  // stale value right after awaiting the check.
+  useEffect(() => {
+    if (refreshState === "checking" && appUpdate?.needsRefresh) {
+      clearTimeout(fallbackTimer.current);
+      appUpdate.applyUpdate();
+    }
+  }, [appUpdate, refreshState]);
+
+  async function handleRefresh() {
+    setRefreshState("checking");
+    await Promise.all([onReloadData?.(), appUpdate?.checkNow()]);
+    // Give onNeedRefresh a moment to fire before concluding there's nothing new.
+    fallbackTimer.current = setTimeout(() => {
+      setRefreshState("current");
+      setTimeout(() => setRefreshState("idle"), 2000);
+    }, 1200);
+  }
 
   useEffect(() => {
     QRCode.toDataURL(APP_URL, { margin: 1, width: 220, color: { dark: "#12160f", light: "#f2ede0" } }).then(setQrDataUrl);
@@ -43,6 +65,37 @@ export default function MoreMenu({ info, onClose }) {
             <X size={20} className="text-[var(--vco-text-faint)]" />
           </button>
         </div>
+
+        <Section icon={RefreshCw} title="Data">
+          <button
+            type="button"
+            onClick={handleRefresh}
+            disabled={refreshState === "checking"}
+            className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)] disabled:opacity-60"
+          >
+            <RefreshCw size={15} className={refreshState === "checking" ? "animate-spin" : ""} />
+            {refreshState === "checking" ? "Checking…" : refreshState === "current" ? "You're up to date" : "Refresh data & app"}
+          </button>
+          <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
+            Re-fetches the lineup/food data and checks for a newer version of the app — no reinstall needed.
+          </p>
+        </Section>
+
+        <Section icon={ShieldCheck} title="Back up your data">
+          <button
+            type="button"
+            onClick={onOpenProfile}
+            className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)]"
+          >
+            <ShieldCheck size={15} />
+            {lastBackupAt ? "Back up again" : "Back up now"}
+          </button>
+          <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
+            {lastBackupAt
+              ? `Last backed up ${new Date(lastBackupAt).toLocaleDateString()}. Everything lives only on this phone.`
+              : "Everything lives only on this phone — save a copy so you can't lose it."}
+          </p>
+        </Section>
 
         <Section icon={Share2} title="Share this app">
           <div className="rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3.5 text-center">

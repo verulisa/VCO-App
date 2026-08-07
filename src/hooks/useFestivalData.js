@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function useFestivalData() {
   const [lineup, setLineup] = useState([]);
@@ -6,29 +6,31 @@ export function useFestivalData() {
   const [info, setInfo] = useState(null);
   const [status, setStatus] = useState("loading"); // loading | ready | error
 
+  const load = useCallback((forceFresh = false) => {
+    const opts = forceFresh ? { cache: "no-store" } : {};
+    return Promise.all([
+      fetch("data/lineup.json", opts).then((r) => r.json()),
+      fetch("data/vendors.json", opts).then((r) => r.json()),
+      fetch("data/info.json", opts).then((r) => r.json()),
+    ]).then(([lineupData, vendorsData, infoData]) => {
+      setLineup(lineupData);
+      setVendors(vendorsData);
+      setInfo(infoData);
+      setStatus("ready");
+    });
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
-
-    Promise.all([
-      fetch("data/lineup.json").then((r) => r.json()),
-      fetch("data/vendors.json").then((r) => r.json()),
-      fetch("data/info.json").then((r) => r.json()),
-    ])
-      .then(([lineupData, vendorsData, infoData]) => {
-        if (cancelled) return;
-        setLineup(lineupData);
-        setVendors(vendorsData);
-        setInfo(infoData);
-        setStatus("ready");
-      })
-      .catch(() => {
-        if (!cancelled) setStatus("error");
-      });
-
+    load().catch(() => {
+      if (!cancelled) setStatus("error");
+    });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [load]);
 
-  return { lineup, vendors, info, status };
+  const reload = useCallback(() => load(true).catch(() => {}), [load]);
+
+  return { lineup, vendors, info, status, reload };
 }

@@ -1,6 +1,20 @@
 <svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="112" fill="#151b10"/>
-  <path d="M256 108 L392 392 L120 392 Z" fill="#1c2416" stroke="#5c9c48" stroke-width="20" stroke-linejoin="round"/>
-  <path d="M186 392c0-108 28-176 82-216-42 54-42 138 0 216" fill="#5c9c48"/>
-  <circle cx="256" cy="140" r="26" fill="#d6553f"/>
+  <rect width="512" height="512" rx="112" fill="#d7e0e4"/>
+
+  <!-- crossed tent poles -->
+  <line x1="200" y1="150" x2="300" y2="70" stroke="#14170f" stroke-width="16" stroke-linecap="round"/>
+  <line x1="312" y1="150" x2="212" y2="70" stroke="#14170f" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- tent body -->
+  <path d="M256 128 L392 404 L120 404 Z" fill="#ece5d3" stroke="#14170f" stroke-width="16" stroke-linejoin="round"/>
+
+  <!-- red flap -->
+  <path d="M256 128 L292 190 L220 190 Z" fill="#d6553f" stroke="#14170f" stroke-width="14" stroke-linejoin="round"/>
+
+  <!-- green vine "V" — black backing stroke for outline, green on top -->
+  <path d="M168 300c8 46 34 82 78 104M344 300c-8 46-34 82-78 104" fill="none" stroke="#14170f" stroke-width="42" stroke-linecap="round"/>
+  <path d="M168 300c8 46 34 82 78 104M344 300c-8 46-34 82-78 104" fill="none" stroke="#4f8a3f" stroke-width="30" stroke-linecap="round"/>
+
+  <!-- leaf -->
+  <path d="M300 232c22-18 52-22 78-10-6 26-26 46-54 52-16 4-30-2-38-14-6-10-2-22 14-28z" fill="#4f8a3f" stroke="#14170f" stroke-width="14" stroke-linejoin="round"/>
 </svg>
