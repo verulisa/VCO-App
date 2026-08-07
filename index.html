@@ -16,9 +16,40 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="VCO" />
     <title>Vegan Camp Out — Unofficial Fan App</title>
+    <style>
+      /* Inline so this paints immediately on first open (or a slow reload),
+         instead of a blank/black gap while the JS bundle loads. React clears
+         and replaces #root's children on its first render, so this is
+         removed automatically the moment the real app is ready — no cleanup
+         code needed. Background matches the manifest's background_color so
+         there's no colour jump from the OS's own launch splash either. */
+      #vco-splash {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #151b10;
+        z-index: 9999;
+      }
+      #vco-splash img {
+        width: 84px;
+        height: 84px;
+        border-radius: 20px;
+        animation: vco-splash-pulse 1.3s ease-in-out infinite;
+      }
+      @keyframes vco-splash-pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.08); opacity: 0.7; }
+      }
+    </style>
   </head>
-  <body class="bg-[--vco-bg] text-[--vco-text]">
-    <div id="root"></div>
+  <body class="bg-[--vco-bg] text-[--vco-text]" style="background: #151b10">
+    <div id="root">
+      <div id="vco-splash" aria-hidden="true">
+        <img src="icons/apple-touch-icon.png" alt="" width="84" height="84" />
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
