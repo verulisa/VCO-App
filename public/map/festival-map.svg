@@ -25,25 +25,35 @@
     <circle cx="230" cy="200" r="10" class="amenity"/>
     <text x="230" y="204" text-anchor="middle" class="amenity-txt">W</text>
 
-    <rect x="280" y="100" width="180" height="120" rx="14" fill="#241b32" stroke="#8b5cb8" stroke-width="2"/>
+    <rect x="280" y="100" width="180" height="120" rx="14" fill="#3a2015" stroke="#e0764f" stroke-width="2"/>
     <text x="370" y="155" text-anchor="middle" class="zone-label">VIP Parking</text>
 
-    <rect x="480" y="100" width="180" height="120" rx="14" fill="#1f2a18" stroke="#5c9c48" stroke-width="2"/>
+    <rect x="480" y="100" width="180" height="120" rx="14" fill="#2c2c14" stroke="#b8c23a" stroke-width="2"/>
     <text x="570" y="155" text-anchor="middle" class="zone-label">Pre-Pitched</text>
     <circle cx="640" cy="200" r="10" class="amenity"/>
     <text x="640" y="204" text-anchor="middle" class="amenity-txt">E</text>
 
-    <rect x="680" y="100" width="180" height="120" rx="14" fill="#241b32" stroke="#8b5cb8" stroke-width="2"/>
+    <rect x="680" y="100" width="180" height="120" rx="14" fill="#2e1a2c" stroke="#c060b0" stroke-width="2"/>
     <text x="770" y="150" text-anchor="middle" class="zone-label">Glamping</text>
     <text x="770" y="172" text-anchor="middle" class="zone-sub">+ VIP Camping</text>
     <circle cx="840" cy="205" r="10" class="amenity"/>
     <text x="840" y="209" text-anchor="middle" class="amenity-txt">E</text>
   </g>
 
-  <!-- Gate D -->
+  <!-- roads -->
+  <g stroke="#6b5636" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.55">
+    <path d="M480 220 L480 300"/>
+    <path d="M155 220 L155 440 M405 220 L405 440"/>
+    <path d="M40 800 Q40 850 90 850 L290 850"/>
+    <path d="M290 710 L290 730"/>
+    <path d="M540 1020 L540 1050 M760 1020 L760 1050 M230 1020 L170 1050"/>
+  </g>
+
+  <!-- Gate D + VIP Zone -->
   <circle cx="480" cy="240" r="22" fill="#d6553f"/>
   <text x="480" y="246" text-anchor="middle" class="gate-label">D</text>
-  <text x="480" y="278" text-anchor="middle" class="zone-sub">what3words: finest.limelight.pelt</text>
+  <text x="480" y="272" text-anchor="middle" class="zone-sub" font-size="10.5">VIP Zone · Glamping · Pre-Pitched</text>
+  <text x="480" y="288" text-anchor="middle" class="zone-sub" font-size="10.5">what3words: finest.limelight.pelt</text>
 
   <!-- Row 2: accessible + mind body -->
   <g>
@@ -61,29 +71,35 @@
   <!-- Row 3: stages -->
   <g>
     <rect x="40" y="440" width="230" height="160" rx="14" fill="#3a231d" stroke="#d6553f" stroke-width="2"/>
-    <text x="155" y="510" text-anchor="middle" class="zone-label">Music Stage</text>
+    <text x="155" y="500" text-anchor="middle" class="zone-label">Music Stage</text>
+    <text x="155" y="522" text-anchor="middle" class="zone-sub">Skate Ramp nearby</text>
 
     <rect x="290" y="440" width="230" height="160" rx="14" fill="#3a231d" stroke="#d6553f" stroke-width="2"/>
-    <text x="405" y="510" text-anchor="middle" class="zone-label">Main Stage</text>
+    <text x="405" y="500" text-anchor="middle" class="zone-label">Main Stage</text>
+    <text x="405" y="522" text-anchor="middle" class="zone-sub">Rides · Bar</text>
 
     <rect x="540" y="440" width="150" height="160" rx="14" fill="#332a14" stroke="#eeb43a" stroke-width="2"/>
-    <text x="615" y="500" text-anchor="middle" class="zone-label" font-size="16">Education</text>
-    <text x="615" y="522" text-anchor="middle" class="zone-sub">+ We The Free</text>
+    <text x="615" y="494" text-anchor="middle" class="zone-label" font-size="15">Education</text>
+    <text x="615" y="514" text-anchor="middle" class="zone-sub">+ We The Free</text>
+    <text x="615" y="530" text-anchor="middle" class="zone-sub">+ Hemp Redemption</text>
 
     <rect x="710" y="440" width="150" height="160" rx="14" fill="#1f2a18" stroke="#5c9c48" stroke-width="2"/>
-    <text x="785" y="500" text-anchor="middle" class="zone-label" font-size="16">Family</text>
-    <text x="785" y="522" text-anchor="middle" class="zone-label" font-size="16">Arena</text>
+    <text x="785" y="494" text-anchor="middle" class="zone-label" font-size="16">Family</text>
+    <text x="785" y="516" text-anchor="middle" class="zone-label" font-size="16">Arena</text>
+    <text x="785" y="536" text-anchor="middle" class="zone-sub">🎠 Carousel</text>
   </g>
 
   <!-- Stalls band -->
   <rect x="290" y="620" width="420" height="90" rx="14" fill="#241f14" stroke="#9c7c3a" stroke-width="2"/>
-  <text x="500" y="655" text-anchor="middle" class="zone-label">Stalls &amp; Food Court</text>
-  <text x="500" y="677" text-anchor="middle" class="zone-sub">45+ traders · see Food tab for the full list</text>
+  <text x="500" y="650" text-anchor="middle" class="zone-label">Stalls &amp; Food Court</text>
+  <text x="500" y="670" text-anchor="middle" class="zone-sub">45+ traders — see Food tab for the full list</text>
+  <text x="500" y="686" text-anchor="middle" class="zone-sub">+ Tattoo · The Vegan Society</text>
 
   <!-- medical / merch markers -->
   <circle cx="720" cy="640" r="16" class="amenity"/>
   <text x="720" y="645" text-anchor="middle" class="amenity-txt">+</text>
   <text x="720" y="670" text-anchor="middle" class="zone-sub">Medical</text>
+  <text x="720" y="684" text-anchor="middle" class="zone-sub" font-size="10">+ Camp Shop</text>
 
   <circle x="0" cy="0" r="0"/>
   <circle cx="270" cy="640" r="16" class="amenity"/>
