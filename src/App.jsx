@@ -43,11 +43,21 @@ export default function App() {
   }
 
   if (!hasNickname) {
-    return <NicknamePrompt onConfirm={rename} />;
+    return (
+      <div className="flex min-h-screen justify-center bg-[var(--vco-bg-alt)]">
+        <div className="min-h-screen w-full max-w-[480px] bg-[var(--vco-bg)] text-[var(--vco-text)]">
+          <NicknamePrompt onConfirm={rename} />
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-[var(--vco-bg)] text-[var(--vco-text)]">
+    <div className="flex min-h-screen justify-center bg-[var(--vco-bg-alt)]">
+    <div
+      className="relative min-h-screen w-full max-w-[480px] bg-[var(--vco-bg)] text-[var(--vco-text)]"
+      style={{ transform: "translateZ(0)" }}
+    >
       <Header
         nickname={nickname}
         emoji={emoji}
@@ -105,6 +115,7 @@ export default function App() {
           onClose={() => setShowProfile(false)}
         />
       )}
+    </div>
     </div>
   );
 }

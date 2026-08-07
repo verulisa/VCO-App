@@ -29,7 +29,7 @@ export default function MapPage({ info }) {
         href={NAV_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-center gap-2 rounded-xl bg-[var(--vco-green)] py-3 text-[13px] font-bold text-white"
+        className="tap flex items-center justify-center gap-2 rounded-xl bg-[var(--vco-green)] py-3 text-[13px] font-bold text-white"
       >
         <Navigation size={16} />
         Navigate to Walesby Forest
@@ -96,22 +96,9 @@ export default function MapPage({ info }) {
       </div>
 
       {info && (
-        <>
-          <CollapsibleSection title="Gates">
-            <Accordion items={gateItems} />
-          </CollapsibleSection>
-
-          <CollapsibleSection title="Map legend (also printed on the map itself)">
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-[11.5px] text-[var(--vco-text-muted)]">
-              {info.legend.map((item) => (
-                <div key={item.label} className="flex items-center gap-2">
-                  <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--vco-yellow)]" />
-                  {item.label}
-                </div>
-              ))}
-            </div>
-          </CollapsibleSection>
-        </>
+        <CollapsibleSection title="Gates">
+          <Accordion items={gateItems} />
+        </CollapsibleSection>
       )}
     </div>
   );

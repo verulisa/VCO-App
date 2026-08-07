@@ -37,7 +37,7 @@ export default function SchedulePage({ schedule, toggleSave }) {
         <button
           type="button"
           onClick={() => downloadIcs(savedActs)}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] py-3 text-[13px] font-semibold text-[var(--vco-text)]"
+          className="tap flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--vco-yellow)] py-3 text-[13px] font-bold text-[#2a1c05] shadow-[var(--vco-glow-gold)]"
         >
           <CalendarPlus size={16} />
           Add schedule to Calendar
