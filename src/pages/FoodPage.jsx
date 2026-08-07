@@ -8,13 +8,8 @@ const CATEGORIES = ["All", "Food", "Trader"];
 const DIET_TAGS = ["Gluten-Free", "Nut-Free", "Soy-Free", "Desserts"];
 const STATUS_FILTERS = ["All", "Want to try", "Been here"];
 
-export default function FoodPage({ vendors, vendorRatings, nickname, highlightVendorId }) {
-  // A shared vendor link lands here with its exact name pre-filled in
-  // search, so the list is already narrowed to just that stall.
-  const [search, setSearch] = useState(() => {
-    if (!highlightVendorId) return "";
-    return vendors.find((v) => v.id === highlightVendorId)?.name || "";
-  });
+export default function FoodPage({ vendors, vendorRatings, nickname }) {
+  const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [tags, setTags] = useState([]);
   const [status, setStatus] = useState("All");

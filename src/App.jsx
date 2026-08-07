@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { RotateCcw } from "lucide-react";
 import Header from "./components/Header";
 import BottomNav from "./components/BottomNav";
@@ -6,6 +6,7 @@ import InstallBanner from "./components/InstallBanner";
 import NicknamePrompt from "./components/NicknamePrompt";
 import ProfileSheet from "./components/ProfileSheet";
 import MoreMenu from "./components/MoreMenu";
+import WelcomeIntro from "./components/WelcomeIntro";
 import SkeletonScreen from "./components/Skeleton";
 import HomePage from "./pages/HomePage";
 import LineupPage from "./pages/LineupPage";
@@ -27,17 +28,11 @@ export default function App() {
   const appUpdate = useAppUpdate();
   const { nickname, emoji, hasNickname, rename } = useNickname();
   const { theme, toggleTheme } = useTheme();
-  const [highlightVendorId] = useState(() => new URLSearchParams(window.location.search).get("food"));
-  const [tab, setTab] = useState(() => (highlightVendorId ? "food" : "home"));
+  const [tab, setTab] = useState("home");
   const [showProfile, setShowProfile] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [lastBackupAt, setLastBackupAt] = useLocalStorage("vco_last_backup_at", null);
-
-  // A shared vendor link (?food=<id>) only needs to steer the very first
-  // load — strip it so a later reload doesn't keep forcing the Food tab.
-  useEffect(() => {
-    if (highlightVendorId) window.history.replaceState({}, "", window.location.pathname);
-  }, [highlightVendorId]);
+  const [welcomeSeen, setWelcomeSeen] = useLocalStorage("vco_welcome_seen", false);
 
   const schedule = useSchedule(lineup);
   const vendorRatings = useVendorRatings();
@@ -109,9 +104,7 @@ export default function App() {
             )}
             {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}
             {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} lineup={lineup} />}
-            {tab === "food" && (
-              <FoodPage vendors={vendors} vendorRatings={vendorRatings} nickname={nickname} highlightVendorId={highlightVendorId} />
-            )}
+            {tab === "food" && <FoodPage vendors={vendors} vendorRatings={vendorRatings} nickname={nickname} />}
             {tab === "map" && <MapPage info={info} />}
           </div>
         )}
@@ -145,6 +138,8 @@ export default function App() {
           onClose={() => setShowProfile(false)}
         />
       )}
+
+      {!welcomeSeen && <WelcomeIntro onClose={() => setWelcomeSeen(true)} />}
     </div>
     {landscapeLock}
     </div>
