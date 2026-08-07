@@ -16,13 +16,18 @@ export function useNotifications(savedActs) {
   const firedCountsRef = useRef(firedCounts);
   firedCountsRef.current = firedCounts;
 
+  // Separate from browser permission, which JS can never revoke once granted —
+  // this is an in-app on/off switch layered on top of it.
+  const [enabled, setEnabled] = useLocalStorage("vco_notif_enabled", true);
+  const toggleEnabled = () => setEnabled((prev) => !prev);
+
   function requestPermission() {
     if (!supportsNotifications) return;
     Notification.requestPermission().then(setPermission);
   }
 
   useEffect(() => {
-    if (!supportsNotifications || permission !== "granted") return;
+    if (!supportsNotifications || permission !== "granted" || !enabled) return;
 
     const check = () => {
       const now = new Date();
@@ -46,19 +51,23 @@ export function useNotifications(savedActs) {
     check();
     const id = setInterval(check, CHECK_INTERVAL_MS);
     return () => clearInterval(id);
-  }, [savedActs, permission, setFiredCounts]);
+  }, [savedActs, permission, enabled, setFiredCounts]);
 
   // Best-effort only: this relies on the app being open in the foreground. It will not
   // fire while the phone is locked or the app is backgrounded — see the Map & Info FAQ.
-  const nextReminder = savedActs
-    .map((act) => ({ act, mins: minutesUntilStart(act) }))
-    .filter((x) => x.mins > 0 && x.mins <= 60)
-    .sort((a, b) => a.mins - b.mins)[0];
+  const nextReminder = enabled
+    ? savedActs
+        .map((act) => ({ act, mins: minutesUntilStart(act) }))
+        .filter((x) => x.mins > 0 && x.mins <= 60)
+        .sort((a, b) => a.mins - b.mins)[0]
+    : undefined;
 
   return {
     supported: supportsNotifications,
     permission,
     requestPermission,
+    enabled,
+    toggleEnabled,
     nextReminder,
   };
 }

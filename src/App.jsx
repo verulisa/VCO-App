@@ -62,6 +62,9 @@ export default function App() {
         onMenuClick={() => setShowMenu(true)}
         theme={theme}
         onToggleTheme={toggleTheme}
+        notifPermission={notifications.permission}
+        notifEnabled={notifications.enabled}
+        onToggleNotif={notifications.toggleEnabled}
       />
       <div className="header-spacer">
         <InstallBanner />

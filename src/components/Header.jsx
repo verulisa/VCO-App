@@ -1,6 +1,16 @@
-import { Menu, Moon, Sun } from "lucide-react";
+import { Bell, BellOff, Menu, Moon, Sun } from "lucide-react";
 
-export default function Header({ nickname, emoji, onNicknameClick, onMenuClick, theme, onToggleTheme }) {
+export default function Header({
+  nickname,
+  emoji,
+  onNicknameClick,
+  onMenuClick,
+  theme,
+  onToggleTheme,
+  notifPermission,
+  notifEnabled,
+  onToggleNotif,
+}) {
   return (
     <header className="header-fixed flex items-center justify-between gap-2 border-b border-[var(--vco-border)] bg-[var(--vco-bg)] px-3">
       <div className="flex min-w-0 items-center gap-2">
@@ -25,6 +35,17 @@ export default function Header({ nickname, emoji, onNicknameClick, onMenuClick, 
       </div>
 
       <div className="flex shrink-0 items-center gap-1">
+        {notifPermission === "granted" && (
+          <button
+            type="button"
+            onClick={onToggleNotif}
+            aria-label={notifEnabled ? "Turn off reminders" : "Turn on reminders"}
+            className="tap flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] text-[var(--vco-text)]"
+          >
+            {notifEnabled ? <Bell size={13} /> : <BellOff size={13} className="text-[var(--vco-text-faint)]" />}
+          </button>
+        )}
+
         <button
           type="button"
           onClick={onToggleTheme}
