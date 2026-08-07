@@ -101,7 +101,7 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
               >
                 <div className="min-w-0">
                   <p className="truncate text-[12.5px] font-bold text-[var(--vco-text)]">{v.name}</p>
-                  <p className="text-[10.5px] text-[var(--vco-text-muted)]">📍 {v.location}</p>
+                  <p className="text-[10.5px] text-[var(--vco-text-muted)]">{v.location}</p>
                 </div>
                 <Bookmark size={14} className="shrink-0 fill-[var(--vco-yellow)] stroke-[var(--vco-yellow)]" />
               </div>
