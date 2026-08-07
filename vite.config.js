@@ -34,6 +34,12 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,png,jpg,ico,woff2}"],
+        // Without this, a fresh cold navigation to the app's URL (closing it
+        // fully, or restarting the phone, then reopening) only matches the
+        // precache on the exact literal "index.html" path — the actual
+        // start-url navigation request falls through to the network and
+        // fails offline, even though every other cached asset works fine.
+        navigateFallback: "index.html",
         // Precache the JSON data and map so the whole app works offline after first load.
         additionalManifestEntries: [
           { url: "data/lineup.json", revision: null },
