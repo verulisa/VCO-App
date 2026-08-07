@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X, Share2, Smartphone, MapPinned, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck } from "lucide-react";
+import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
 
@@ -133,31 +133,6 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
                   {info.event.name} · {info.event.edition}
                 </p>
                 <p className="mt-1">{info.event.venue}</p>
-              </div>
-            </Section>
-
-            <Section icon={MapPinned} title="Gates">
-              <div className="flex flex-col gap-2.5">
-                {info.gates.map((gate) => (
-                  <div key={gate.id} className="text-[12px]">
-                    <p className="font-bold text-[var(--vco-text)]">{gate.name}</p>
-                    <p className="text-[var(--vco-text-muted)]">{gate.use.join(" · ")}</p>
-                    {gate.whatThreeWords && (
-                      <p className="font-mono text-[11px] text-[var(--vco-green-strong)]">///{gate.whatThreeWords}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section icon={Info} title="Map legend">
-              <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-[11.5px] text-[var(--vco-text-muted)]">
-                {info.legend.map((item) => (
-                  <div key={item.label} className="flex items-center gap-2">
-                    <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--vco-yellow)]" />
-                    {item.label}
-                  </div>
-                ))}
               </div>
             </Section>
 

@@ -1,7 +1,9 @@
 import sharp from "sharp";
-import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
-const svg = readFileSync(new URL("./icon-source.svg", import.meta.url));
+// Sourced from the real VCO logo the festival team supplied (public/brand/logo.jpg),
+// not a hand-drawn approximation.
+const source = fileURLToPath(new URL("../public/brand/logo.jpg", import.meta.url));
 
 const targets = [
   { file: "public/icons/pwa-192x192.png", size: 192 },
@@ -13,6 +15,6 @@ const targets = [
 ];
 
 for (const t of targets) {
-  await sharp(svg, { density: 384 }).resize(t.size, t.size).png().toFile(t.file);
+  await sharp(source).resize(t.size, t.size).png().toFile(t.file);
   console.log("wrote", t.file);
 }

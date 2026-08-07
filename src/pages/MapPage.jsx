@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
 import { MapPin, Navigation, X, ZoomIn, ZoomOut } from "lucide-react";
+import Accordion from "../components/Accordion";
+import CollapsibleSection from "../components/CollapsibleSection";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const NAV_URL = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Walesby Forest, Nottinghamshire, NG22 9NG");
 
-export default function MapPage() {
+export default function MapPage({ info }) {
   const [pin, setPin] = useLocalStorage("vco_tent_pin", null);
   const [zoom, setZoom] = useState(1);
   const imgWrapRef = useRef(null);
@@ -15,6 +17,11 @@ export default function MapPage() {
     const yPct = ((e.clientY - rect.top) / rect.height) * 100;
     setPin({ xPct, yPct });
   }
+
+  const gateItems = info?.gates.map((gate) => ({
+    question: gate.name,
+    answer: `${gate.use.join(" · ")}${gate.whatThreeWords ? ` — ///${gate.whatThreeWords}` : ""}`,
+  }));
 
   return (
     <div className="flex flex-col gap-4 px-4 pb-28 pt-4">
@@ -59,8 +66,8 @@ export default function MapPage() {
         <div className="overflow-auto rounded-xl" style={{ maxHeight: "60vh" }}>
           <div ref={imgWrapRef} onClick={handleMapClick} className="relative w-full cursor-crosshair">
             <img
-              src="map/festival-map.svg"
-              alt="Vegan Camp Out schematic site map"
+              src="map/site-map.jpg"
+              alt="Vegan Camp Out official festival map"
               className="w-full select-none"
               style={{ width: `${zoom * 100}%`, maxWidth: "none" }}
               draggable={false}
@@ -88,9 +95,24 @@ export default function MapPage() {
         )}
       </div>
 
-      <p className="text-center text-[11px] text-[var(--vco-text-faint)]">
-        Map legend, gates and FAQ moved to the ☰ menu, top-left.
-      </p>
+      {info && (
+        <>
+          <CollapsibleSection title="Gates">
+            <Accordion items={gateItems} />
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Map legend (also printed on the map itself)">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-[11.5px] text-[var(--vco-text-muted)]">
+              {info.legend.map((item) => (
+                <div key={item.label} className="flex items-center gap-2">
+                  <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--vco-yellow)]" />
+                  {item.label}
+                </div>
+              ))}
+            </div>
+          </CollapsibleSection>
+        </>
+      )}
     </div>
   );
 }

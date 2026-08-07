@@ -13,7 +13,8 @@ export default defineConfig({
         "icons/favicon-16x16.png",
         "icons/favicon-32x32.png",
         "icons/apple-touch-icon.png",
-        "map/festival-map.svg",
+        "map/site-map.jpg",
+        "brand/logo.jpg",
       ],
       manifest: {
         name: "Vegan Camp Out",
@@ -32,12 +33,12 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,png,ico,woff2}"],
+        globPatterns: ["**/*.{js,css,html,svg,png,jpg,ico,woff2}"],
         // Precache the JSON data and map so the whole app works offline after first load.
         additionalManifestEntries: [
           { url: "data/lineup.json", revision: null },
           { url: "data/vendors.json", revision: null },
-          { url: "map/festival-map.svg", revision: null },
+          { url: "map/site-map.jpg", revision: null },
         ],
         runtimeCaching: [
           {
@@ -46,7 +47,7 @@ export default defineConfig({
             options: { cacheName: "vco-data" },
           },
           {
-            urlPattern: /\/map\/.*\.svg$/,
+            urlPattern: /\/map\/.*\.(svg|jpg)$/,
             handler: "CacheFirst",
             options: { cacheName: "vco-map" },
           },
