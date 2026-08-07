@@ -17,9 +17,9 @@ export default defineConfig({
         "brand/logo.jpg",
       ],
       manifest: {
-        name: "Vegan Camp Out",
+        name: "Vegan Camp Out (Unofficial Fan App)",
         short_name: "VCO",
-        description: "Offline companion app for the Vegan Camp Out festival — lineup, schedule, food and map.",
+        description: "Unofficial fan-made offline companion app for the Vegan Camp Out festival — lineup, schedule, food and map. Not affiliated with or endorsed by the festival organisers.",
         start_url: "./",
         scope: "./",
         display: "standalone",

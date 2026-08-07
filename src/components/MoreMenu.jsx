@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck } from "lucide-react";
+import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
 
 const APP_URL = "https://verulisa.github.io/VCO-App/";
+const SUPPORT_URL = "https://revolut.me/veroni1wc6?currency=GBP&amount=3&note=";
 
 function Section({ icon: Icon, title, children }) {
   return (
@@ -19,6 +20,7 @@ function Section({ icon: Icon, title, children }) {
 
 export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastBackupAt, onOpenProfile }) {
   const [qrDataUrl, setQrDataUrl] = useState(null);
+  const [supportQrDataUrl, setSupportQrDataUrl] = useState(null);
   const [copied, setCopied] = useState(false);
   const [refreshState, setRefreshState] = useState("idle"); // idle | checking | current
   const fallbackTimer = useRef(null);
@@ -45,6 +47,7 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
 
   useEffect(() => {
     QRCode.toDataURL(APP_URL, { margin: 1, width: 220, color: { dark: "#12160f", light: "#f2ede0" } }).then(setQrDataUrl);
+    QRCode.toDataURL(SUPPORT_URL, { margin: 1, width: 180, color: { dark: "#12160f", light: "#f2ede0" } }).then(setSupportQrDataUrl);
   }, []);
 
   function copyLink() {
@@ -141,6 +144,23 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
             </Section>
           </>
         )}
+
+        <div className="mt-2 border-t border-[var(--vco-border)] pt-4 text-center">
+          <p className="mb-3 text-[10px] leading-relaxed text-[var(--vco-text-faint)]">
+            Unofficial fan-made app. Not affiliated with, endorsed by, or connected to Vegan Camp Out.
+          </p>
+          <p className="mb-2 flex items-center justify-center gap-1 text-[11px] text-[var(--vco-text-muted)]">
+            Made with <span aria-hidden="true">🤍</span> — 100% free, no ads.
+          </p>
+          <p className="mb-3 text-[10.5px] text-[var(--vco-text-faint)]">
+            If it helped you get around, you're welcome to buy the dev a coffee <Coffee size={11} className="inline -mt-0.5" />
+          </p>
+          {supportQrDataUrl && (
+            <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" className="tap inline-block">
+              <img src={supportQrDataUrl} alt="QR code to send a voluntary tip via Revolut" className="mx-auto w-24 rounded-lg opacity-90" />
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
