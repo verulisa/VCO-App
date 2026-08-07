@@ -7,6 +7,8 @@ import { useNow } from "../hooks/useNow";
 import { downloadIcs } from "../utils/ics";
 import { formatDayHeading } from "../utils/time";
 
+const isAndroid = typeof navigator !== "undefined" && /Android/i.test(navigator.userAgent);
+
 export default function SchedulePage({ schedule, toggleSave, lineup }) {
   const { savedIds, savedActs, scheduleRows, clashPairs, importIds } = schedule;
   const now = useNow();
@@ -59,6 +61,7 @@ export default function SchedulePage({ schedule, toggleSave, lineup }) {
       )}
       <p className="-mt-2 text-center text-[10.5px] leading-relaxed text-[var(--vco-text-faint)]">
         Adds a 15-min-before alarm to each — your phone's own Calendar app reminds you even offline and locked.
+        {isAndroid && " On Android it downloads a file — open it from your notification shade or Downloads to add it."}
       </p>
 
       <ScheduleShare savedIds={savedIds} onImport={importIds} lineup={lineup} />

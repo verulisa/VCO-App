@@ -12,7 +12,9 @@ export function encodeSchedule(savedIds) {
 
 export function decodeSchedule(code) {
   const trimmed = code.trim();
-  if (!trimmed.startsWith(CODE_PREFIX)) return null;
+  // Case-insensitive: phone keyboards/autocorrect and some share sheets can
+  // silently lowercase text (seen in the wild as "vco1:" instead of "VCO1:").
+  if (trimmed.slice(0, CODE_PREFIX.length).toLowerCase() !== CODE_PREFIX.toLowerCase()) return null;
   const ids = trimmed
     .slice(CODE_PREFIX.length)
     .split(",")
@@ -31,6 +33,15 @@ export default function ScheduleShare({ savedIds, onImport, lineup }) {
   const [justAdded, setJustAdded] = useState(0);
   const videoRef = useRef(null);
   const streamRef = useRef(null);
+  const resultRef = useRef(null);
+
+  // A scan/paste result can land below the fold of this panel — scroll it
+  // into view so it doesn't look like nothing happened.
+  useEffect(() => {
+    if (preview || scanError) {
+      resultRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }, [preview, scanError]);
 
   function buildPreview(ids) {
     const byId = new Map((lineup || []).map((a) => [a.id, a]));
@@ -206,7 +217,11 @@ export default function ScheduleShare({ savedIds, onImport, lineup }) {
             Scan a QR code
           </button>
         )}
-        {scanError && <p className="mb-2 text-[11px] text-[var(--vco-danger-text)]">{scanError}</p>}
+        {scanError && (
+          <p ref={resultRef} className="mb-2 text-[11px] font-semibold text-[var(--vco-danger-text)]">
+            {scanError}
+          </p>
+        )}
 
         <div className="flex gap-2">
           <input
@@ -239,7 +254,7 @@ export default function ScheduleShare({ savedIds, onImport, lineup }) {
         )}
 
         {preview && (
-          <div className="mt-3 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] p-3">
+          <div ref={resultRef} className="mt-3 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] p-3">
             <p className="mb-0.5 text-[12.5px] font-semibold text-[var(--vco-text)]">
               These aren't in your favourites yet — want to add them?
             </p>
