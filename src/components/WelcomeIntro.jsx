@@ -1,6 +1,10 @@
-import { CalendarPlus, Coffee, ListMusic, Share2, Smartphone, Star, X } from "lucide-react";
+import { CalendarPlus, Coffee, ListMusic, Lock, Share2, Smartphone, Star, X } from "lucide-react";
 
 const POINTS = [
+  {
+    icon: Lock,
+    text: "It's just a web page — nothing is collected or sent anywhere. Everything stays only on this phone, and you can delete it after the festival.",
+  },
   { icon: ListMusic, text: "Browse the full lineup, schedule & festival info." },
   { icon: Star, text: "Tap the star on any act to save it to My Schedule." },
   { icon: CalendarPlus, text: "Export your saved schedule to your phone's Calendar app for reminders." },

@@ -106,7 +106,7 @@ export default function ProfileSheet({ nickname, onRename, savedIds, vendorRatin
           </button>
           {lastBackupAt && (
             <p className="mb-3 text-center text-[10.5px] text-[var(--vco-text-faint)]">
-              Last backed up {new Date(lastBackupAt).toLocaleString()}
+              Last backed up {new Date(lastBackupAt).toLocaleString("en-GB")}
             </p>
           )}
 

@@ -110,7 +110,7 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
           </button>
           <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
             {lastBackupAt
-              ? `Last backed up ${new Date(lastBackupAt).toLocaleDateString()}. Everything lives only on this phone.`
+              ? `Last backed up ${new Date(lastBackupAt).toLocaleDateString("en-GB")}. Everything lives only on this phone.`
               : "Everything lives only on this phone — save a copy so you can't lose it."}
           </p>
         </Section>

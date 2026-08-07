@@ -50,7 +50,10 @@ export function formatTimeRange(act) {
 
 export function formatDayHeading(dateStr) {
   const date = new Date(`${dateStr}T00:00:00`);
-  return date.toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "short" });
+  // Locale hardcoded to English — toLocaleDateString(undefined, ...) would
+  // otherwise follow the phone's system language (e.g. Czech), and nothing
+  // in this app may be in any language but English.
+  return date.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short" });
 }
 
 export function formatDuration(mins) {
