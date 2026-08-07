@@ -38,7 +38,13 @@ export default function ShareQR({ text, triggerLabel = "Share", triggerClassName
         </button>
       </div>
 
-      {qrDataUrl && <img src={qrDataUrl} alt="QR code" className="mx-auto rounded-lg" />}
+      <div className="mx-auto aspect-square w-full max-w-[200px]">
+        {qrDataUrl ? (
+          <img src={qrDataUrl} alt="QR code" className="h-full w-full rounded-lg" />
+        ) : (
+          <div className="skeleton h-full w-full rounded-lg" />
+        )}
+      </div>
 
       <div className="mt-2 flex items-center gap-2 rounded-lg bg-[var(--vco-surface)] px-2.5 py-2">
         <p className="flex-1 truncate text-[11px] text-[var(--vco-text-muted)]">{text}</p>

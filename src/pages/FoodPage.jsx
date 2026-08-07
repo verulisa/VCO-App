@@ -8,7 +8,7 @@ const CATEGORIES = ["All", "Food", "Trader"];
 const DIET_TAGS = ["Gluten-Free", "Nut-Free", "Soy-Free", "Desserts"];
 const STATUS_FILTERS = ["All", "Want to try", "Been here"];
 
-export default function FoodPage({ vendors, vendorRatings }) {
+export default function FoodPage({ vendors, vendorRatings, nickname }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [tags, setTags] = useState([]);
@@ -69,6 +69,7 @@ export default function FoodPage({ vendors, vendorRatings }) {
               onToggleVisited={toggleVisited}
               onToggleWishlist={toggleWishlist}
               onSetNote={setNote}
+              nickname={nickname}
             />
           ))
         )}
