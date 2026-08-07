@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
@@ -22,27 +22,16 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
   const [qrDataUrl, setQrDataUrl] = useState(null);
   const [supportQrDataUrl, setSupportQrDataUrl] = useState(null);
   const [copied, setCopied] = useState(false);
-  const [refreshState, setRefreshState] = useState("idle"); // idle | checking | current
-  const fallbackTimer = useRef(null);
-
-  // registerSW's onNeedRefresh fires asynchronously (a moment after
-  // reg.update() resolves), so react to it via props instead of reading a
-  // stale value right after awaiting the check.
-  useEffect(() => {
-    if (refreshState === "checking" && appUpdate?.needsRefresh) {
-      clearTimeout(fallbackTimer.current);
-      appUpdate.applyUpdate();
-    }
-  }, [appUpdate, refreshState]);
+  const [refreshState, setRefreshState] = useState("idle"); // idle | checking
 
   async function handleRefresh() {
     setRefreshState("checking");
+    // Re-fetch data bypassing cache, force a real (no-store) check for a
+    // newer service worker, then hard-reload — the same effect as closing
+    // and reopening the app, which is the only thing that reliably shows
+    // the latest version regardless of how GitHub Pages' caching behaves.
     await Promise.all([onReloadData?.(), appUpdate?.checkNow()]);
-    // Give onNeedRefresh a moment to fire before concluding there's nothing new.
-    fallbackTimer.current = setTimeout(() => {
-      setRefreshState("current");
-      setTimeout(() => setRefreshState("idle"), 2000);
-    }, 1200);
+    setTimeout(() => window.location.reload(), 400);
   }
 
   useEffect(() => {
@@ -77,10 +66,10 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
             className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)] disabled:opacity-60"
           >
             <RefreshCw size={15} className={refreshState === "checking" ? "animate-spin" : ""} />
-            {refreshState === "checking" ? "Checking…" : refreshState === "current" ? "You're up to date" : "Refresh data & app"}
+            {refreshState === "checking" ? "Refreshing…" : "Refresh data & app"}
           </button>
           <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
-            Re-fetches the lineup/food data and checks for a newer version of the app — no reinstall needed.
+            Re-fetches everything fresh and reloads the app — the same as closing and reopening it.
           </p>
         </Section>
 
