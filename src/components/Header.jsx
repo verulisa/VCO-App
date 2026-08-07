@@ -2,7 +2,7 @@ import { Menu, Moon, Sun } from "lucide-react";
 
 export default function Header({ nickname, emoji, onNicknameClick, onMenuClick, theme, onToggleTheme }) {
   return (
-    <header className="flex items-center justify-between gap-2 border-b border-[var(--vco-border)] px-3 py-3 safe-top">
+    <header className="header-fixed flex items-center justify-between gap-2 border-b border-[var(--vco-border)] bg-[var(--vco-bg)] px-3">
       <div className="flex min-w-0 items-center gap-2">
         <button
           type="button"

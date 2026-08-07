@@ -54,10 +54,7 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen justify-center bg-[var(--vco-bg-alt)]">
-    <div
-      className="relative min-h-screen w-full max-w-[480px] bg-[var(--vco-bg)] text-[var(--vco-text)]"
-      style={{ transform: "translateZ(0)" }}
-    >
+    <div className="relative min-h-screen w-full max-w-[480px] bg-[var(--vco-bg)] text-[var(--vco-text)]">
       <Header
         nickname={nickname}
         emoji={emoji}
@@ -66,35 +63,37 @@ export default function App() {
         theme={theme}
         onToggleTheme={toggleTheme}
       />
-      <InstallBanner />
+      <div className="header-spacer">
+        <InstallBanner />
 
-      {status === "loading" && <SkeletonScreen />}
-      {status === "error" && (
-        <p className="px-4 py-10 text-center text-[13px] text-[var(--vco-danger-text)]">
-          Couldn't load festival data. Open this app once with a signal so it can be cached for offline use.
-        </p>
-      )}
+        {status === "loading" && <SkeletonScreen />}
+        {status === "error" && (
+          <p className="px-4 py-10 text-center text-[13px] text-[var(--vco-danger-text)]">
+            Couldn't load festival data. Open this app once with a signal so it can be cached for offline use.
+          </p>
+        )}
 
-      {status === "ready" && (
-        <div key={tab} className="page-in">
-          {tab === "home" && (
-            <HomePage
-              lineup={lineup}
-              info={info}
-              isSaved={schedule.isSaved}
-              toggleSave={schedule.toggleSave}
-              notifications={notifications}
-              vendors={vendors}
-              vendorRatings={vendorRatings}
-              onGoToFood={() => setTab("food")}
-            />
-          )}
-          {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}
-          {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} />}
-          {tab === "food" && <FoodPage vendors={vendors} vendorRatings={vendorRatings} />}
-          {tab === "map" && <MapPage info={info} />}
-        </div>
-      )}
+        {status === "ready" && (
+          <div key={tab} className="page-in">
+            {tab === "home" && (
+              <HomePage
+                lineup={lineup}
+                info={info}
+                isSaved={schedule.isSaved}
+                toggleSave={schedule.toggleSave}
+                notifications={notifications}
+                vendors={vendors}
+                vendorRatings={vendorRatings}
+                onGoToFood={() => setTab("food")}
+              />
+            )}
+            {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}
+            {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} />}
+            {tab === "food" && <FoodPage vendors={vendors} vendorRatings={vendorRatings} />}
+            {tab === "map" && <MapPage info={info} />}
+          </div>
+        )}
+      </div>
 
       <BottomNav active={tab} onChange={setTab} />
 

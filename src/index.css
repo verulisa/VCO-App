@@ -72,6 +72,52 @@ body {
   padding-top: env(safe-area-inset-top, 0px);
 }
 
+:root {
+  --vco-header-h: 57px;
+}
+
+/* True viewport-fixed positioning, self-centered to match the app's
+   max-width column — deliberately NOT achieved via a `transform` on an
+   ancestor, because that turns descendant `position: fixed` elements into
+   elements fixed to that ancestor's box instead of the viewport (so they'd
+   scroll away with the page instead of staying put). */
+.fixed-col {
+  position: fixed;
+  left: 50%;
+  width: 100%;
+  max-width: 480px;
+  transform: translateX(-50%);
+}
+
+/* Anchors a right-side drawer to the right edge of the centered app column
+   (480px max-width) instead of the literal browser edge, without relying on
+   an ancestor `transform` (see .fixed-col note above for why that breaks
+   position:fixed elsewhere). On screens <=480px wide this resolves to 0,
+   i.e. the real screen edge, same as before. */
+.drawer-col-right {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: max(0px, calc(50% - 240px));
+}
+
+.header-fixed {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 100%;
+  max-width: 480px;
+  transform: translateX(-50%);
+  z-index: 30;
+  height: calc(var(--vco-header-h) + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+  box-sizing: border-box;
+}
+
+.header-spacer {
+  padding-top: calc(var(--vco-header-h) + env(safe-area-inset-top, 0px));
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
