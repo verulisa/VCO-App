@@ -1,10 +1,12 @@
+import { CalendarPlus } from "lucide-react";
 import ActCard from "../components/ActCard";
 import BreakRow from "../components/BreakRow";
 import ClashBanner from "../components/ClashBanner";
 import ScheduleShare from "../components/ScheduleShare";
+import { downloadIcs } from "../utils/ics";
 
 export default function SchedulePage({ schedule, toggleSave }) {
-  const { savedIds, scheduleRows, clashPairs, importIds } = schedule;
+  const { savedIds, savedActs, scheduleRows, clashPairs, importIds } = schedule;
 
   return (
     <div className="flex flex-col gap-3.5 px-4 pb-28 pt-4">
@@ -27,6 +29,20 @@ export default function SchedulePage({ schedule, toggleSave }) {
           )}
         </div>
       )}
+
+      {savedActs.length > 0 && (
+        <button
+          type="button"
+          onClick={() => downloadIcs(savedActs)}
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] py-3 text-[13px] font-semibold text-[var(--vco-text)]"
+        >
+          <CalendarPlus size={16} />
+          Add schedule to Calendar
+        </button>
+      )}
+      <p className="-mt-2 text-center text-[10.5px] leading-relaxed text-[var(--vco-text-faint)]">
+        Adds a 15-min-before alarm to each — your phone's own Calendar app reminds you even offline and locked.
+      </p>
 
       <ScheduleShare savedIds={savedIds} onImport={importIds} />
     </div>

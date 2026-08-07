@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
-import { MapPin, X, ZoomIn, ZoomOut } from "lucide-react";
+import { MapPin, Navigation, X, ZoomIn, ZoomOut } from "lucide-react";
 import Accordion from "../components/Accordion";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+
+const NAV_URL = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Walesby Forest, Nottinghamshire, NG22 9NG");
 
 export default function MapPage({ info }) {
   const [pin, setPin] = useLocalStorage("vco_tent_pin", null);
@@ -17,6 +19,19 @@ export default function MapPage({ info }) {
 
   return (
     <div className="flex flex-col gap-4 px-4 pb-28 pt-4">
+      <a
+        href={NAV_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-2 rounded-xl bg-[var(--vco-green)] py-3 text-[13px] font-bold text-white"
+      >
+        <Navigation size={16} />
+        Navigate to Walesby Forest
+      </a>
+      <p className="-mt-2.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
+        Needs signal — use this on the way there, before you lose coverage on site.
+      </p>
+
       <div className="rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3">
         <div className="mb-2 flex items-center justify-between">
           <p className="text-[11px] uppercase tracking-wide text-[var(--vco-text-muted)]">

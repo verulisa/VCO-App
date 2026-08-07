@@ -15,22 +15,29 @@
 
   <text x="450" y="52" text-anchor="middle" fill="#f2ede0" font-size="26" font-weight="800">VEGAN CAMP OUT — SITE MAP</text>
   <text x="450" y="74" text-anchor="middle" class="footnote">Schematic layout, not to scale · Walesby Forest, Nottinghamshire</text>
+  <text x="864" y="30" text-anchor="end" class="zone-sub">T Toilets · S Showers · W Water · E Portaloo point</text>
 
   <!-- Row 1: arrivals -->
   <g>
     <rect x="40" y="100" width="220" height="120" rx="14" fill="#1e2530" stroke="#5c7a8c" stroke-width="2"/>
     <text x="150" y="150" text-anchor="middle" class="zone-label">Motorhomes</text>
     <text x="150" y="172" text-anchor="middle" class="zone-label">&amp; Caravans</text>
+    <circle cx="230" cy="200" r="10" class="amenity"/>
+    <text x="230" y="204" text-anchor="middle" class="amenity-txt">W</text>
 
     <rect x="280" y="100" width="180" height="120" rx="14" fill="#241b32" stroke="#8b5cb8" stroke-width="2"/>
     <text x="370" y="155" text-anchor="middle" class="zone-label">VIP Parking</text>
 
     <rect x="480" y="100" width="180" height="120" rx="14" fill="#1f2a18" stroke="#5c9c48" stroke-width="2"/>
     <text x="570" y="155" text-anchor="middle" class="zone-label">Pre-Pitched</text>
+    <circle cx="640" cy="200" r="10" class="amenity"/>
+    <text x="640" y="204" text-anchor="middle" class="amenity-txt">E</text>
 
     <rect x="680" y="100" width="180" height="120" rx="14" fill="#241b32" stroke="#8b5cb8" stroke-width="2"/>
     <text x="770" y="150" text-anchor="middle" class="zone-label">Glamping</text>
     <text x="770" y="172" text-anchor="middle" class="zone-sub">+ VIP Camping</text>
+    <circle cx="840" cy="205" r="10" class="amenity"/>
+    <text x="840" y="209" text-anchor="middle" class="amenity-txt">E</text>
   </g>
 
   <!-- Gate D -->
@@ -43,6 +50,8 @@
     <rect x="40" y="300" width="220" height="110" rx="14" fill="#1e2530" stroke="#5c7a8c" stroke-width="2"/>
     <text x="150" y="345" text-anchor="middle" class="zone-label">Accessible</text>
     <text x="150" y="367" text-anchor="middle" class="zone-sub">Parking + Camping</text>
+    <circle cx="230" cy="390" r="10" class="amenity"/>
+    <text x="230" y="394" text-anchor="middle" class="amenity-txt">T</text>
 
     <rect x="280" y="300" width="580" height="110" rx="14" fill="#332a14" stroke="#eeb43a" stroke-width="2"/>
     <text x="570" y="345" text-anchor="middle" class="zone-label">Mind &amp; Body</text>
@@ -103,14 +112,26 @@
     <rect x="40" y="880" width="380" height="140" rx="14" fill="#1f2a18" stroke="#5c9c48" stroke-width="2"/>
     <text x="230" y="945" text-anchor="middle" class="zone-label">General Camping</text>
     <text x="230" y="967" text-anchor="middle" class="zone-sub">+ Solo Camping</text>
+    <circle cx="195" cy="998" r="10" class="amenity"/>
+    <text x="195" y="1002" text-anchor="middle" class="amenity-txt">T</text>
+    <circle cx="230" cy="998" r="10" class="amenity"/>
+    <text x="230" y="1002" text-anchor="middle" class="amenity-txt">S</text>
+    <circle cx="265" cy="998" r="10" class="amenity"/>
+    <text x="265" y="1002" text-anchor="middle" class="amenity-txt">W</text>
 
     <rect x="440" y="880" width="200" height="140" rx="14" fill="#1f2a18" stroke="#5c9c48" stroke-width="2"/>
     <text x="540" y="945" text-anchor="middle" class="zone-label" font-size="16">Family</text>
     <text x="540" y="967" text-anchor="middle" class="zone-label" font-size="16">Camping</text>
+    <circle cx="522" cy="998" r="10" class="amenity"/>
+    <text x="522" y="1002" text-anchor="middle" class="amenity-txt">T</text>
+    <circle cx="557" cy="998" r="10" class="amenity"/>
+    <text x="557" y="1002" text-anchor="middle" class="amenity-txt">W</text>
 
     <rect x="660" y="880" width="200" height="140" rx="14" fill="#1f2a18" stroke="#5c9c48" stroke-width="2"/>
     <text x="760" y="945" text-anchor="middle" class="zone-label" font-size="16">Quiet</text>
     <text x="760" y="967" text-anchor="middle" class="zone-label" font-size="16">Camping</text>
+    <circle cx="760" cy="998" r="10" class="amenity"/>
+    <text x="760" y="1002" text-anchor="middle" class="amenity-txt">T</text>
   </g>
 
   <!-- Gates row -->

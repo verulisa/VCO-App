@@ -1,32 +1,41 @@
 import { useLocalStorage } from "./useLocalStorage";
 
-// { [vendorId]: { rating: 1-5, tried: boolean, note: string } }
+// { [vendorId]: { wishlist: boolean, visited: boolean, rating: 1-5, note: string } }
+const EMPTY = { wishlist: false, visited: false, rating: 0, note: "" };
+
 export function useVendorRatings() {
   const [ratings, setRatings] = useLocalStorage("vco_vendor_ratings", {});
 
   function getRating(vendorId) {
-    return ratings[vendorId] || { rating: 0, tried: false, note: "" };
+    return ratings[vendorId] || EMPTY;
   }
 
-  function setRating(vendorId, patch) {
+  function patch(vendorId, changes) {
     setRatings((prev) => ({
       ...prev,
-      [vendorId]: { ...getRating(vendorId), ...patch },
+      [vendorId]: { ...EMPTY, ...(prev[vendorId] || {}), ...changes },
     }));
   }
 
-  function rate(vendorId, stars) {
-    setRating(vendorId, { rating: stars, tried: true });
+  function toggleWishlist(vendorId) {
+    const current = getRating(vendorId);
+    patch(vendorId, { wishlist: !current.wishlist });
   }
 
-  function toggleTried(vendorId) {
+  function toggleVisited(vendorId) {
     const current = getRating(vendorId);
-    setRating(vendorId, { tried: !current.tried });
+    const nextVisited = !current.visited;
+    // Marking a place as visited naturally clears it off the "want to try" list.
+    patch(vendorId, { visited: nextVisited, wishlist: nextVisited ? false : current.wishlist });
+  }
+
+  function rate(vendorId, stars) {
+    patch(vendorId, { rating: stars, visited: true, wishlist: false });
   }
 
   function setNote(vendorId, note) {
-    setRating(vendorId, { note });
+    patch(vendorId, { note });
   }
 
-  return { ratings, getRating, rate, toggleTried, setNote };
+  return { ratings, getRating, rate, toggleWishlist, toggleVisited, setNote };
 }
