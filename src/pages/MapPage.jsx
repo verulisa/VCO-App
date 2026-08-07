@@ -1,14 +1,79 @@
 import { useRef, useState } from "react";
-import { MapPin, Navigation, X, ZoomIn, ZoomOut } from "lucide-react";
+import { MapPin, Navigation, Share2, X, ZoomIn, ZoomOut } from "lucide-react";
 import Accordion from "../components/Accordion";
 import CollapsibleSection from "../components/CollapsibleSection";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const NAV_URL = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Walesby Forest, Nottinghamshire, NG22 9NG");
 
+// Draws the official map plus a red pin at the dropped spot into an offscreen
+// canvas, entirely client-side (the map image is already service-worker
+// cached) so it works with zero signal, then shares or downloads it as a PNG.
+async function shareMapPin(pin, setSharing) {
+  setSharing(true);
+  try {
+    const img = new Image();
+    img.src = "map/site-map.jpg";
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+    });
+
+    const canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    const x = (pin.xPct / 100) * canvas.width;
+    const y = (pin.yPct / 100) * canvas.height;
+    const s = canvas.width * 0.035;
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(-s, -s * 1.3, -s * 1.1, -s * 2.4, 0, -s * 2.6);
+    ctx.bezierCurveTo(s * 1.1, -s * 2.4, s, -s * 1.3, 0, 0);
+    ctx.closePath();
+    ctx.fillStyle = "#c1432c";
+    ctx.strokeStyle = "#1c2416";
+    ctx.lineWidth = s * 0.15;
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, -s * 1.65, s * 0.5, 0, Math.PI * 2);
+    ctx.fillStyle = "#1c2416";
+    ctx.fill();
+    ctx.restore();
+
+    // JPEG, not PNG — this is a photographic map image, so JPEG keeps the
+    // shared file small (a few hundred KB instead of several MB) which
+    // matters when sending it over patchy signal near the venue.
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.85));
+    const file = new File([blob], "vco-my-spot.jpg", { type: "image/jpeg" });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], text: "This is where I am at Vegan Camp Out 📍" }).catch(() => {});
+    } else {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "vco-my-spot.jpg";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+  } finally {
+    setSharing(false);
+  }
+}
+
 export default function MapPage({ info }) {
   const [pin, setPin] = useLocalStorage("vco_tent_pin", null);
   const [zoom, setZoom] = useState(1);
+  const [sharing, setSharing] = useState(false);
   const imgWrapRef = useRef(null);
 
   function handleMapClick(e) {
@@ -89,9 +154,20 @@ export default function MapPage({ info }) {
           </div>
         </div>
         {pin && (
-          <button type="button" onClick={() => setPin(null)} className="mt-2 flex items-center gap-1 text-[11px] text-[var(--vco-text-faint)]">
-            <X size={11} /> Clear pin
-          </button>
+          <div className="mt-2 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => shareMapPin(pin, setSharing)}
+              disabled={sharing}
+              className="tap flex items-center gap-1.5 rounded-lg bg-[var(--vco-green)] px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-60"
+            >
+              <Share2 size={12} />
+              {sharing ? "Preparing…" : "Share my spot"}
+            </button>
+            <button type="button" onClick={() => setPin(null)} className="flex items-center gap-1 text-[11px] text-[var(--vco-text-faint)]">
+              <X size={11} /> Clear pin
+            </button>
+          </div>
         )}
       </div>
 
