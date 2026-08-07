@@ -27,7 +27,9 @@ export default function VendorCard({ vendor, ratingState, onRate, onToggleVisite
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="truncate font-bold text-[14px] text-[var(--vco-text)]">{vendor.name}</p>
-          <p className="text-[11.5px] text-[var(--vco-text-muted)]">{vendor.location}</p>
+          {vendor.location && vendor.location !== "Stalls" && (
+            <p className="text-[11.5px] text-[var(--vco-text-muted)]">{vendor.location}</p>
+          )}
         </div>
       </div>
 
