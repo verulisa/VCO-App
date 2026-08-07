@@ -2,17 +2,19 @@ import { useState } from "react";
 import { Star, Check, Bookmark } from "lucide-react";
 import ShareQR from "./ShareQR";
 import { tapFeedback } from "../utils/haptics";
+import { APP_URL } from "../utils/appUrl";
 
 export default function VendorCard({ vendor, ratingState, onRate, onToggleVisited, onToggleWishlist, onSetNote, nickname }) {
   const [editingNote, setEditingNote] = useState(false);
   const { rating, visited, wishlist, note } = ratingState;
   const isTopRated = visited && rating === 5;
 
+  const shareLink = `${APP_URL}?food=${encodeURIComponent(vendor.id)}`;
   const shareText = visited
     ? `${vendor.name} (Vegan Camp Out) — ${"★".repeat(rating || 0)}${rating ? "" : "not rated yet"}${
         note ? ` — "${note}"` : ""
-      }${nickname ? ` (via ${nickname})` : ""}`
-    : `${vendor.name} (Vegan Camp Out) — on my list to try!`;
+      }${nickname ? ` (via ${nickname})` : ""}\n${shareLink}`
+    : `${vendor.name} (Vegan Camp Out) — on my list to try!\n${shareLink}`;
 
   return (
     <div

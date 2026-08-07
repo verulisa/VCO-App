@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
+import { APP_URL } from "../utils/appUrl";
 
-const APP_URL = "https://verulisa.github.io/VCO-App/";
 const SUPPORT_URL = "https://revolut.me/veroni1wc6?currency=GBP&amount=300&note=";
 
 function Section({ icon: Icon, title, children }) {

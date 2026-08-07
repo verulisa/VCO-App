@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import BottomNav from "./components/BottomNav";
 import InstallBanner from "./components/InstallBanner";
@@ -26,10 +26,17 @@ export default function App() {
   const appUpdate = useAppUpdate();
   const { nickname, emoji, hasNickname, rename } = useNickname();
   const { theme, toggleTheme } = useTheme();
-  const [tab, setTab] = useState("home");
+  const [highlightVendorId] = useState(() => new URLSearchParams(window.location.search).get("food"));
+  const [tab, setTab] = useState(() => (highlightVendorId ? "food" : "home"));
   const [showProfile, setShowProfile] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [lastBackupAt, setLastBackupAt] = useLocalStorage("vco_last_backup_at", null);
+
+  // A shared vendor link (?food=<id>) only needs to steer the very first
+  // load — strip it so a later reload doesn't keep forcing the Food tab.
+  useEffect(() => {
+    if (highlightVendorId) window.history.replaceState({}, "", window.location.pathname);
+  }, [highlightVendorId]);
 
   const schedule = useSchedule(lineup);
   const vendorRatings = useVendorRatings();
@@ -92,7 +99,9 @@ export default function App() {
             )}
             {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}
             {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} lineup={lineup} />}
-            {tab === "food" && <FoodPage vendors={vendors} vendorRatings={vendorRatings} nickname={nickname} />}
+            {tab === "food" && (
+              <FoodPage vendors={vendors} vendorRatings={vendorRatings} nickname={nickname} highlightVendorId={highlightVendorId} />
+            )}
             {tab === "map" && <MapPage info={info} />}
           </div>
         )}
