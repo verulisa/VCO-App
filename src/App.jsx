@@ -16,6 +16,7 @@ import MapPage from "./pages/MapPage";
 import { useFestivalData } from "./hooks/useFestivalData";
 import { useNickname } from "./hooks/useNickname";
 import { useTheme } from "./hooks/useTheme";
+import { useTextScale } from "./hooks/useTextScale";
 import { useSchedule } from "./hooks/useSchedule";
 import { useNotifications } from "./hooks/useNotifications";
 import { useVendorRatings } from "./hooks/useVendorRatings";
@@ -28,6 +29,7 @@ export default function App() {
   const appUpdate = useAppUpdate();
   const { nickname, emoji, hasNickname, rename } = useNickname();
   const { theme, toggleTheme } = useTheme();
+  const { largeText, toggleLargeText } = useTextScale();
   const [tab, setTab] = useState("home");
   const [showProfile, setShowProfile] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -123,6 +125,8 @@ export default function App() {
             setShowMenu(false);
             setShowProfile(true);
           }}
+          largeText={largeText}
+          onToggleLargeText={toggleLargeText}
         />
       )}
 

@@ -58,6 +58,12 @@ body,
   height: 100%;
 }
 
+/* zoom (not transform: scale) so it doesn't create a containing block for
+   descendant position:fixed elements — see useTextScale.js. */
+html.large-text {
+  zoom: 1.18;
+}
+
 body {
   background: var(--vco-bg);
   color: var(--vco-text);

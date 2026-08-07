@@ -10,14 +10,17 @@ const DAYS = ["All", "Thu", "Fri", "Sat", "Sun"];
 
 export default function LineupPage({ lineup, isSaved, toggleSave }) {
   const now = useNow();
+  const todayKey = useMemo(() => dayKeyForDate(lineup, todayIso()), [lineup]);
   const [search, setSearch] = useState("");
-  const [day, setDay] = useState("All");
+  // Default to today's day during the festival itself (todayKey is only
+  // set once today's date actually appears in the lineup) — otherwise
+  // "All" like before.
+  const [day, setDay] = useState(() => todayKey || "All");
   const [stage, setStage] = useState("All");
   const [categories, setCategories] = useState([]);
 
   const stages = useMemo(() => ["All", ...new Set(lineup.map((a) => a.stage))], [lineup]);
   const allCategories = useMemo(() => [...new Set(lineup.map((a) => a.category))].sort(), [lineup]);
-  const todayKey = useMemo(() => dayKeyForDate(lineup, todayIso()), [lineup]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();

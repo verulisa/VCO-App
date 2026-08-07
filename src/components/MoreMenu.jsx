@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share } from "lucide-react";
+import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share, Type } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
 import { APP_URL } from "../utils/appUrl";
@@ -18,7 +18,7 @@ function Section({ icon: Icon, title, children }) {
   );
 }
 
-export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastBackupAt, onOpenProfile }) {
+export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastBackupAt, onOpenProfile, largeText, onToggleLargeText }) {
   const [qrDataUrl, setQrDataUrl] = useState(null);
   const [supportQrDataUrl, setSupportQrDataUrl] = useState(null);
   const [copied, setCopied] = useState(false);
@@ -82,6 +82,20 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
           </button>
           <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
             Re-fetches everything fresh and reloads the app — the same as closing and reopening it.
+          </p>
+        </Section>
+
+        <Section icon={Type} title="Display">
+          <button
+            type="button"
+            onClick={onToggleLargeText}
+            className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)]"
+          >
+            <Type size={15} />
+            {largeText ? "Switch to normal text size" : "Switch to larger text"}
+          </button>
+          <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
+            Makes everything bigger and easier to read outdoors.
           </p>
         </Section>
 
