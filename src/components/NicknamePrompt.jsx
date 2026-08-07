@@ -7,8 +7,8 @@ export default function NicknamePrompt({ onConfirm }) {
   const [custom, setCustom] = useState("");
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center">
-      <div className="w-full max-w-sm rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5">
+    <div className="modal-backdrop fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center">
+      <div className="sheet-in w-full max-w-sm rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5">
         <p className="text-[11px] uppercase tracking-wide text-[var(--vco-text-muted)]">Welcome to</p>
         <h1 className="mb-1 font-extrabold text-[20px] text-[var(--vco-text)]">Vegan Camp Out</h1>
         <p className="mb-4 text-[12.5px] leading-relaxed text-[var(--vco-text-muted)]">

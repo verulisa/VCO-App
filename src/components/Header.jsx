@@ -12,7 +12,7 @@ export default function Header({
   onToggleNotif,
 }) {
   return (
-    <header className="header-fixed flex items-center justify-between gap-2 border-b border-[var(--vco-border)] bg-[var(--vco-bg)] px-3">
+    <header className="header-fixed flex items-center justify-between gap-2 border-b border-[var(--vco-border)] bg-[var(--vco-bg)]/90 px-3 backdrop-blur-md">
       <div className="flex min-w-0 items-center gap-2">
         <button
           type="button"

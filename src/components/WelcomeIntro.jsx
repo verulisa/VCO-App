@@ -17,9 +17,12 @@ const POINTS = [
 
 export default function WelcomeIntro({ onClose }) {
   return (
-    <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/60 p-4 sm:items-center" onClick={onClose}>
+    <div
+      className="modal-backdrop fixed inset-0 z-[60] flex items-end justify-center bg-black/60 p-4 sm:items-center"
+      onClick={onClose}
+    >
       <div
-        className="max-h-[85vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5"
+        className="sheet-in max-h-[85vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-1 flex items-center justify-between">

@@ -2,13 +2,15 @@ import { memo } from "react";
 import { Star } from "lucide-react";
 import { formatTimeRange, isLiveNow, progressPercent } from "../utils/time";
 import { tapFeedback } from "../utils/haptics";
+import { stageColor } from "../utils/stageColor";
 
 function ActCard({ act, saved, onToggleSave, now = new Date() }) {
   const live = isLiveNow(act, now);
+  const stage = stageColor(act.stage);
 
   return (
     <div
-      className={`relative grid grid-cols-[56px_1fr_auto] rounded-xl border bg-[var(--vco-surface)] shadow-[var(--vco-shadow)] ${
+      className={`relative grid grid-cols-[56px_1fr_auto] rounded-xl border bg-[var(--vco-surface)] shadow-[var(--vco-shadow)] transition-shadow ${
         live ? "border-[var(--vco-red)]/35" : "border-[var(--vco-border)]"
       }`}
     >
@@ -28,11 +30,15 @@ function ActCard({ act, saved, onToggleSave, now = new Date() }) {
         <p className="truncate font-bold text-[13.5px] text-[var(--vco-text)]">{act.name}</p>
         <div className="mt-1 flex flex-wrap items-center gap-1.5">
           {live && (
-            <span className="rounded-full border border-[var(--vco-red)]/40 bg-[var(--vco-red-soft)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--vco-red)]">
+            <span className="flex items-center gap-1 rounded-full border border-[var(--vco-red)]/40 bg-[var(--vco-red-soft)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--vco-red)]">
+              <span className="h-[5px] w-[5px] animate-pulse rounded-full bg-[var(--vco-red)]" />
               Live
             </span>
           )}
-          <span className="rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-2 py-0.5 text-[9.5px] uppercase tracking-wide text-[var(--vco-text-muted)]">
+          <span
+            className="rounded-full border px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide"
+            style={{ backgroundColor: stage.bg, borderColor: stage.border, color: stage.text }}
+          >
             {act.stage}
           </span>
           <span className="text-[11px] text-[var(--vco-text-muted)]">{act.category}</span>

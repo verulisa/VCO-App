@@ -1,4 +1,4 @@
-import { Bell, Bookmark, ChevronRight } from "lucide-react";
+import { Bell, Bookmark, CalendarClock, ChevronRight, Music } from "lucide-react";
 import ActCard from "../components/ActCard";
 import { useNow } from "../hooks/useNow";
 import { daysUntil, isLiveNow, isUpcoming, sortByStart } from "../utils/time";
@@ -49,7 +49,10 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
           Happening now
         </p>
         {live.length === 0 ? (
-          <p className="text-[12.5px] text-[var(--vco-text-muted)]">Nothing live right now — check what's up next below.</p>
+          <div className="flex items-center gap-2.5 rounded-xl border border-dashed border-[var(--vco-border)] px-3.5 py-3">
+            <Music size={16} className="shrink-0 text-[var(--vco-text-faint)]" />
+            <p className="text-[12.5px] text-[var(--vco-text-muted)]">Nothing live right now — check what's up next below.</p>
+          </div>
         ) : (
           <div className="flex flex-col gap-2.5">
             {live.map((act) => (
@@ -62,7 +65,10 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
       <section>
         <p className="mb-2.5 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-text-faint)]">Up next</p>
         {upNext.length === 0 ? (
-          <p className="text-[12.5px] text-[var(--vco-text-muted)]">Nothing in the next couple of hours.</p>
+          <div className="flex items-center gap-2.5 rounded-xl border border-dashed border-[var(--vco-border)] px-3.5 py-3">
+            <CalendarClock size={16} className="shrink-0 text-[var(--vco-text-faint)]" />
+            <p className="text-[12.5px] text-[var(--vco-text-muted)]">Nothing in the next couple of hours.</p>
+          </div>
         ) : (
           <div className="flex flex-col gap-2.5">
             {upNext.map((act) => (

@@ -21,7 +21,9 @@ export default function Accordion({ items }) {
                 className={`shrink-0 text-[var(--vco-text-faint)] transition-transform ${open ? "rotate-180" : ""}`}
               />
             </button>
-            {open && <p className="mt-2 text-[11.5px] leading-relaxed text-[var(--vco-text-muted)]">{item.answer}</p>}
+            {open && (
+              <p className="reveal-in mt-2 text-[11.5px] leading-relaxed text-[var(--vco-text-muted)]">{item.answer}</p>
+            )}
           </div>
         );
       })}

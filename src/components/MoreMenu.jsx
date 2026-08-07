@@ -59,9 +59,9 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60" onClick={onClose}>
+    <div className="modal-backdrop fixed inset-0 z-50 bg-black/60" onClick={onClose}>
       <div
-        className="drawer-col-right page-in safe-top ml-auto flex w-[86%] max-w-sm flex-col overflow-y-auto bg-[var(--vco-bg)] p-5 shadow-[var(--vco-shadow)]"
+        className="drawer-col-right drawer-in safe-top ml-auto flex w-[86%] max-w-sm flex-col overflow-y-auto bg-[var(--vco-bg)] p-5 shadow-[var(--vco-shadow)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-1 flex items-center justify-between">
@@ -148,7 +148,7 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
             </button>
 
             {showQr && (
-              <div className="mt-1 text-center">
+              <div className="reveal-in mt-1 text-center">
                 {/* Reserve the image's footprint before it's ready — an async height
                     jump here (adding a 220px image after first paint) can leave
                     content below it unpainted on some Android Chrome versions,

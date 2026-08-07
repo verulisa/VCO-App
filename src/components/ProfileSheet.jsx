@@ -40,8 +40,8 @@ export default function ProfileSheet({ nickname, onRename, savedIds, vendorRatin
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center">
-      <div className="max-h-[85vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5">
+    <div className="modal-backdrop fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center">
+      <div className="sheet-in max-h-[85vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-extrabold text-[16px] text-[var(--vco-text)]">Profile</h2>
           <button type="button" onClick={onClose} aria-label="Close">

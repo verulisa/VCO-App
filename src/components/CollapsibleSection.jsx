@@ -10,7 +10,7 @@ export default function CollapsibleSection({ title, defaultOpen = false, childre
         <span className="text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-text-faint)]">{title}</span>
         <ChevronDown size={15} className={`shrink-0 text-[var(--vco-text-faint)] transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
-      {open && <div className="mt-3">{children}</div>}
+      {open && <div className="reveal-in mt-3">{children}</div>}
     </div>
   );
 }

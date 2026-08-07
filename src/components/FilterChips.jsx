@@ -21,9 +21,9 @@ export default function FilterChips({ options, value, onChange, multi = false, h
           key={option}
           type="button"
           onClick={() => handleClick(option)}
-          className={`tap relative shrink-0 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-[12px] ${
+          className={`tap relative shrink-0 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-[12px] transition-colors duration-150 ${
             isOn(option)
-              ? "border-[var(--vco-green)] bg-[var(--vco-green)] font-bold text-white"
+              ? "border-[var(--vco-green)] bg-[var(--vco-green)] font-bold text-white shadow-[0_2px_10px_-4px_var(--vco-green)]"
               : "border-[var(--vco-border)] bg-[var(--vco-surface)] text-[var(--vco-text-muted)]"
           }`}
         >
