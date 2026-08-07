@@ -38,7 +38,7 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
           className="flex items-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-3.5 py-2.5 text-left text-[12px] text-[var(--vco-text-muted)]"
         >
           <Bell size={15} className="shrink-0 text-[var(--vco-green-strong)]" />
-          Turn on reminders — we'll try to nudge you 15 min before saved acts (works best while the app is open).
+          Turn on reminders — we'll nudge you 15 min before saved acts. Won't work in the background or locked screen (browser limitation).
         </button>
       )}
 
