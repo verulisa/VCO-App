@@ -1,0 +1,188 @@
+import { useEffect, useRef, useState } from "react";
+import QRCode from "qrcode";
+import jsQR from "jsqr";
+import { QrCode, Camera, Clipboard, X } from "lucide-react";
+
+const CODE_PREFIX = "VCO1:";
+
+export function encodeSchedule(savedIds) {
+  return `${CODE_PREFIX}${savedIds.join(",")}`;
+}
+
+export function decodeSchedule(code) {
+  const trimmed = code.trim();
+  if (!trimmed.startsWith(CODE_PREFIX)) return null;
+  const ids = trimmed
+    .slice(CODE_PREFIX.length)
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return ids.length ? ids : null;
+}
+
+export default function ScheduleShare({ savedIds, onImport }) {
+  const [open, setOpen] = useState(false);
+  const [qrDataUrl, setQrDataUrl] = useState(null);
+  const [importText, setImportText] = useState("");
+  const [scanError, setScanError] = useState("");
+  const [scanning, setScanning] = useState(false);
+  const videoRef = useRef(null);
+  const streamRef = useRef(null);
+
+  const code = encodeSchedule(savedIds);
+
+  useEffect(() => {
+    if (!open) return;
+    QRCode.toDataURL(code, { margin: 1, width: 220, color: { dark: "#12160f", light: "#f2ede0" } }).then(setQrDataUrl);
+  }, [open, code]);
+
+  useEffect(() => {
+    if (!scanning) return;
+    let raf;
+    let cancelled = false;
+
+    navigator.mediaDevices
+      .getUserMedia({ video: { facingMode: "environment" } })
+      .then((stream) => {
+        if (cancelled) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        streamRef.current = stream;
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
+
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        const tick = () => {
+          if (cancelled) return;
+          const video = videoRef.current;
+          if (video && video.readyState === video.HAVE_ENOUGH_DATA) {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const result = jsQR(imageData.data, imageData.width, imageData.height);
+            if (result) {
+              const ids = decodeSchedule(result.data);
+              if (ids) {
+                onImport(ids);
+                setScanning(false);
+                return;
+              }
+            }
+          }
+          raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+      })
+      .catch(() => setScanError("Couldn't access the camera. You can paste the code below instead."));
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+      streamRef.current?.getTracks().forEach((t) => t.stop());
+    };
+  }, [scanning, onImport]);
+
+  if (!open) {
+    return (
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] py-3 text-[13px] font-semibold text-[var(--vco-text)]"
+      >
+        <QrCode size={16} />
+        Share schedule (QR / code)
+      </button>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-4">
+      <div className="mb-3 flex items-center justify-between">
+        <p className="font-bold text-[13px] text-[var(--vco-text)]">Share your schedule</p>
+        <button type="button" onClick={() => setOpen(false)} aria-label="Close">
+          <X size={16} className="text-[var(--vco-text-faint)]" />
+        </button>
+      </div>
+
+      {savedIds.length > 0 ? (
+        <>
+          <p className="mb-2 text-[11.5px] text-[var(--vco-text-muted)]">
+            Let a friend scan this, all offline — no signal needed.
+          </p>
+          {qrDataUrl && <img src={qrDataUrl} alt="QR code of your saved schedule" className="mx-auto rounded-lg" />}
+          <div className="mt-3 flex items-center gap-2 rounded-lg bg-[var(--vco-surface-raised)] px-2.5 py-2">
+            <code className="flex-1 truncate text-[11px] text-[var(--vco-text-muted)]">{code}</code>
+            <button type="button" onClick={() => navigator.clipboard?.writeText(code)} aria-label="Copy code">
+              <Clipboard size={14} className="text-[var(--vco-text-faint)]" />
+            </button>
+          </div>
+        </>
+      ) : (
+        <p className="mb-3 text-[11.5px] text-[var(--vco-text-muted)]">
+          Save a few acts to your schedule first, then come back here to share them.
+        </p>
+      )}
+
+      <div className="mt-4 border-t border-[var(--vco-border)] pt-3">
+        <p className="mb-2 font-bold text-[13px] text-[var(--vco-text)]">Import a friend's schedule</p>
+
+        {scanning ? (
+          <div className="relative overflow-hidden rounded-lg">
+            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+            <video ref={videoRef} playsInline muted className="w-full rounded-lg" />
+            <button
+              type="button"
+              onClick={() => setScanning(false)}
+              className="absolute right-2 top-2 rounded-full bg-black/60 p-1.5 text-white"
+              aria-label="Stop scanning"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              setScanError("");
+              setScanning(true);
+            }}
+            className="mb-2 flex w-full items-center justify-center gap-2 rounded-lg border border-[var(--vco-border)] py-2.5 text-[12.5px] text-[var(--vco-text)]"
+          >
+            <Camera size={15} />
+            Scan a QR code
+          </button>
+        )}
+        {scanError && <p className="mb-2 text-[11px] text-[var(--vco-danger-text)]">{scanError}</p>}
+
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={importText}
+            onChange={(e) => setImportText(e.target.value)}
+            placeholder={`Paste a ${CODE_PREFIX}… code`}
+            className="min-w-0 flex-1 rounded-lg border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-2.5 py-2 text-[12px] text-[var(--vco-text)] outline-none placeholder:text-[var(--vco-text-faint)]"
+          />
+          <button
+            type="button"
+            onClick={() => {
+              const ids = decodeSchedule(importText);
+              if (ids) {
+                onImport(ids);
+                setImportText("");
+              } else {
+                setScanError("That doesn't look like a valid schedule code.");
+              }
+            }}
+            className="shrink-0 rounded-lg bg-[var(--vco-green)] px-3 text-[12.5px] font-semibold text-white"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
