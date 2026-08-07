@@ -1,4 +1,4 @@
-import { CalendarPlus } from "lucide-react";
+import { CalendarPlus, Sparkles } from "lucide-react";
 import ActCard from "../components/ActCard";
 import BreakRow from "../components/BreakRow";
 import ClashBanner from "../components/ClashBanner";
@@ -13,9 +13,12 @@ export default function SchedulePage({ schedule, toggleSave }) {
       <ClashBanner clashPairs={clashPairs} />
 
       {scheduleRows.length === 0 ? (
-        <p className="py-10 text-center text-[12.5px] leading-relaxed text-[var(--vco-text-muted)]">
-          Nothing saved yet. Head to the Lineup tab and tap the star on anything you don't want to miss.
-        </p>
+        <div className="flex flex-col items-center gap-2 py-14 text-center">
+          <Sparkles size={28} className="text-[var(--vco-text-faint)]" />
+          <p className="max-w-[240px] text-[12.5px] leading-relaxed text-[var(--vco-text-muted)]">
+            Nothing saved yet. Head to the Lineup tab and tap the star on anything you don't want to miss.
+          </p>
+        </div>
       ) : (
         <div className="flex flex-col">
           {scheduleRows.map((row) =>

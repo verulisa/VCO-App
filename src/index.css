@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 :root {
+  --vco-shadow: 0 1px 2px rgba(30, 25, 10, 0.05), 0 10px 20px -14px rgba(30, 25, 10, 0.18);
+  --vco-glow-gold: 0 0 0 1px rgba(165, 112, 28, 0.35), 0 6px 18px -8px rgba(165, 112, 28, 0.28);
   --vco-bg: #f6f4ee;
   --vco-bg-alt: #efece1;
   --vco-surface: #ffffff;
@@ -24,6 +26,8 @@
 }
 
 html.dark {
+  --vco-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 24px -14px rgba(0, 0, 0, 0.55);
+  --vco-glow-gold: 0 0 0 1px rgba(238, 180, 58, 0.35), 0 0 20px -4px rgba(238, 180, 58, 0.35);
   --vco-bg: #12160f;
   --vco-bg-alt: #0d100b;
   --vco-surface: #1c2416;
@@ -100,4 +104,65 @@ body {
 }
 .perf::after {
   bottom: -6.5px;
+}
+
+.tap {
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+.tap:active {
+  transform: scale(0.96);
+  opacity: 0.85;
+}
+
+@keyframes vco-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-in {
+  animation: vco-page-in 0.22s ease both;
+}
+
+@keyframes vco-pop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.pop-in {
+  animation: vco-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes vco-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--vco-surface-raised);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  animation: vco-shimmer 1.6s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+  }
 }

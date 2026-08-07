@@ -64,3 +64,14 @@ export function daysUntil(dateStr, now = new Date()) {
 export function sortByStart(acts) {
   return [...acts].sort((a, b) => actStart(a) - actStart(b));
 }
+
+export function todayIso(now = new Date()) {
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+}
+
+// Which day-chip ("Thu"/"Fri"/...) corresponds to today's real date, derived
+// from the lineup itself rather than a hardcoded date map.
+export function dayKeyForDate(lineup, dateStr) {
+  const act = lineup.find((a) => a.date === dateStr);
+  return act ? act.day : null;
+}

@@ -1,11 +1,16 @@
 import { Star } from "lucide-react";
 import { formatTimeRange, isLiveNow, progressPercent } from "../utils/time";
+import { tapFeedback } from "../utils/haptics";
 
 export default function ActCard({ act, saved, onToggleSave, now = new Date() }) {
   const live = isLiveNow(act, now);
 
   return (
-    <div className="relative rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] grid grid-cols-[56px_1px_1fr_auto]">
+    <div
+      className={`relative grid grid-cols-[56px_1px_1fr_auto] rounded-xl border bg-[var(--vco-surface)] shadow-[var(--vco-shadow)] ${
+        live ? "border-[var(--vco-red)]/35" : "border-[var(--vco-border)]"
+      }`}
+    >
       <div className="flex flex-col items-center justify-center gap-0.5 px-1.5 py-3 font-mono text-[12px] tabular-nums text-[var(--vco-text)]">
         <span>{act.startTime}</span>
         <span className="text-[10.5px] text-[var(--vco-text-faint)]">{act.endTime}</span>
@@ -30,14 +35,18 @@ export default function ActCard({ act, saved, onToggleSave, now = new Date() }) 
 
       <button
         type="button"
-        onClick={() => onToggleSave(act.id)}
+        onClick={() => {
+          tapFeedback();
+          onToggleSave(act.id);
+        }}
         aria-pressed={saved}
         aria-label={saved ? `Remove ${act.name} from schedule` : `Save ${act.name} to schedule`}
-        className="flex items-center px-3"
+        className="tap flex items-center px-3"
       >
         <Star
+          key={saved}
           size={19}
-          className={saved ? "fill-[var(--vco-yellow)] stroke-[var(--vco-yellow)]" : "stroke-[var(--vco-text-faint)]"}
+          className={saved ? "pop-in fill-[var(--vco-yellow)] stroke-[var(--vco-yellow)]" : "stroke-[var(--vco-text-faint)]"}
         />
       </button>
 

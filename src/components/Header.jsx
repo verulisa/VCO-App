@@ -28,7 +28,7 @@ export default function Header({ nickname, emoji, onNicknameClick, theme, onTogg
           type="button"
           onClick={onToggleTheme}
           aria-label="Toggle light / dark mode"
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] text-[var(--vco-text)]"
+          className="tap flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] text-[var(--vco-text)]"
         >
           {theme === "dark" ? <Sun size={13} /> : <Moon size={13} />}
         </button>
@@ -36,7 +36,7 @@ export default function Header({ nickname, emoji, onNicknameClick, theme, onTogg
         <button
           type="button"
           onClick={onNicknameClick}
-          className="flex max-w-[130px] items-center gap-1 whitespace-nowrap rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] py-1 pl-1 pr-2 text-[10.5px] text-[var(--vco-text)]"
+          className="tap flex max-w-[130px] items-center gap-1 whitespace-nowrap rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] py-1 pl-1 pr-2 text-[10.5px] text-[var(--vco-text)]"
         >
           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--vco-green)] text-[10px]">
             {emoji}

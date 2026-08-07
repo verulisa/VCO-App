@@ -13,7 +13,7 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
   return (
     <div className="flex flex-col gap-5 px-4 pb-28 pt-4">
       {info && (
-        <div className="flex items-center justify-between rounded-2xl border border-[var(--vco-border)] bg-gradient-to-br from-[var(--vco-surface-raised)] to-[var(--vco-surface)] p-4">
+        <div className="flex items-center justify-between rounded-2xl border border-[var(--vco-border)] bg-gradient-to-br from-[var(--vco-surface-raised)] to-[var(--vco-surface)] p-4 shadow-[var(--vco-shadow)]">
           <div>
             <p className="font-mono text-[30px] font-extrabold leading-none tabular-nums text-[var(--vco-green-strong)]">
               {days > 0 ? days : days === 0 ? "Today" : "—"}
@@ -80,7 +80,7 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
 
 function Stat({ label, value }) {
   return (
-    <div className="flex-1 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-2.5 text-center">
+    <div className="flex-1 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-2.5 text-center shadow-[var(--vco-shadow)]">
       <p className="font-mono text-[18px] font-extrabold tabular-nums text-[var(--vco-text)]">{value}</p>
       <p className="mt-0.5 text-[9px] uppercase tracking-wide text-[var(--vco-text-muted)]">{label}</p>
     </div>

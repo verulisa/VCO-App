@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Bookmark } from "lucide-react";
+import { Bookmark, SearchX } from "lucide-react";
 import FilterChips from "../components/FilterChips";
 import SearchBar from "../components/SearchBar";
 import VendorCard from "../components/VendorCard";
@@ -55,7 +55,10 @@ export default function FoodPage({ vendors, vendorRatings }) {
 
       <div className="flex flex-col gap-2.5">
         {filtered.length === 0 ? (
-          <p className="py-8 text-center text-[12.5px] text-[var(--vco-text-muted)]">No stalls match those filters.</p>
+          <div className="flex flex-col items-center gap-2 py-12 text-center">
+            <SearchX size={28} className="text-[var(--vco-text-faint)]" />
+            <p className="text-[12.5px] text-[var(--vco-text-muted)]">No stalls match those filters.</p>
+          </div>
         ) : (
           filtered.map((vendor) => (
             <VendorCard

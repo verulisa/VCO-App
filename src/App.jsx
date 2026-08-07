@@ -5,6 +5,7 @@ import InstallBanner from "./components/InstallBanner";
 import BackupNudge from "./components/BackupNudge";
 import NicknamePrompt from "./components/NicknamePrompt";
 import ProfileSheet from "./components/ProfileSheet";
+import SkeletonScreen from "./components/Skeleton";
 import HomePage from "./pages/HomePage";
 import LineupPage from "./pages/LineupPage";
 import SchedulePage from "./pages/SchedulePage";
@@ -58,7 +59,7 @@ export default function App() {
         onOpen={() => setShowProfile(true)}
       />
 
-      {status === "loading" && <p className="px-4 py-10 text-center text-[13px] text-[var(--vco-text-muted)]">Loading festival data…</p>}
+      {status === "loading" && <SkeletonScreen />}
       {status === "error" && (
         <p className="px-4 py-10 text-center text-[13px] text-[var(--vco-danger-text)]">
           Couldn't load festival data. Open this app once with a signal so it can be cached for offline use.
@@ -66,7 +67,7 @@ export default function App() {
       )}
 
       {status === "ready" && (
-        <>
+        <div key={tab} className="page-in">
           {tab === "home" && (
             <HomePage lineup={lineup} info={info} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} notifications={notifications} />
           )}
@@ -74,7 +75,7 @@ export default function App() {
           {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} />}
           {tab === "food" && <FoodPage vendors={vendors} vendorRatings={vendorRatings} />}
           {tab === "map" && <MapPage info={info} />}
-        </>
+        </div>
       )}
 
       <BottomNav active={tab} onChange={setTab} />

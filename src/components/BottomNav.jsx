@@ -1,4 +1,5 @@
 import { Home, ListMusic, CalendarCheck, UtensilsCrossed, Map } from "lucide-react";
+import { tapFeedback } from "../utils/haptics";
 
 const TABS = [
   { key: "home", label: "Home", icon: Home },
@@ -17,12 +18,18 @@ export default function BottomNav({ active, onChange }) {
           <button
             key={key}
             type="button"
-            onClick={() => onChange(key)}
-            className={`flex flex-col items-center gap-0.5 rounded-xl px-3.5 py-1.5 text-[10px] ${
+            onClick={() => {
+              if (!isActive) tapFeedback(6);
+              onChange(key);
+            }}
+            className={`tap flex flex-col items-center gap-0.5 rounded-xl px-3.5 py-1.5 text-[10px] transition-colors duration-150 ${
               isActive ? "bg-[var(--vco-green-soft)] text-[var(--vco-text)]" : "text-[var(--vco-text-faint)]"
             }`}
           >
-            <Icon size={19} className={isActive ? "stroke-[var(--vco-green-strong)]" : "stroke-[var(--vco-text-faint)]"} />
+            <Icon
+              size={19}
+              className={`transition-transform duration-200 ${isActive ? "-translate-y-0.5 scale-110 stroke-[var(--vco-green-strong)]" : "stroke-[var(--vco-text-faint)]"}`}
+            />
             {label}
           </button>
         );

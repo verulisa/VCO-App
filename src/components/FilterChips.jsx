@@ -1,9 +1,12 @@
-export default function FilterChips({ options, value, onChange, multi = false }) {
+import { tapFeedback } from "../utils/haptics";
+
+export default function FilterChips({ options, value, onChange, multi = false, highlight }) {
   function isOn(option) {
     return multi ? value.includes(option) : value === option;
   }
 
   function handleClick(option) {
+    tapFeedback();
     if (!multi) {
       onChange(option);
       return;
@@ -18,13 +21,16 @@ export default function FilterChips({ options, value, onChange, multi = false })
           key={option}
           type="button"
           onClick={() => handleClick(option)}
-          className={`shrink-0 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-[12px] ${
+          className={`tap relative shrink-0 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-[12px] ${
             isOn(option)
               ? "border-[var(--vco-green)] bg-[var(--vco-green)] font-bold text-white"
               : "border-[var(--vco-border)] bg-[var(--vco-surface)] text-[var(--vco-text-muted)]"
           }`}
         >
           {option}
+          {highlight === option && !isOn(option) && (
+            <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[var(--vco-yellow)]" />
+          )}
         </button>
       ))}
     </div>
