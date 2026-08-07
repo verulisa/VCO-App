@@ -11,7 +11,7 @@ const TABS = [
 
 export default function BottomNav({ active, onChange }) {
   return (
-    <nav className="sticky inset-x-0 bottom-0 z-40 flex justify-around border-t border-[var(--vco-border)] bg-[var(--vco-surface-raised)]/95 px-1 pb-[calc(env(safe-area-inset-bottom,0px)+8px)] pt-2 backdrop-blur">
+    <nav className="fixed inset-x-0 bottom-0 z-40 mx-auto flex w-full max-w-[480px] justify-around border-t border-[var(--vco-border)] bg-[var(--vco-surface-raised)]/95 px-1 pb-[calc(env(safe-area-inset-bottom,0px)+8px)] pt-2 backdrop-blur">
       {TABS.map(({ key, label, icon: Icon }) => {
         const isActive = active === key;
         return (
