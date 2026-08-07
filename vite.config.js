@@ -40,11 +40,19 @@ export default defineConfig({
         // start-url navigation request falls through to the network and
         // fails offline, even though every other cached asset works fine.
         navigateFallback: "index.html",
-        // Precache the JSON data and map so the whole app works offline after first load.
+        // Precache the JSON data so the whole app works offline after first load.
+        // (map/site-map.jpg is NOT listed here — globPatterns above already picks
+        // it up automatically with a real content-hash revision. Re-adding it here
+        // with revision:null gave Workbox two different cache keys for the same
+        // URL, which makes precacheAndRoute() throw at startup — silently killing
+        // ALL service-worker caching, not just the map: no NavigationRoute, no
+        // runtime caching, nothing. That's what caused both the map failing to
+        // load offline and the repeated native "no internet" dialog, since with
+        // no fetch handler registered at all, every request hit the dead network
+        // directly instead of being served from cache.)
         additionalManifestEntries: [
           { url: "data/lineup.json", revision: null },
           { url: "data/vendors.json", revision: null },
-          { url: "map/site-map.jpg", revision: null },
         ],
         runtimeCaching: [
           {
