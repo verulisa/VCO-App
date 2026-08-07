@@ -37,6 +37,9 @@ function ActCard({ act, saved, onToggleSave, now = new Date() }) {
           </span>
           <span className="text-[11px] text-[var(--vco-text-muted)]">{act.category}</span>
         </div>
+        {act.description && (
+          <p className="mt-1 line-clamp-2 text-[11px] leading-snug text-[var(--vco-text-muted)]">{act.description}</p>
+        )}
       </div>
 
       <button
