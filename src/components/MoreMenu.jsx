@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share, Type } from "lucide-react";
+import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
 import { APP_URL } from "../utils/appUrl";
@@ -22,6 +22,7 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
   const [qrDataUrl, setQrDataUrl] = useState(null);
   const [supportQrDataUrl, setSupportQrDataUrl] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [showQr, setShowQr] = useState(false);
   const [refreshState, setRefreshState] = useState("idle"); // idle | checking
 
   async function handleRefresh() {
@@ -116,24 +117,12 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
         </Section>
 
         <Section icon={Share2} title="Share this app">
-          <div className="rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3.5 text-center">
-            {/* Reserve the image's footprint before it's ready — an async height
-                jump here (adding a 220px image after first paint) can leave
-                content below it unpainted on some Android Chrome versions,
-                inside this fixed + overflow-y:auto drawer. */}
-            <div className="mx-auto aspect-square w-full max-w-[220px]">
-              {qrDataUrl ? (
-                <img src={qrDataUrl} alt="QR code linking to this app" className="h-full w-full rounded-lg" />
-              ) : (
-                <div className="skeleton h-full w-full rounded-lg" />
-              )}
-            </div>
-            <p className="mt-2 text-[11px] text-[var(--vco-text-muted)]">Scan to open this app on another phone</p>
+          <div className="rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3.5">
             {typeof navigator !== "undefined" && navigator.share && (
               <button
                 type="button"
                 onClick={shareApp}
-                className="tap mt-2.5 flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--vco-green)] py-2 text-[11.5px] font-semibold text-white"
+                className="tap flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--vco-green)] py-2 text-[11.5px] font-semibold text-white"
               >
                 <Share size={13} />
                 Share via…
@@ -147,6 +136,33 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
               <Clipboard size={13} />
               {copied ? "Copied!" : "Copy link"}
             </button>
+
+            <button
+              type="button"
+              onClick={() => setShowQr((v) => !v)}
+              className="tap mt-2 flex w-full items-center justify-center gap-1.5 py-1.5 text-[11px] font-semibold text-[var(--vco-text-muted)]"
+            >
+              <QrCode size={13} />
+              {showQr ? "Hide QR code" : "Show QR code"}
+              <ChevronDown size={13} className={`transition-transform ${showQr ? "rotate-180" : ""}`} />
+            </button>
+
+            {showQr && (
+              <div className="mt-1 text-center">
+                {/* Reserve the image's footprint before it's ready — an async height
+                    jump here (adding a 220px image after first paint) can leave
+                    content below it unpainted on some Android Chrome versions,
+                    inside this fixed + overflow-y:auto drawer. */}
+                <div className="mx-auto aspect-square w-full max-w-[220px]">
+                  {qrDataUrl ? (
+                    <img src={qrDataUrl} alt="QR code linking to this app" className="h-full w-full rounded-lg" />
+                  ) : (
+                    <div className="skeleton h-full w-full rounded-lg" />
+                  )}
+                </div>
+                <p className="mt-2 text-[11px] text-[var(--vco-text-muted)]">Scan to open this app on another phone</p>
+              </div>
+            )}
           </div>
         </Section>
 
