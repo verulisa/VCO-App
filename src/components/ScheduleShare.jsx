@@ -182,18 +182,29 @@ export default function ScheduleShare({ savedIds, onImport, lineup }) {
           <p className="mb-2 text-[11.5px] text-[var(--vco-text-muted)]">
             Let a friend scan this, all offline — no signal needed.
           </p>
-          {qrDataUrl && <img src={qrDataUrl} alt="QR code of your saved schedule" className="mx-auto rounded-lg" />}
+          <div className="mx-auto aspect-square w-full max-w-[220px]">
+            {qrDataUrl ? (
+              <img src={qrDataUrl} alt="QR code of your saved schedule" className="h-full w-full rounded-lg" />
+            ) : (
+              <div className="skeleton h-full w-full rounded-lg" />
+            )}
+          </div>
           <div className="mt-3 flex items-center gap-2 rounded-lg bg-[var(--vco-surface-raised)] px-2.5 py-2">
             <code className="flex-1 truncate text-[11px] text-[var(--vco-text-muted)]">{code}</code>
-            {typeof navigator !== "undefined" && navigator.share && (
-              <button type="button" onClick={shareCode} aria-label="Share code">
-                <Share size={14} className="text-[var(--vco-text-faint)]" />
-              </button>
-            )}
             <button type="button" onClick={() => navigator.clipboard?.writeText(code)} aria-label="Copy code">
               <Clipboard size={14} className="text-[var(--vco-text-faint)]" />
             </button>
           </div>
+          {typeof navigator !== "undefined" && navigator.share && (
+            <button
+              type="button"
+              onClick={shareCode}
+              className="tap mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--vco-green)] py-2 text-[12px] font-semibold text-white"
+            >
+              <Share size={13} />
+              Send via…
+            </button>
+          )}
         </>
       ) : (
         <p className="mb-3 text-[11.5px] text-[var(--vco-text-muted)]">
