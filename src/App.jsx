@@ -5,6 +5,7 @@ import InstallBanner from "./components/InstallBanner";
 import BackupNudge from "./components/BackupNudge";
 import NicknamePrompt from "./components/NicknamePrompt";
 import ProfileSheet from "./components/ProfileSheet";
+import MoreMenu from "./components/MoreMenu";
 import SkeletonScreen from "./components/Skeleton";
 import HomePage from "./pages/HomePage";
 import LineupPage from "./pages/LineupPage";
@@ -26,6 +27,7 @@ export default function App() {
   const { theme, toggleTheme } = useTheme();
   const [tab, setTab] = useState("home");
   const [showProfile, setShowProfile] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [lastBackupAt, setLastBackupAt] = useLocalStorage("vco_last_backup_at", null);
 
   const schedule = useSchedule(lineup);
@@ -49,6 +51,7 @@ export default function App() {
         nickname={nickname}
         emoji={emoji}
         onNicknameClick={() => setShowProfile(true)}
+        onMenuClick={() => setShowMenu(true)}
         theme={theme}
         onToggleTheme={toggleTheme}
       />
@@ -74,11 +77,13 @@ export default function App() {
           {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}
           {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} />}
           {tab === "food" && <FoodPage vendors={vendors} vendorRatings={vendorRatings} />}
-          {tab === "map" && <MapPage info={info} />}
+          {tab === "map" && <MapPage />}
         </div>
       )}
 
       <BottomNav active={tab} onChange={setTab} />
+
+      {showMenu && <MoreMenu info={info} onClose={() => setShowMenu(false)} />}
 
       {showProfile && (
         <ProfileSheet

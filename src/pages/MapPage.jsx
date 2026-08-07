@@ -1,11 +1,10 @@
 import { useRef, useState } from "react";
 import { MapPin, Navigation, X, ZoomIn, ZoomOut } from "lucide-react";
-import Accordion from "../components/Accordion";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const NAV_URL = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Walesby Forest, Nottinghamshire, NG22 9NG");
 
-export default function MapPage({ info }) {
+export default function MapPage() {
   const [pin, setPin] = useLocalStorage("vco_tent_pin", null);
   const [zoom, setZoom] = useState(1);
   const imgWrapRef = useRef(null);
@@ -89,43 +88,9 @@ export default function MapPage({ info }) {
         )}
       </div>
 
-      {info && (
-        <>
-          <div className="rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3.5">
-            <p className="mb-2 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-text-faint)]">Legend</p>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-[11.5px] text-[var(--vco-text-muted)]">
-              {info.legend.map((item) => (
-                <div key={item.label} className="flex items-center gap-2">
-                  <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--vco-yellow)]" />
-                  {item.label}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3.5">
-            <p className="mb-2 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-text-faint)]">Gates</p>
-            <div className="flex flex-col gap-2.5">
-              {info.gates.map((gate) => (
-                <div key={gate.id} className="text-[12px]">
-                  <p className="font-bold text-[var(--vco-text)]">{gate.name}</p>
-                  <p className="text-[var(--vco-text-muted)]">{gate.use.join(" · ")}</p>
-                  {gate.whatThreeWords && (
-                    <p className="font-mono text-[11px] text-[var(--vco-green-strong)]">///{gate.whatThreeWords}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="mb-2 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-text-faint)]">
-              Essential info
-            </p>
-            <Accordion items={info.faq} />
-          </div>
-        </>
-      )}
+      <p className="text-center text-[11px] text-[var(--vco-text-faint)]">
+        Map legend, gates and FAQ moved to the ☰ menu, top-left.
+      </p>
     </div>
   );
 }

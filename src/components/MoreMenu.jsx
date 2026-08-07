@@ -1,0 +1,119 @@
+import { useEffect, useState } from "react";
+import { X, Share2, Smartphone, MapPinned, HelpCircle, Info, Clipboard } from "lucide-react";
+import QRCode from "qrcode";
+import Accordion from "./Accordion";
+
+const APP_URL = "https://verulisa.github.io/VCO-App/";
+
+function Section({ icon: Icon, title, children }) {
+  return (
+    <div className="border-t border-[var(--vco-border)] py-4 first:border-t-0 first:pt-0">
+      <p className="mb-2.5 flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-text-faint)]">
+        <Icon size={13} />
+        {title}
+      </p>
+      {children}
+    </div>
+  );
+}
+
+export default function MoreMenu({ info, onClose }) {
+  const [qrDataUrl, setQrDataUrl] = useState(null);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    QRCode.toDataURL(APP_URL, { margin: 1, width: 220, color: { dark: "#12160f", light: "#f2ede0" } }).then(setQrDataUrl);
+  }, []);
+
+  function copyLink() {
+    navigator.clipboard?.writeText(APP_URL);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1800);
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end bg-black/60" onClick={onClose}>
+      <div
+        className="page-in flex h-full w-[86%] max-w-sm flex-col overflow-y-auto bg-[var(--vco-bg)] p-5 shadow-[var(--vco-shadow)]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="mb-1 flex items-center justify-between">
+          <h2 className="font-extrabold text-[16px] text-[var(--vco-text)]">Menu</h2>
+          <button type="button" onClick={onClose} aria-label="Close menu" className="tap">
+            <X size={20} className="text-[var(--vco-text-faint)]" />
+          </button>
+        </div>
+
+        <Section icon={Share2} title="Share this app">
+          <div className="rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3.5 text-center">
+            {qrDataUrl && <img src={qrDataUrl} alt="QR code linking to this app" className="mx-auto rounded-lg" />}
+            <p className="mt-2 text-[11px] text-[var(--vco-text-muted)]">Scan to open this app on another phone</p>
+            <button
+              type="button"
+              onClick={copyLink}
+              className="tap mt-2.5 flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--vco-surface-raised)] py-2 text-[11.5px] font-semibold text-[var(--vco-text)]"
+            >
+              <Clipboard size={13} />
+              {copied ? "Copied!" : "Copy link"}
+            </button>
+          </div>
+        </Section>
+
+        <Section icon={Smartphone} title="Install as an app">
+          <div className="flex flex-col gap-2.5 text-[12px] leading-relaxed text-[var(--vco-text-muted)]">
+            <div className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3">
+              <p className="mb-1 font-bold text-[var(--vco-text)]">iPhone (Safari)</p>
+              Tap the Share icon, then "Add to Home Screen". Opens like a real app and works fully offline.
+            </div>
+            <div className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3">
+              <p className="mb-1 font-bold text-[var(--vco-text)]">Android (Chrome)</p>
+              Tap the ⋮ menu, then "Install app" (or "Add to Home Screen").
+            </div>
+          </div>
+        </Section>
+
+        {info && (
+          <>
+            <Section icon={Info} title="Event">
+              <div className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3 text-[12.5px] text-[var(--vco-text-muted)]">
+                <p className="font-bold text-[var(--vco-text)]">
+                  {info.event.name} · {info.event.edition}
+                </p>
+                <p className="mt-1">{info.event.venue}</p>
+              </div>
+            </Section>
+
+            <Section icon={MapPinned} title="Gates">
+              <div className="flex flex-col gap-2.5">
+                {info.gates.map((gate) => (
+                  <div key={gate.id} className="text-[12px]">
+                    <p className="font-bold text-[var(--vco-text)]">{gate.name}</p>
+                    <p className="text-[var(--vco-text-muted)]">{gate.use.join(" · ")}</p>
+                    {gate.whatThreeWords && (
+                      <p className="font-mono text-[11px] text-[var(--vco-green-strong)]">///{gate.whatThreeWords}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            <Section icon={Info} title="Map legend">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-[11.5px] text-[var(--vco-text-muted)]">
+                {info.legend.map((item) => (
+                  <div key={item.label} className="flex items-center gap-2">
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--vco-yellow)]" />
+                    {item.label}
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            <Section icon={HelpCircle} title="FAQ & essentials">
+              <Accordion items={info.faq} />
+            </Section>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}

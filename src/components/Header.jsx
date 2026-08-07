@@ -1,4 +1,4 @@
-import { Moon, Sun } from "lucide-react";
+import { Menu, Moon, Sun } from "lucide-react";
 
 function Logo() {
   return (
@@ -10,10 +10,18 @@ function Logo() {
   );
 }
 
-export default function Header({ nickname, emoji, onNicknameClick, theme, onToggleTheme }) {
+export default function Header({ nickname, emoji, onNicknameClick, onMenuClick, theme, onToggleTheme }) {
   return (
-    <header className="flex items-center justify-between gap-2 border-b border-[var(--vco-border)] px-4 py-3 safe-top">
+    <header className="flex items-center justify-between gap-2 border-b border-[var(--vco-border)] px-3 py-3 safe-top">
       <div className="flex min-w-0 items-center gap-2">
+        <button
+          type="button"
+          onClick={onMenuClick}
+          aria-label="Open menu"
+          className="tap flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[var(--vco-text)]"
+        >
+          <Menu size={19} />
+        </button>
         <Logo />
         <div className="min-w-0 leading-tight">
           <p className="truncate font-extrabold text-[12px] tracking-tight text-[var(--vco-text)]">VEGAN CAMP OUT</p>
@@ -36,7 +44,7 @@ export default function Header({ nickname, emoji, onNicknameClick, theme, onTogg
         <button
           type="button"
           onClick={onNicknameClick}
-          className="tap flex max-w-[130px] items-center gap-1 whitespace-nowrap rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] py-1 pl-1 pr-2 text-[10.5px] text-[var(--vco-text)]"
+          className="tap flex max-w-[110px] items-center gap-1 whitespace-nowrap rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] py-1 pl-1 pr-2 text-[10.5px] text-[var(--vco-text)]"
         >
           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--vco-green)] text-[10px]">
             {emoji}
