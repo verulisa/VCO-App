@@ -78,7 +78,16 @@ export default function App() {
       {status === "ready" && (
         <div key={tab} className="page-in">
           {tab === "home" && (
-            <HomePage lineup={lineup} info={info} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} notifications={notifications} />
+            <HomePage
+              lineup={lineup}
+              info={info}
+              isSaved={schedule.isSaved}
+              toggleSave={schedule.toggleSave}
+              notifications={notifications}
+              vendors={vendors}
+              vendorRatings={vendorRatings}
+              onGoToFood={() => setTab("food")}
+            />
           )}
           {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}
           {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} />}
