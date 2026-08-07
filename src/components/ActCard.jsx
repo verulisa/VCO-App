@@ -1,8 +1,9 @@
+import { memo } from "react";
 import { Star } from "lucide-react";
 import { formatTimeRange, isLiveNow, progressPercent } from "../utils/time";
 import { tapFeedback } from "../utils/haptics";
 
-export default function ActCard({ act, saved, onToggleSave, now = new Date() }) {
+function ActCard({ act, saved, onToggleSave, now = new Date() }) {
   const live = isLiveNow(act, now);
 
   return (
@@ -67,3 +68,17 @@ export default function ActCard({ act, saved, onToggleSave, now = new Date() }) 
 export function actSubtitle(act) {
   return `${act.stage} · ${formatTimeRange(act)}`;
 }
+
+// The 20s "now" tick otherwise re-renders every visible card on Lineup —
+// most of a ~180-act list is neither live nor about to be, so their
+// output is byte-identical from one tick to the next. Skip the re-render
+// unless the act/saved state changed, the live/not-live status just
+// flipped, or the card is currently live (its progress bar needs to keep
+// advancing).
+export default memo(ActCard, (prev, next) => {
+  if (prev.act.id !== next.act.id || prev.saved !== next.saved) return false;
+  const prevLive = isLiveNow(prev.act, prev.now);
+  const nextLive = isLiveNow(next.act, next.now);
+  if (prevLive !== nextLive || nextLive) return false;
+  return true;
+});

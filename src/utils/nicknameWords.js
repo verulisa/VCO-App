@@ -20,13 +20,17 @@ export function generateNickname() {
   return `${adj} ${animal} #${num}`;
 }
 
+// One emoji per animal — several of these (ferret, wombat, meerkat, newt,
+// capybara, alpaca...) have no dedicated emoji in Unicode, so it's a
+// closest-fit substitute, but each pick is kept unique so two different
+// animals never render the same icon.
 const ANIMAL_EMOJI = {
   Hedgehog: "🦔", Otter: "🦦", Goat: "🐐", Duck: "🦆", Badger: "🦡",
-  Chicken: "🐔", Fox: "🦊", Sloth: "🦥", Axolotl: "🦎", Alpaca: "🦙",
+  Chicken: "🐔", Fox: "🦊", Sloth: "🦥", Axolotl: "🦎", Alpaca: "🐑",
   Donkey: "🫏", Pigeon: "🐦", Squirrel: "🐿️", Llama: "🦙", Pony: "🐴",
   Hamster: "🐹", Rabbit: "🐰", Owl: "🦉", Raccoon: "🦝", Ferret: "🦫",
-  Cow: "🐮", Pig: "🐷", Turtle: "🐢", Peacock: "🦚", Wombat: "🦫",
-  Cricket: "🦗", Newt: "🦎", Capybara: "🐹", Meerkat: "🦫", Vole: "🐭",
+  Cow: "🐮", Pig: "🐷", Turtle: "🐢", Peacock: "🦚", Wombat: "🐻",
+  Cricket: "🦗", Newt: "🐸", Capybara: "🐾", Meerkat: "🐁", Vole: "🐭",
 };
 
 export function nicknameEmoji(nickname) {

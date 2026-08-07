@@ -5,7 +5,10 @@ const POINTS = [
   { icon: Star, text: "Tap the star on any act to save it to My Schedule." },
   { icon: CalendarPlus, text: "Export your saved schedule to your phone's Calendar app for reminders." },
   { icon: Share2, text: "Recommend food stalls and share your schedule with friends." },
-  { icon: Smartphone, text: "Add this to your Home Screen so it works fully offline, no signal needed." },
+  {
+    icon: Smartphone,
+    text: "Add this web page to your phone's Home Screen so it works like a real app, fully offline — instructions are in the menu.",
+  },
 ];
 
 export default function WelcomeIntro({ onClose }) {
