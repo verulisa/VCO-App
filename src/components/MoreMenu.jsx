@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee } from "lucide-react";
+import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
 
@@ -43,6 +43,18 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
     navigator.clipboard?.writeText(APP_URL);
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
+  }
+
+  async function shareApp() {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "Vegan Camp Out — Unofficial Fan App", url: APP_URL });
+      } catch {
+        // User cancelled the share sheet — nothing to do.
+      }
+    } else {
+      copyLink();
+    }
   }
 
   return (
@@ -93,10 +105,20 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
           <div className="rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3.5 text-center">
             {qrDataUrl && <img src={qrDataUrl} alt="QR code linking to this app" className="mx-auto rounded-lg" />}
             <p className="mt-2 text-[11px] text-[var(--vco-text-muted)]">Scan to open this app on another phone</p>
+            {typeof navigator !== "undefined" && navigator.share && (
+              <button
+                type="button"
+                onClick={shareApp}
+                className="tap mt-2.5 flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--vco-green)] py-2 text-[11.5px] font-semibold text-white"
+              >
+                <Share size={13} />
+                Share via…
+              </button>
+            )}
             <button
               type="button"
               onClick={copyLink}
-              className="tap mt-2.5 flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--vco-surface-raised)] py-2 text-[11.5px] font-semibold text-[var(--vco-text)]"
+              className="tap mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--vco-surface-raised)] py-2 text-[11.5px] font-semibold text-[var(--vco-text)]"
             >
               <Clipboard size={13} />
               {copied ? "Copied!" : "Copy link"}
