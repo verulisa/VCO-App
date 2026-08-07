@@ -1,0 +1,88 @@
+{
+  "event": {
+    "name": "Vegan Camp Out",
+    "edition": "10th Anniversary",
+    "venue": "Walesby Forest, Nottinghamshire, NG22 9NG",
+    "startDate": "2026-08-13",
+    "endDate": "2026-08-17",
+    "days": [
+      { "key": "Thu", "date": "2026-08-13", "label": "Thursday" },
+      { "key": "Fri", "date": "2026-08-14", "label": "Friday" },
+      { "key": "Sat", "date": "2026-08-15", "label": "Saturday" },
+      { "key": "Sun", "date": "2026-08-16", "label": "Sunday" }
+    ]
+  },
+  "gates": [
+    {
+      "id": "gate-abc",
+      "name": "Gates A / B / C",
+      "use": ["General camping"],
+      "whatThreeWords": null
+    },
+    {
+      "id": "gate-d",
+      "name": "Gate D",
+      "use": ["Glamping", "Pre-pitched", "VIP", "All campervans / caravans", "Accessible", "Drop-off"],
+      "whatThreeWords": "finest.limelight.pelt"
+    },
+    {
+      "id": "gate-e",
+      "name": "Gate E",
+      "use": ["Drop-off zone"],
+      "whatThreeWords": null
+    },
+    {
+      "id": "gate-f",
+      "name": "Gate F",
+      "use": ["Day tickets", "Weekend tickets", "Family"],
+      "whatThreeWords": "reflector.locating.cunning"
+    }
+  ],
+  "campingZones": [
+    "General Camping",
+    "Family Camping",
+    "Quiet Camping",
+    "Solo Camping",
+    "Glamping",
+    "Pre-Pitched",
+    "VIP Camping",
+    "Accessible Camping",
+    "Motorhomes & Caravans",
+    "VIP Parking",
+    "Accessible Parking",
+    "General / Day / Family Parking"
+  ],
+  "legend": [
+    { "label": "Medical", "icon": "cross" },
+    { "label": "Toilets", "icon": "toilets" },
+    { "label": "Accessible Toilets", "icon": "accessible" },
+    { "label": "Showers", "icon": "shower" },
+    { "label": "Wristband Exchange", "icon": "wristband" },
+    { "label": "Bar / Drinks", "icon": "drink" },
+    { "label": "Water Points", "icon": "water" },
+    { "label": "Coffee / Hot Drinks", "icon": "coffee" },
+    { "label": "Festival Merch", "icon": "shirt" }
+  ],
+  "faq": [
+    {
+      "question": "Is there phone signal on site?",
+      "answer": "Signal in Walesby Forest is patchy to non-existent in most of the camping and stage areas. Download this app and browse it once while you still have signal (e.g. before you leave home) — everything then keeps working offline for the whole weekend."
+    },
+    {
+      "question": "What should I bring?",
+      "answer": "Wellies or waterproof boots, a power bank (there's no mains charging at pitches), cash and card for stalls, a reusable water bottle for the water points, warm layers for the evenings, and earplugs if you're near a stage or the Jungle."
+    },
+    {
+      "question": "Where's the medical point?",
+      "answer": "Marked with a red cross on the festival map, next to the Family Arena and Stalls area."
+    },
+    {
+      "question": "Emergency contacts",
+      "answer": "Check your ticket confirmation email or the printed event guide handed out at your entry gate for the current on-site welfare and emergency numbers — these can change year to year so we don't hardcode them here."
+    },
+    {
+      "question": "What are the site rules?",
+      "answer": "The whole site is 100% vegan — no animal products may be brought on site. No glass in the camping fields. No fires except in designated areas. Respect quiet camping hours if you're pitched in the Quiet Camping zone."
+    }
+  ]
+}

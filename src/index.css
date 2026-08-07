@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --vco-bg: #f6f4ee;
+  --vco-bg-alt: #efece1;
+  --vco-surface: #ffffff;
+  --vco-surface-raised: #f1eee2;
+  --vco-border: #ddd7c4;
+  --vco-text: #1c2416;
+  --vco-text-muted: #5c6853;
+  --vco-text-faint: #8a9280;
+  --vco-green: #3f7a34;
+  --vco-green-strong: #2f6428;
+  --vco-green-soft: #e3ecdd;
+  --vco-red: #c1432c;
+  --vco-red-soft: #f7e2dd;
+  --vco-yellow: #a5701c;
+  --vco-yellow-soft: #f6ead0;
+  --vco-danger-bg: #fbe4df;
+  --vco-danger-border: #e2a494;
+  --vco-danger-text: #8a3020;
+}
+
+html.dark {
+  --vco-bg: #12160f;
+  --vco-bg-alt: #0d100b;
+  --vco-surface: #1c2416;
+  --vco-surface-raised: #232c1a;
+  --vco-border: #2b3422;
+  --vco-text: #f2ede0;
+  --vco-text-muted: #93a184;
+  --vco-text-faint: #5c6853;
+  --vco-green: #5c9c48;
+  --vco-green-strong: #7ec462;
+  --vco-green-soft: rgba(92, 156, 72, 0.16);
+  --vco-red: #d6553f;
+  --vco-red-soft: rgba(214, 85, 63, 0.16);
+  --vco-yellow: #eeb43a;
+  --vco-yellow-soft: rgba(238, 180, 58, 0.16);
+  --vco-danger-bg: #3a1c16;
+  --vco-danger-border: #7a3327;
+  --vco-danger-text: #f4b7a3;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--vco-bg);
+  color: var(--vco-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.perf {
+  position: relative;
+  border-left: 1.5px dashed var(--vco-border);
+}
+.perf::before,
+.perf::after {
+  content: "";
+  position: absolute;
+  left: -6.5px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--vco-bg);
+}
+.perf::before {
+  top: -6.5px;
+}
+.perf::after {
+  bottom: -6.5px;
+}
