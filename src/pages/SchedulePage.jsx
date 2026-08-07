@@ -3,11 +3,13 @@ import ActCard from "../components/ActCard";
 import BreakRow from "../components/BreakRow";
 import ClashBanner from "../components/ClashBanner";
 import ScheduleShare from "../components/ScheduleShare";
+import { useNow } from "../hooks/useNow";
 import { downloadIcs } from "../utils/ics";
 import { formatDayHeading } from "../utils/time";
 
 export default function SchedulePage({ schedule, toggleSave }) {
   const { savedIds, savedActs, scheduleRows, clashPairs, importIds } = schedule;
+  const now = useNow();
 
   return (
     <div className="flex flex-col gap-3.5 px-4 pb-28 pt-4">
@@ -36,7 +38,7 @@ export default function SchedulePage({ schedule, toggleSave }) {
             if (row.type === "act") {
               return (
                 <div key={row.act.id} className="mb-2.5">
-                  <ActCard act={row.act} saved onToggleSave={toggleSave} />
+                  <ActCard act={row.act} saved onToggleSave={toggleSave} now={now} />
                 </div>
               );
             }

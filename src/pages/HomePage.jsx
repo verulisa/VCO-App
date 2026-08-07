@@ -1,9 +1,10 @@
 import { Bell, Bookmark, ChevronRight } from "lucide-react";
 import ActCard from "../components/ActCard";
+import { useNow } from "../hooks/useNow";
 import { daysUntil, isLiveNow, isUpcoming, sortByStart } from "../utils/time";
 
 export default function HomePage({ lineup, info, isSaved, toggleSave, notifications, vendors, vendorRatings, onGoToFood }) {
-  const now = new Date();
+  const now = useNow();
   const live = sortByStart(lineup.filter((a) => isLiveNow(a, now)));
   const upNext = sortByStart(lineup.filter((a) => !isLiveNow(a, now) && isUpcoming(a, now, 120))).slice(0, 4);
   const days = info ? daysUntil(info.event.startDate, now) : null;

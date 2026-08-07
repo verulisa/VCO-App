@@ -3,11 +3,13 @@ import { SearchX } from "lucide-react";
 import ActCard from "../components/ActCard";
 import FilterChips from "../components/FilterChips";
 import SearchBar from "../components/SearchBar";
+import { useNow } from "../hooks/useNow";
 import { dayKeyForDate, sortByStart, todayIso } from "../utils/time";
 
 const DAYS = ["All", "Thu", "Fri", "Sat", "Sun"];
 
 export default function LineupPage({ lineup, isSaved, toggleSave }) {
+  const now = useNow();
   const [search, setSearch] = useState("");
   const [day, setDay] = useState("All");
   const [stage, setStage] = useState("All");
@@ -44,7 +46,7 @@ export default function LineupPage({ lineup, isSaved, toggleSave }) {
             <p className="text-[12.5px] text-[var(--vco-text-muted)]">No acts match those filters.</p>
           </div>
         ) : (
-          filtered.map((act) => <ActCard key={act.id} act={act} saved={isSaved(act.id)} onToggleSave={toggleSave} />)
+          filtered.map((act) => <ActCard key={act.id} act={act} saved={isSaved(act.id)} onToggleSave={toggleSave} now={now} />)
         )}
       </div>
     </div>
