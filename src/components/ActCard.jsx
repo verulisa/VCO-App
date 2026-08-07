@@ -7,16 +7,21 @@ export default function ActCard({ act, saved, onToggleSave, now = new Date() }) 
 
   return (
     <div
-      className={`relative grid grid-cols-[56px_1px_1fr_auto] rounded-xl border bg-[var(--vco-surface)] shadow-[var(--vco-shadow)] ${
+      className={`relative grid grid-cols-[56px_1fr_auto] rounded-xl border bg-[var(--vco-surface)] shadow-[var(--vco-shadow)] ${
         live ? "border-[var(--vco-red)]/35" : "border-[var(--vco-border)]"
       }`}
     >
+      {/* Anchored to the card's own top/bottom edge (inset-y-0 on a
+          position:relative ancestor) instead of a grid row/column — that
+          way the dots always sit flush with the true card edge, live
+          progress bar or not, instead of drifting to wherever a grid
+          track happens to end. */}
+      <div className="perf pointer-events-none absolute inset-y-0 left-[56px]" />
+
       <div className="flex flex-col items-center justify-center gap-0.5 px-1.5 py-3 font-mono text-[12px] tabular-nums text-[var(--vco-text)]">
         <span>{act.startTime}</span>
         <span className="text-[10.5px] text-[var(--vco-text-faint)]">{act.endTime}</span>
       </div>
-
-      <div className="perf" style={{ gridColumn: 2, gridRow: live ? "1 / 3" : "1 / 2" }} />
 
       <div className="min-w-0 px-3 py-3">
         <p className="truncate font-bold text-[13.5px] text-[var(--vco-text)]">{act.name}</p>
@@ -51,7 +56,7 @@ export default function ActCard({ act, saved, onToggleSave, now = new Date() }) 
       </button>
 
       {live && (
-        <div className="col-span-4 mx-3 mb-2.5 h-[3px] overflow-hidden rounded-full bg-[var(--vco-border)]">
+        <div className="col-span-3 mx-3 mb-2.5 h-[3px] overflow-hidden rounded-full bg-[var(--vco-border)]">
           <div className="h-full bg-[var(--vco-yellow)]" style={{ width: `${progressPercent(act, now)}%` }} />
         </div>
       )}

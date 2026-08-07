@@ -132,7 +132,6 @@ body {
 }
 
 .perf {
-  position: relative;
   border-left: 1.5px dashed var(--vco-border);
 }
 .perf::before,
