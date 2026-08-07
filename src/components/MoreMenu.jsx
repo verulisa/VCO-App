@@ -147,6 +147,7 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
           {supportQrDataUrl && (
             <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" className="tap inline-block">
               <img src={supportQrDataUrl} alt="QR code to send a voluntary tip via Revolut" className="mx-auto w-24 rounded-lg opacity-90" />
+              <p className="mt-1.5 text-[10px] text-[var(--vco-text-faint)]">Scan to tip via Revolut</p>
             </a>
           )}
         </div>
