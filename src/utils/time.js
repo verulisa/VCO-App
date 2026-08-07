@@ -48,6 +48,11 @@ export function formatTimeRange(act) {
   return `${act.startTime} – ${act.endTime}`;
 }
 
+export function formatDayHeading(dateStr) {
+  const date = new Date(`${dateStr}T00:00:00`);
+  return date.toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "short" });
+}
+
 export function formatDuration(mins) {
   if (mins < 60) return `${mins} min`;
   const h = Math.floor(mins / 60);

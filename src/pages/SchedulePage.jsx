@@ -4,6 +4,7 @@ import BreakRow from "../components/BreakRow";
 import ClashBanner from "../components/ClashBanner";
 import ScheduleShare from "../components/ScheduleShare";
 import { downloadIcs } from "../utils/ics";
+import { formatDayHeading } from "../utils/time";
 
 export default function SchedulePage({ schedule, toggleSave }) {
   const { savedIds, savedActs, scheduleRows, clashPairs, importIds } = schedule;
@@ -21,15 +22,26 @@ export default function SchedulePage({ schedule, toggleSave }) {
         </div>
       ) : (
         <div className="flex flex-col">
-          {scheduleRows.map((row) =>
-            row.type === "act" ? (
-              <div key={row.act.id} className="mb-2.5">
-                <ActCard act={row.act} saved onToggleSave={toggleSave} />
-              </div>
-            ) : (
-              <BreakRow key={row.key} minutes={row.minutes} />
-            )
-          )}
+          {scheduleRows.map((row) => {
+            if (row.type === "day") {
+              return (
+                <p
+                  key={row.key}
+                  className="mb-2.5 mt-1 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-green-strong)] first:mt-0"
+                >
+                  {formatDayHeading(row.date)}
+                </p>
+              );
+            }
+            if (row.type === "act") {
+              return (
+                <div key={row.act.id} className="mb-2.5">
+                  <ActCard act={row.act} saved onToggleSave={toggleSave} />
+                </div>
+              );
+            }
+            return <BreakRow key={row.key} minutes={row.minutes} />;
+          })}
         </div>
       )}
 

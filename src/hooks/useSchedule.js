@@ -41,14 +41,21 @@ export function useSchedule(lineup) {
     return { clashIds: clashing, clashPairs: pairs };
   }, [savedActs]);
 
-  // Rows interleave each saved act with a "break" entry describing the gap to the next one.
+  // Rows interleave each saved act with a "break" entry describing the gap to
+  // the next one, but only within the same day — a gap that crosses into a
+  // new day gets a day-heading row instead of a nonsensical "13h break".
   const scheduleRows = useMemo(() => {
     const rows = [];
+    let lastDate = null;
     for (let i = 0; i < savedActs.length; i++) {
       const act = savedActs[i];
+      if (act.date !== lastDate) {
+        rows.push({ type: "day", date: act.date, key: `day-${act.date}` });
+        lastDate = act.date;
+      }
       rows.push({ type: "act", act, isClash: clashIds.has(act.id) });
       const next = savedActs[i + 1];
-      if (next) {
+      if (next && next.date === act.date) {
         const gap = gapMinutes(act, next);
         if (gap > 0) {
           rows.push({ type: "break", minutes: gap, key: `gap-${act.id}-${next.id}` });
