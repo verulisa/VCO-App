@@ -103,7 +103,17 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
 
         <Section icon={Share2} title="Share this app">
           <div className="rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3.5 text-center">
-            {qrDataUrl && <img src={qrDataUrl} alt="QR code linking to this app" className="mx-auto rounded-lg" />}
+            {/* Reserve the image's footprint before it's ready — an async height
+                jump here (adding a 220px image after first paint) can leave
+                content below it unpainted on some Android Chrome versions,
+                inside this fixed + overflow-y:auto drawer. */}
+            <div className="mx-auto aspect-square w-full max-w-[220px]">
+              {qrDataUrl ? (
+                <img src={qrDataUrl} alt="QR code linking to this app" className="h-full w-full rounded-lg" />
+              ) : (
+                <div className="skeleton h-full w-full rounded-lg" />
+              )}
+            </div>
             <p className="mt-2 text-[11px] text-[var(--vco-text-muted)]">Scan to open this app on another phone</p>
             {typeof navigator !== "undefined" && navigator.share && (
               <button
@@ -166,12 +176,20 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
           <p className="mb-3 text-[10.5px] text-[var(--vco-text-faint)]">
             If it helped you get around, you're welcome to buy the dev a coffee <Coffee size={11} className="inline -mt-0.5" />
           </p>
-          {supportQrDataUrl && (
-            <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" className="tap inline-block">
-              <img src={supportQrDataUrl} alt="QR code to send a voluntary tip via Revolut" className="mx-auto w-24 rounded-lg opacity-90" />
-              <p className="mt-1.5 text-[10px] text-[var(--vco-text-faint)]">Scan to tip via Revolut</p>
-            </a>
-          )}
+          <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer" className="tap inline-block">
+            <div className="mx-auto aspect-square w-24">
+              {supportQrDataUrl ? (
+                <img
+                  src={supportQrDataUrl}
+                  alt="QR code to send a voluntary tip via Revolut"
+                  className="h-full w-full rounded-lg opacity-90"
+                />
+              ) : (
+                <div className="skeleton h-full w-full rounded-lg" />
+              )}
+            </div>
+            <p className="mt-1.5 text-[10px] text-[var(--vco-text-faint)]">Scan to tip via Revolut</p>
+          </a>
         </div>
       </div>
     </div>
