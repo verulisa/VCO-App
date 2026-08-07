@@ -4,7 +4,7 @@ import QRCode from "qrcode";
 import Accordion from "./Accordion";
 
 const APP_URL = "https://verulisa.github.io/VCO-App/";
-const SUPPORT_URL = "https://revolut.me/veroni1wc6?currency=GBP&amount=3&note=";
+const SUPPORT_URL = "https://revolut.me/veroni1wc6?currency=GBP&amount=300&note=";
 
 function Section({ icon: Icon, title, children }) {
   return (
