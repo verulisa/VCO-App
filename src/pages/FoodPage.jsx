@@ -3,18 +3,17 @@ import { Bookmark } from "lucide-react";
 import FilterChips from "../components/FilterChips";
 import SearchBar from "../components/SearchBar";
 import VendorCard from "../components/VendorCard";
-import { useVendorRatings } from "../hooks/useVendorRatings";
 
 const CATEGORIES = ["All", "Food", "Trader"];
 const DIET_TAGS = ["Gluten-Free", "Nut-Free", "Soy-Free", "Desserts"];
 const STATUS_FILTERS = ["All", "Want to try", "Been here"];
 
-export default function FoodPage({ vendors }) {
+export default function FoodPage({ vendors, vendorRatings }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [tags, setTags] = useState([]);
   const [status, setStatus] = useState("All");
-  const { ratings, getRating, rate, toggleVisited, toggleWishlist, setNote } = useVendorRatings();
+  const { ratings, getRating, rate, toggleVisited, toggleWishlist, setNote } = vendorRatings;
 
   const wishlistCount = useMemo(() => Object.values(ratings).filter((r) => r.wishlist).length, [ratings]);
 

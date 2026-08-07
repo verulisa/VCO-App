@@ -22,7 +22,8 @@ export default function InstallBanner() {
         {isIos() ? (
           <p className="mt-0.5">
             Tap the Share icon <Share size={11} className="inline" /> in Safari, then "Add to Home Screen" — this makes
-            the app work fully offline and enables reminders.
+            the app work fully offline, enables reminders, and stops iPhone from auto-clearing your saved data after a
+            week of not opening it.
           </p>
         ) : (
           <p className="mt-0.5">

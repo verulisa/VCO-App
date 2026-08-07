@@ -37,5 +37,9 @@ export function useVendorRatings() {
     patch(vendorId, { note });
   }
 
-  return { ratings, getRating, rate, toggleWishlist, toggleVisited, setNote };
+  function replaceAll(nextRatings) {
+    setRatings(nextRatings || {});
+  }
+
+  return { ratings, getRating, rate, toggleWishlist, toggleVisited, setNote, replaceAll };
 }
