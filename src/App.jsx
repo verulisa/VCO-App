@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { RotateCcw } from "lucide-react";
 import Header from "./components/Header";
 import BottomNav from "./components/BottomNav";
 import InstallBanner from "./components/InstallBanner";
@@ -49,12 +50,21 @@ export default function App() {
     if (payload.tentPin !== undefined) writeTentPin(payload.tentPin);
   }
 
+  const landscapeLock = (
+    <div className="landscape-lock">
+      <RotateCcw size={30} className="text-[var(--vco-text-faint)]" />
+      <p className="font-extrabold text-[15px]">Please rotate back to portrait</p>
+      <p className="max-w-[240px] text-[12.5px] text-[var(--vco-text-muted)]">This app is designed for portrait mode only.</p>
+    </div>
+  );
+
   if (!hasNickname) {
     return (
       <div className="flex min-h-screen justify-center bg-[var(--vco-bg-alt)]">
         <div className="min-h-screen w-full max-w-[480px] bg-[var(--vco-bg)] text-[var(--vco-text)]">
           <NicknamePrompt onConfirm={rename} />
         </div>
+        {landscapeLock}
       </div>
     );
   }
@@ -136,6 +146,7 @@ export default function App() {
         />
       )}
     </div>
+    {landscapeLock}
     </div>
   );
 }

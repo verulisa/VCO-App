@@ -118,6 +118,32 @@ body {
   padding-top: calc(var(--vco-header-h) + env(safe-area-inset-top, 0px));
 }
 
+/* Real orientation-locking isn't available to "Add to Home Screen" web
+   apps on iOS (only native apps can do that), so instead of a broken
+   sideways layout, cover the screen with a "please rotate back" prompt
+   on phone-sized landscape viewports. Desktop/tablet landscape windows
+   are wide AND tall, so the max-height clause keeps this from firing
+   there. */
+.landscape-lock {
+  display: none;
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .landscape-lock {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 24px;
+    text-align: center;
+    background: var(--vco-bg);
+    color: var(--vco-text);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
