@@ -81,6 +81,10 @@
       "answer": "Check your ticket confirmation email or the printed event guide handed out at your entry gate for the current on-site welfare and emergency numbers — these can change year to year so we don't hardcode them here."
     },
     {
+      "question": "Arrival & opening times",
+      "answer": "The car park opens at 12 midday Thursday or Friday (depending on whether you hold a Thursday pass) for everyone except VIP, who can arrive from 10am. The campsite opens at 1pm and the arena at 2pm. Please don't arrive earlier — it causes traffic queues that make entry slower for everyone. Have your vehicle/parking pass ready for scanning; if you didn't buy one online, you can pay on entry (card only) — £25 for the weekend or £15 for a day ticket."
+    },
+    {
       "question": "Water points",
       "answer": "There are several water points across the site, free of charge. Make sure you use the ones sign-posted as 'drinking water'."
     },
