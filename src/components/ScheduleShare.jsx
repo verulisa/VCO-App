@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 import jsQR from "jsqr";
-import { QrCode, Camera, Clipboard, X } from "lucide-react";
+import { QrCode, Camera, Clipboard, X, Check } from "lucide-react";
+import { formatTimeRange } from "../utils/time";
 
 const CODE_PREFIX = "VCO1:";
 
@@ -20,14 +21,63 @@ export function decodeSchedule(code) {
   return ids.length ? ids : null;
 }
 
-export default function ScheduleShare({ savedIds, onImport }) {
+export default function ScheduleShare({ savedIds, onImport, lineup }) {
   const [open, setOpen] = useState(false);
   const [qrDataUrl, setQrDataUrl] = useState(null);
   const [importText, setImportText] = useState("");
   const [scanError, setScanError] = useState("");
   const [scanning, setScanning] = useState(false);
+  const [preview, setPreview] = useState(null); // { newActs, selected: Set, alreadyCount, unknownCount }
+  const [justAdded, setJustAdded] = useState(0);
   const videoRef = useRef(null);
   const streamRef = useRef(null);
+
+  function buildPreview(ids) {
+    const byId = new Map((lineup || []).map((a) => [a.id, a]));
+    const savedSet = new Set(savedIds);
+    let alreadyCount = 0;
+    let unknownCount = 0;
+    const newActs = [];
+    for (const id of ids) {
+      const act = byId.get(id);
+      if (!act) {
+        unknownCount++;
+      } else if (savedSet.has(id)) {
+        alreadyCount++;
+      } else {
+        newActs.push(act);
+      }
+    }
+    if (newActs.length === 0) {
+      setScanError(
+        alreadyCount > 0
+          ? "All of those acts are already in your schedule."
+          : "That code didn't match any acts in this lineup."
+      );
+      return;
+    }
+    setScanError("");
+    setPreview({ newActs, selected: new Set(newActs.map((a) => a.id)), alreadyCount, unknownCount });
+  }
+
+  function toggleSelected(id) {
+    setPreview((prev) => {
+      const next = new Set(prev.selected);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return { ...prev, selected: next };
+    });
+  }
+
+  function confirmImport() {
+    if (!preview) return;
+    const ids = Array.from(preview.selected);
+    onImport(ids);
+    setJustAdded(ids.length);
+    setPreview(null);
+    setImportText("");
+    setTimeout(() => setJustAdded(0), 3000);
+  }
 
   const code = encodeSchedule(savedIds);
 
@@ -67,8 +117,8 @@ export default function ScheduleShare({ savedIds, onImport }) {
             if (result) {
               const ids = decodeSchedule(result.data);
               if (ids) {
-                onImport(ids);
                 setScanning(false);
+                buildPreview(ids);
                 return;
               }
             }
@@ -171,8 +221,7 @@ export default function ScheduleShare({ savedIds, onImport }) {
             onClick={() => {
               const ids = decodeSchedule(importText);
               if (ids) {
-                onImport(ids);
-                setImportText("");
+                buildPreview(ids);
               } else {
                 setScanError("That doesn't look like a valid schedule code.");
               }
@@ -182,6 +231,71 @@ export default function ScheduleShare({ savedIds, onImport }) {
             Add
           </button>
         </div>
+
+        {justAdded > 0 && (
+          <p className="mt-2 text-[11.5px] font-semibold text-[var(--vco-green-strong)]">
+            Added {justAdded} act{justAdded === 1 ? "" : "s"} to your schedule.
+          </p>
+        )}
+
+        {preview && (
+          <div className="mt-3 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] p-3">
+            <p className="mb-0.5 text-[12.5px] font-semibold text-[var(--vco-text)]">
+              These aren't in your favourites yet — want to add them?
+            </p>
+            {preview.alreadyCount > 0 && (
+              <p className="mb-2 text-[10.5px] text-[var(--vco-text-faint)]">
+                {preview.alreadyCount} of the shared acts are already in your schedule, so they're skipped here.
+              </p>
+            )}
+            <div className="mt-2 flex flex-col gap-1.5">
+              {preview.newActs.map((act) => {
+                const checked = preview.selected.has(act.id);
+                return (
+                  <button
+                    key={act.id}
+                    type="button"
+                    onClick={() => toggleSelected(act.id)}
+                    className="tap flex items-center gap-2.5 rounded-lg bg-[var(--vco-surface)] px-2.5 py-2 text-left"
+                  >
+                    <span
+                      className={`flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-md border ${
+                        checked
+                          ? "border-[var(--vco-green)] bg-[var(--vco-green)]"
+                          : "border-[var(--vco-border)] bg-transparent"
+                      }`}
+                    >
+                      {checked && <Check size={11} className="text-white" />}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[12.5px] font-semibold text-[var(--vco-text)]">{act.name}</span>
+                      <span className="block text-[10.5px] text-[var(--vco-text-muted)]">
+                        {act.stage} · {formatTimeRange(act)}
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="mt-3 flex gap-2">
+              <button
+                type="button"
+                onClick={() => setPreview(null)}
+                className="flex-1 rounded-lg border border-[var(--vco-border)] py-2 text-[12.5px] font-semibold text-[var(--vco-text)]"
+              >
+                Not now
+              </button>
+              <button
+                type="button"
+                onClick={confirmImport}
+                disabled={preview.selected.size === 0}
+                className="flex-1 rounded-lg bg-[var(--vco-green)] py-2 text-[12.5px] font-semibold text-white disabled:opacity-40"
+              >
+                Add {preview.selected.size || ""}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

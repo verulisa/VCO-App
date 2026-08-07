@@ -91,7 +91,7 @@ export default function App() {
               />
             )}
             {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}
-            {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} />}
+            {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} lineup={lineup} />}
             {tab === "food" && <FoodPage vendors={vendors} vendorRatings={vendorRatings} />}
             {tab === "map" && <MapPage info={info} />}
           </div>

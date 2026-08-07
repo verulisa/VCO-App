@@ -7,7 +7,7 @@ import { useNow } from "../hooks/useNow";
 import { downloadIcs } from "../utils/ics";
 import { formatDayHeading } from "../utils/time";
 
-export default function SchedulePage({ schedule, toggleSave }) {
+export default function SchedulePage({ schedule, toggleSave, lineup }) {
   const { savedIds, savedActs, scheduleRows, clashPairs, importIds } = schedule;
   const now = useNow();
 
@@ -61,7 +61,7 @@ export default function SchedulePage({ schedule, toggleSave }) {
         Adds a 15-min-before alarm to each — your phone's own Calendar app reminds you even offline and locked.
       </p>
 
-      <ScheduleShare savedIds={savedIds} onImport={importIds} />
+      <ScheduleShare savedIds={savedIds} onImport={importIds} lineup={lineup} />
     </div>
   );
 }
