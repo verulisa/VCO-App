@@ -1,9 +1,7 @@
 import sharp from "sharp";
 import { fileURLToPath } from "node:url";
 
-// A custom-made emblem (public/brand/logo.jpg), deliberately not a reproduction
-// of the festival's own official logo — this is an unofficial fan app, so it
-// shouldn't visually borrow the organisers' actual branding/trademark.
+// The festival's real logo (public/brand/logo.jpg).
 const source = fileURLToPath(new URL("../public/brand/logo.jpg", import.meta.url));
 
 const targets = [
