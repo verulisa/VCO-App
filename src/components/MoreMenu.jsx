@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Trash2, Mail } from "lucide-react";
+import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Mail } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
 import { APP_URL } from "../utils/appUrl";
@@ -36,24 +36,16 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
   // installed yet, so they see how right away.
   const [showInstall, setShowInstall] = useState(() => !isStandalone());
   const [refreshState, setRefreshState] = useState("idle"); // idle | checking
-  const [resetting, setResetting] = useState(false);
 
   async function handleRefresh() {
     setRefreshState("checking");
     // Used to just re-check for a new service worker and hope it activated
     // in time for the reload — in practice that race was unreliable and
     // could still land back on the old version. Unregistering and clearing
-    // Cache Storage outright (same as "Hard reset" below) is what actually
-    // works every time, and it's just as safe for saved data since neither
-    // touches localStorage.
+    // Cache Storage outright is what actually works every time, and it's
+    // just as safe for saved data since neither touches localStorage.
     await onReloadData?.();
     await appUpdate?.hardReset();
-  }
-
-  function handleHardReset() {
-    if (!window.confirm("Wipe the app's cached files and service worker, then reload? Your saved acts and settings stay on this phone.")) return;
-    setResetting(true);
-    appUpdate?.hardReset();
   }
 
   useEffect(() => {
@@ -211,22 +203,6 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
               </div>
             </div>
           )}
-        </Section>
-
-        <Section icon={Trash2} title="Troubleshooting">
-          <button
-            type="button"
-            onClick={handleHardReset}
-            disabled={resetting}
-            className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)] disabled:opacity-60"
-          >
-            <RefreshCw size={15} className={resetting ? "animate-spin" : ""} />
-            {resetting ? "Clearing…" : "Refresh (force clear cache)"}
-          </button>
-          <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
-            Wipes the app's cached files and service worker, then reloads from scratch — a stronger version of
-            "Refresh" above, for when the app is stuck on an old screen. Your saved acts and settings aren't touched.
-          </p>
         </Section>
 
         {info && (
