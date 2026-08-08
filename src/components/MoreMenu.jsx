@@ -214,25 +214,14 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
         </Section>
 
         <Section icon={Trash2} title="Troubleshooting">
-          <a
-            href={buildFeedbackMailto()}
-            className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)]"
-          >
-            <Mail size={15} />
-            Report a problem
-          </a>
-          <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
-            Opens your email app with the technical details already filled in — just describe what happened.
-          </p>
-
           <button
             type="button"
             onClick={handleHardReset}
             disabled={resetting}
-            className="tap mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)] disabled:opacity-60"
+            className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)] disabled:opacity-60"
           >
-            <Trash2 size={15} className={resetting ? "animate-spin" : ""} />
-            {resetting ? "Clearing…" : "Hard reset (clear cache)"}
+            <RefreshCw size={15} className={resetting ? "animate-spin" : ""} />
+            {resetting ? "Clearing…" : "Refresh (force clear cache)"}
           </button>
           <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
             Wipes the app's cached files and service worker, then reloads from scratch — a stronger version of
@@ -280,6 +269,14 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
               )}
             </div>
             <p className="mt-1.5 text-[10px] text-[var(--vco-text-faint)]">Scan to tip via Revolut</p>
+          </a>
+
+          <a
+            href={buildFeedbackMailto()}
+            className="tap mt-4 flex items-center justify-center gap-1.5 text-[11px] font-semibold text-[var(--vco-text-muted)] underline decoration-dotted underline-offset-2"
+          >
+            <Mail size={12} />
+            Report a problem
           </a>
         </div>
       </div>
