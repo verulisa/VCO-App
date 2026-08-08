@@ -91,6 +91,22 @@ export function CoffeeIcon() {
   );
 }
 
+export function WristbandIcon() {
+  return (
+    <IconBase>
+      <path
+        d="M4 9c0-1.4 1.8-2.5 4-2.5h8c2.2 0 4 1.1 4 2.5s-1.8 2.5-4 2.5H8c-2.2 0-4-1.1-4-2.5Z"
+        fill="currentColor"
+      />
+      <rect x="9" y="9.8" width="6" height="4.4" rx="1" fill="currentColor" />
+      <path
+        d="M4 15c0-1.4 1.8-2.5 4-2.5h8c2.2 0 4 1.1 4 2.5s-1.8 2.5-4 2.5H8c-2.2 0-4-1.1-4-2.5Z"
+        fill="currentColor"
+      />
+    </IconBase>
+  );
+}
+
 export function MerchIcon() {
   return (
     <IconBase>

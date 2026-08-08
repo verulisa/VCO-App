@@ -4,7 +4,7 @@ import Accordion from "../components/Accordion";
 import CollapsibleSection from "../components/CollapsibleSection";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { MAP_AREAS, MAP_GATES } from "../data/mapAreas";
-import { AccessibleToiletsIcon, BarIcon, CoffeeIcon, MedicalIcon, MerchIcon, ShowerIcon, ToiletsIcon, WaterIcon } from "../components/AmenityIcons";
+import { AccessibleToiletsIcon, BarIcon, CoffeeIcon, MedicalIcon, MerchIcon, ShowerIcon, ToiletsIcon, WaterIcon, WristbandIcon } from "../components/AmenityIcons";
 
 const NAV_URL = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Walesby Forest, Nottinghamshire, NG22 9NG");
 const MAP_SRC = "map/festival-map.jpg";
@@ -14,6 +14,7 @@ const AMENITY_LEGEND = [
   { Icon: ToiletsIcon, label: "Toilets" },
   { Icon: AccessibleToiletsIcon, label: "Accessible toilets" },
   { Icon: ShowerIcon, label: "Showers" },
+  { Icon: WristbandIcon, label: "Wristband exchange" },
   { Icon: WaterIcon, label: "Water points" },
   { Icon: BarIcon, label: "Bar / drinks" },
   { Icon: CoffeeIcon, label: "Coffee / hot drinks" },
@@ -40,7 +41,7 @@ async function shareMapPin(pin, setSharing) {
     const ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0);
 
-    const areaR = canvas.width * 0.016;
+    const areaR = canvas.width * 0.013;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.font = `800 ${areaR}px ui-sans-serif, system-ui, sans-serif`;
@@ -188,7 +189,7 @@ export default function MapPage({ info }) {
             {MAP_AREAS.map((area) => (
               <span
                 key={area.n}
-                className="pointer-events-none absolute flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#12160fd9] text-[10px] font-extrabold text-[#f2ede0] shadow"
+                className="pointer-events-none absolute flex h-4 w-4 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#12160fd9] text-[8.5px] font-extrabold text-[#f2ede0] shadow"
                 style={{ left: `${area.xPct}%`, top: `${area.yPct}%` }}
               >
                 {area.n}
