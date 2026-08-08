@@ -100,7 +100,8 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
             {refreshState === "checking" ? "Refreshing…" : "Refresh data & app"}
           </button>
           <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
-            Re-fetches everything fresh and reloads the app — the same as closing and reopening it.
+            Re-fetches everything fresh and reloads the app — the same as closing and reopening it. Your saved acts,
+            nickname and settings are stored separately and are never touched by this.
           </p>
         </Section>
 
