@@ -82,14 +82,14 @@
   <polygon class="zone" points="450,415 600,415 595,490 490,545" fill="#c1432c"/>
   <polygon class="zone" points="685,375 850,400 935,440 830,545 700,470" fill="#b8c23a"/>
   <polygon class="zone" points="935,440 1030,390 1195,420 1195,590 1050,650 935,530" fill="#b355c4"/>
-  <polygon class="zone" points="600,485 935,440 1050,650 650,660" fill="#c99a3a"/>
+  <polygon class="zone" points="600,485 935,440 1050,650 650,660" fill="#2f5c3f"/>
 
-  <polygon class="zone" points="330,650 620,660 600,900 390,880 380,700" fill="#c1432c"/>
+  <polygon class="zone" points="330,650 620,660 600,900 390,880 380,700" fill="#2f5c3f"/>
   <polygon class="zone" points="170,760 390,790 370,950 150,920" fill="#3f6fb8"/>
   <polygon class="zone" points="0,880 170,850 150,1000 0,970" fill="#2d5490"/>
-  <polygon class="zone" points="580,700 870,680 880,860 700,900 600,850" fill="#8a7038"/>
-  <polygon class="zone" points="850,650 1080,660 1080,850 900,860 830,750" fill="#3fa08c"/>
-  <polygon class="zone" points="650,650 780,628 790,700 670,715" fill="#c99a3a"/>
+  <polygon class="zone" points="580,700 870,680 880,860 700,900 600,850" fill="#2f5c3f"/>
+  <polygon class="zone" points="850,650 1080,660 1080,850 900,860 830,750" fill="#2f5c3f"/>
+  <polygon class="zone" points="650,650 780,628 790,700 670,715" fill="#2f5c3f"/>
 
   <polygon class="zone" points="400,850 600,830 750,860 700,1080 420,1080" fill="#6b3fa0"/>
   <polygon class="zone" points="150,920 400,970 500,1150 350,1280 100,1200" fill="#20291c"/>
@@ -136,14 +136,14 @@
     <text x="480" y="230" font-size="28">Motorhomes</text>
     <text x="480" y="262" font-size="28">&amp; Caravans</text>
     <text x="260" y="450" font-size="28">VIP Parking</text>
-    <text x="530" y="470" font-size="16">VIP Zone</text>
+    <text x="530" y="470" font-size="16" fill="#f2ede0">VIP Zone</text>
     <text x="790" y="450" font-size="24">Pre-Pitched</text>
     <text x="1075" y="530" font-size="26">Glamping</text>
-    <text x="790" y="580" font-size="22">Mind &amp; Body</text>
+    <text x="790" y="580" font-size="22" fill="#f2ede0">Mind &amp; Body</text>
 
     <text x="470" y="740" font-size="19" fill="#f2ede0">Music Stage</text>
     <text x="470" y="820" font-size="19" fill="#f2ede0">Main Stage</text>
-    <text x="720" y="700" font-size="14">Education</text>
+    <text x="720" y="700" font-size="14" fill="#f2ede0">Education</text>
     <text x="960" y="760" font-size="22" fill="#f2ede0">Family Arena</text>
     <text x="730" y="790" font-size="20" fill="#f2ede0">Stalls &amp; Food</text>
     <text x="270" y="860" font-size="19" fill="#f2ede0">Accessible</text>
