@@ -3,17 +3,20 @@ import { MapPin, Navigation, Share2, X, ZoomIn, ZoomOut } from "lucide-react";
 import Accordion from "../components/Accordion";
 import CollapsibleSection from "../components/CollapsibleSection";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { GATE_LABELS, ZONE_LABELS } from "../data/mapLabels";
 
 const NAV_URL = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Walesby Forest, Nottinghamshire, NG22 9NG");
+const MAP_SRC = "map/festival-map.jpg";
 
-// Draws the official map plus a red pin at the dropped spot into an offscreen
-// canvas, entirely client-side (the map image is already service-worker
-// cached) so it works with zero signal, then shares or downloads it as a PNG.
+// Draws the map, its zone/gate labels and a red pin at the dropped spot into
+// an offscreen canvas, entirely client-side (everything's already
+// service-worker cached) so it works with zero signal, then shares or
+// downloads it as an image.
 async function shareMapPin(pin, setSharing) {
   setSharing(true);
   try {
     const img = new Image();
-    img.src = "map/site-map.jpg";
+    img.src = MAP_SRC;
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = reject;
@@ -24,6 +27,36 @@ async function shareMapPin(pin, setSharing) {
     canvas.height = img.naturalHeight;
     const ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0);
+
+    const labelFontSize = canvas.width * 0.014;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = `700 ${labelFontSize}px ui-sans-serif, system-ui, sans-serif`;
+    for (const { text, xPct, yPct } of ZONE_LABELS) {
+      const x = (xPct / 100) * canvas.width;
+      const y = (yPct / 100) * canvas.height;
+      const w = ctx.measureText(text).width;
+      const padX = labelFontSize * 0.5;
+      const padY = labelFontSize * 0.4;
+      ctx.fillStyle = "rgba(18,22,15,0.72)";
+      ctx.beginPath();
+      ctx.roundRect(x - w / 2 - padX, y - labelFontSize / 2 - padY, w + padX * 2, labelFontSize + padY * 2, labelFontSize);
+      ctx.fill();
+      ctx.fillStyle = "#f2ede0";
+      ctx.fillText(text, x, y + labelFontSize * 0.05);
+    }
+    const gateR = canvas.width * 0.016;
+    ctx.font = `800 ${gateR}px ui-sans-serif, system-ui, sans-serif`;
+    for (const { letter, xPct, yPct } of GATE_LABELS) {
+      const x = (xPct / 100) * canvas.width;
+      const y = (yPct / 100) * canvas.height;
+      ctx.fillStyle = "#d6553f";
+      ctx.beginPath();
+      ctx.arc(x, y, gateR, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.fillText(letter, x, y + gateR * 0.08);
+    }
 
     const x = (pin.xPct / 100) * canvas.width;
     const y = (pin.yPct / 100) * canvas.height;
@@ -47,8 +80,7 @@ async function shareMapPin(pin, setSharing) {
     ctx.fill();
     ctx.restore();
 
-    // JPEG, not PNG — this is a photographic map image, so JPEG keeps the
-    // shared file small (a few hundred KB instead of several MB) which
+    // JPEG, not PNG — keeps the shared file small (a few hundred KB) which
     // matters when sending it over patchy signal near the venue.
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.85));
     const file = new File([blob], "vco-my-spot.jpg", { type: "image/jpeg" });
@@ -129,14 +161,37 @@ export default function MapPage({ info }) {
         </div>
 
         <div className="overflow-auto rounded-xl" style={{ maxHeight: "60vh" }}>
-          <div ref={imgWrapRef} onClick={handleMapClick} className="relative w-full cursor-crosshair">
-            <img
-              src="map/site-map.jpg"
-              alt="Vegan Camp Out official festival map"
-              className="w-full select-none"
-              style={{ width: `${zoom * 100}%`, maxWidth: "none" }}
-              draggable={false}
-            />
+          {/* Width lives on this wrapper (not the img) at zoom time, so the
+              percentage-positioned labels/gates/pin below track the image's
+              actual rendered size at every zoom level instead of staying
+              anchored to the unzoomed 100% box. */}
+          <div
+            ref={imgWrapRef}
+            onClick={handleMapClick}
+            className="relative cursor-crosshair"
+            style={{ width: `${zoom * 100}%`, maxWidth: "none" }}
+          >
+            <img src={MAP_SRC} alt="Vegan Camp Out festival map (unofficial, hand-drawn layout)" className="w-full select-none" draggable={false} />
+
+            {ZONE_LABELS.map((label) => (
+              <span
+                key={label.text}
+                className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-[#12160fbf] px-1.5 py-0.5 text-[9px] font-bold leading-none text-[#f2ede0] shadow-sm"
+                style={{ left: `${label.xPct}%`, top: `${label.yPct}%` }}
+              >
+                {label.text}
+              </span>
+            ))}
+            {GATE_LABELS.map((gate) => (
+              <span
+                key={gate.letter}
+                className="pointer-events-none absolute flex h-4 w-4 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--vco-red)] text-[9px] font-extrabold text-white shadow"
+                style={{ left: `${gate.xPct}%`, top: `${gate.yPct}%` }}
+              >
+                {gate.letter}
+              </span>
+            ))}
+
             {pin && (
               <button
                 type="button"
