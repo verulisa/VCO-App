@@ -1,0 +1,136 @@
+<svg width="1400" height="1751" viewBox="0 0 1400 1751" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <style>
+      .zone { stroke: #0e1209; stroke-width: 3; stroke-linejoin: round; }
+      .amenity { fill: #f2ede0; stroke: #12160f; stroke-width: 2; }
+      .amenity-txt { fill: #12160f; font-size: 18px; font-weight: 800; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="1751" fill="#12452f" />
+
+  <!-- ===================== ROADS (under zones' strokes but visually as paths between them) ===================== -->
+  <g stroke="#d8caa0" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.7">
+    <path d="M420,150 L360,420 L420,540"/>
+    <path d="M700,420 L790,470 L810,540"/>
+    <path d="M900,530 L830,650"/>
+    <path d="M480,545 L500,655"/>
+    <path d="M330,700 L280,900"/>
+    <path d="M620,700 L650,830"/>
+    <path d="M860,720 L900,900"/>
+    <path d="M280,950 L240,1150 L280,1250"/>
+    <path d="M550,1000 L600,1200 L580,1400"/>
+    <path d="M850,900 L820,1200 L900,1450"/>
+    <path d="M1050,900 L1080,1450"/>
+    <path d="M1150,950 L1170,1450"/>
+    <path d="M280,1250 Q350,1480 620,1560 Q850,1500 900,1450"/>
+    <path d="M900,1450 Q1000,1520 1080,1500"/>
+  </g>
+
+  <!-- ===================== ZONES ===================== -->
+  <polygon class="zone" points="430,55 680,90 685,375 450,415 190,300 280,155" fill="#4f9d4a"/>
+  <polygon class="zone" points="190,300 450,415 420,545 140,585 35,400" fill="#d16a3a"/>
+  <polygon class="zone" points="450,415 600,415 595,490 490,545" fill="#c1432c"/>
+  <polygon class="zone" points="685,375 850,400 935,440 830,545 700,470" fill="#b8c23a"/>
+  <polygon class="zone" points="935,440 1030,390 1195,420 1195,590 1050,650 935,530" fill="#b355c4"/>
+  <polygon class="zone" points="600,485 935,440 1050,650 650,660" fill="#c99a3a"/>
+
+  <polygon class="zone" points="330,650 620,660 600,900 390,880 380,700" fill="#c1432c"/>
+  <polygon class="zone" points="170,760 390,790 370,950 150,920" fill="#3f6fb8"/>
+  <polygon class="zone" points="0,880 170,850 150,1000 0,970" fill="#2d5490"/>
+  <polygon class="zone" points="580,700 870,680 880,860 700,900 600,850" fill="#8a7038"/>
+  <polygon class="zone" points="850,650 1080,660 1080,850 900,860 830,750" fill="#3fa08c"/>
+  <polygon class="zone" points="650,650 780,628 790,700 670,715" fill="#c99a3a"/>
+
+  <polygon class="zone" points="400,850 600,830 750,860 700,1080 420,1080" fill="#6b3fa0"/>
+  <polygon class="zone" points="150,920 400,970 500,1150 350,1280 100,1200" fill="#20291c"/>
+
+  <polygon class="zone" points="650,1000 950,970 950,1150 700,1200" fill="#3fa08c"/>
+  <polygon class="zone" points="950,970 1230,950 1230,1150 950,1150" fill="#3fa08c"/>
+  <polygon class="zone" points="950,1150 1150,1130 1150,1280 950,1270" fill="#4bb09a"/>
+  <polygon class="zone" points="700,1200 950,1150 950,1350 650,1450" fill="#3fa08c"/>
+  <polygon class="zone" points="950,1270 1150,1280 1150,1420 950,1400" fill="#4bb09a"/>
+  <polygon class="zone" points="1150,950 1400,930 1400,1450 1150,1420" fill="#8a9280"/>
+
+  <!-- ===================== ZONE LABELS ===================== -->
+  <g fill="#12160f" font-weight="800" text-anchor="middle">
+    <text x="480" y="230" font-size="28">Motorhomes</text>
+    <text x="480" y="262" font-size="28">&amp; Caravans</text>
+    <text x="260" y="450" font-size="28">VIP Parking</text>
+    <text x="530" y="470" font-size="16">VIP Zone</text>
+    <text x="790" y="450" font-size="24">Pre-Pitched</text>
+    <text x="1075" y="530" font-size="26">Glamping</text>
+    <text x="790" y="580" font-size="22">Mind &amp; Body</text>
+
+    <text x="470" y="740" font-size="19" fill="#f2ede0">Music Stage</text>
+    <text x="470" y="820" font-size="19" fill="#f2ede0">Main Stage</text>
+    <text x="720" y="700" font-size="14">Education</text>
+    <text x="960" y="760" font-size="22" fill="#f2ede0">Family Arena</text>
+    <text x="730" y="790" font-size="20" fill="#f2ede0">Stalls &amp; Food</text>
+    <text x="270" y="860" font-size="19" fill="#f2ede0">Accessible</text>
+    <text x="75" y="925" font-size="14" fill="#f2ede0">Acc.</text>
+    <text x="75" y="942" font-size="14" fill="#f2ede0">Parking</text>
+    <text x="540" y="950" font-size="21" fill="#f2ede0">The Jungle</text>
+    <text x="250" y="1075" font-size="16" fill="#f2ede0">Showers &amp;</text>
+    <text x="250" y="1093" font-size="16" fill="#f2ede0">Toilets</text>
+    <text x="800" y="1075" font-size="17" fill="#f2ede0">General</text>
+    <text x="800" y="1093" font-size="17" fill="#f2ede0">Camping</text>
+    <text x="1080" y="1040" font-size="16" fill="#f2ede0">Family</text>
+    <text x="1080" y="1058" font-size="16" fill="#f2ede0">Camping</text>
+    <text x="1050" y="1198" font-size="12" fill="#f2ede0">Quiet</text>
+    <text x="1050" y="1212" font-size="12" fill="#f2ede0">Camping</text>
+    <text x="790" y="1285" font-size="17" fill="#f2ede0">General</text>
+    <text x="790" y="1303" font-size="17" fill="#f2ede0">Camping</text>
+    <text x="1050" y="1338" font-size="12" fill="#f2ede0">Solo</text>
+    <text x="1050" y="1352" font-size="12" fill="#f2ede0">Camping</text>
+    <text x="1270" y="1170" font-size="18">Day / Family</text>
+    <text x="1270" y="1192" font-size="18">Parking</text>
+  </g>
+
+  <!-- ===================== AMENITY ICONS ===================== -->
+  <g>
+    <circle class="amenity" cx="330" cy="230" r="20"/><text class="amenity-txt" x="330" y="237">T</text>
+    <circle class="amenity" cx="500" cy="330" r="20"/><text class="amenity-txt" x="500" y="337">W</text>
+    <circle class="amenity" cx="245" cy="360" r="20"/><text class="amenity-txt" x="245" y="367">W</text>
+    <circle class="amenity" cx="160" cy="560" r="20"/><text class="amenity-txt" x="160" y="567">W</text>
+    <circle class="amenity" cx="520" cy="500" r="18"/><text class="amenity-txt" x="520" y="507" font-size="15">A</text>
+    <circle class="amenity" cx="775" cy="500" r="18"/><text class="amenity-txt" x="775" y="507" font-size="15">A</text>
+    <circle class="amenity" cx="1000" cy="440" r="18"/><text class="amenity-txt" x="1000" y="447" font-size="15">S</text>
+    <circle class="amenity" cx="1135" cy="480" r="18"/><text class="amenity-txt" x="1135" y="487" font-size="15">A</text>
+    <circle class="amenity" cx="895" cy="618" r="18"/><text class="amenity-txt" x="895" y="625" font-size="15">+</text>
+    <circle class="amenity" cx="460" cy="690" r="18"/><text class="amenity-txt" x="460" y="697" font-size="15">B</text>
+    <circle class="amenity" cx="210" cy="820" r="18"/><text class="amenity-txt" x="210" y="827" font-size="15">T</text>
+    <circle class="amenity" cx="240" cy="1010" r="18"/><text class="amenity-txt" x="240" y="1017" font-size="15">S</text>
+    <circle class="amenity" cx="310" cy="1040" r="18"/><text class="amenity-txt" x="310" y="1047" font-size="15">T</text>
+    <circle class="amenity" cx="1000" cy="700" r="18"/><text class="amenity-txt" x="1000" y="707" font-size="15">T</text>
+    <circle class="amenity" cx="960" cy="1010" r="16"/><text class="amenity-txt" x="960" y="1016" font-size="13">W</text>
+    <circle class="amenity" cx="1080" cy="990" r="16"/><text class="amenity-txt" x="1080" y="996" font-size="13">C</text>
+    <circle class="amenity" cx="1130" cy="990" r="16"/><text class="amenity-txt" x="1130" y="996" font-size="13">T</text>
+    <circle class="amenity" cx="760" cy="1120" r="16"/><text class="amenity-txt" x="760" y="1126" font-size="13">T</text>
+    <circle class="amenity" cx="720" cy="1180" r="16"/><text class="amenity-txt" x="720" y="1186" font-size="13">C</text>
+    <circle class="amenity" cx="790" cy="1210" r="16"/><text class="amenity-txt" x="790" y="1216" font-size="13">W</text>
+    <circle class="amenity" cx="760" cy="1330" r="16"/><text class="amenity-txt" x="760" y="1336" font-size="13">W</text>
+    <circle class="amenity" cx="670" cy="1400" r="16"/><text class="amenity-txt" x="670" y="1406" font-size="13">B</text>
+  </g>
+
+  <!-- ===================== GATES (perimeter, below every zone) ===================== -->
+  <g>
+    <circle cx="250" cy="1500" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
+    <text x="250" y="1510" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">A</text>
+    <circle cx="340" cy="1545" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
+    <text x="340" y="1555" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">B</text>
+    <circle cx="450" cy="1580" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
+    <text x="450" y="1590" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">C</text>
+    <circle cx="650" cy="1610" r="32" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
+    <text x="650" y="1621" text-anchor="middle" font-size="28" font-weight="800" fill="#fff">D</text>
+    <circle cx="900" cy="1580" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
+    <text x="900" y="1590" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">E</text>
+    <circle cx="1070" cy="1550" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
+    <text x="1070" y="1560" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">F</text>
+  </g>
+
+  <!-- Legend -->
+  <g font-size="20" fill="#f2ede0" font-weight="700">
+    <text x="30" y="1700">+ Medical · T Toilets · A Accessible toilets · S Showers · W Water · B Bar/drinks · C Coffee</text>
+  </g>
+</svg>

@@ -13,7 +13,7 @@ export default defineConfig({
         "icons/favicon-16x16.png",
         "icons/favicon-32x32.png",
         "icons/apple-touch-icon.png",
-        "map/festival-map.jpg",
+        "map/festival-map.svg",
         "brand/logo.jpg",
       ],
       manifest: {
