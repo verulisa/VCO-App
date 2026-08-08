@@ -208,7 +208,11 @@ body {
   }
 }
 .page-in {
-  animation: vco-page-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  /* forwards, not both — if the animation ever fails to start (seen on some
+     WebKit builds when a keyed element remounts), the page falls back to its
+     normal opacity:1 instead of staying stuck invisible until another tap
+     forces a repaint. */
+  animation: vco-page-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Backdrop fade-in for modal/drawer overlays. */
@@ -221,7 +225,7 @@ body {
   }
 }
 .modal-backdrop {
-  animation: vco-backdrop-in 0.2s ease both;
+  animation: vco-backdrop-in 0.2s ease forwards;
 }
 
 /* Bottom/center sheet entrance — slides up and settles with a soft
@@ -237,7 +241,7 @@ body {
   }
 }
 .sheet-in {
-  animation: vco-sheet-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: vco-sheet-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Right-side drawer (More menu) slides in from the real screen edge. */
@@ -252,7 +256,7 @@ body {
   }
 }
 .drawer-in {
-  animation: vco-drawer-in 0.26s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: vco-drawer-in 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Accordion answer / any content revealed on toggle. */
@@ -267,7 +271,7 @@ body {
   }
 }
 .reveal-in {
-  animation: vco-reveal 0.18s ease-out both;
+  animation: vco-reveal 0.18s ease-out forwards;
 }
 
 @keyframes vco-pop {
