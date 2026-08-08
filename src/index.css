@@ -64,6 +64,17 @@ html.large-text {
   zoom: 1.18;
 }
 
+/* The header was already tight on room (logo, title, weather/theme icons,
+   nickname pill all sharing one row) — at 1.18x that squeeze was enough to
+   truncate "Vegan CAMP OUT" down to just "Vega...". Claw back width from
+   the least essential part (the nickname pill) instead of the title. */
+html.large-text .vco-nickname-pill {
+  max-width: 62px;
+}
+html.large-text .vco-header-right {
+  gap: 2px;
+}
+
 body {
   background: var(--vco-bg);
   color: var(--vco-text);

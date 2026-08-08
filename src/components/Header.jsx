@@ -37,7 +37,7 @@ export default function Header({
         </div>
       </div>
 
-      <div className="flex shrink-0 items-center gap-1">
+      <div className="vco-header-right flex shrink-0 items-center gap-1">
         <button
           type="button"
           onClick={onOpenMorningCard}
@@ -70,7 +70,7 @@ export default function Header({
         <button
           type="button"
           onClick={onNicknameClick}
-          className="tap flex max-w-[110px] items-center gap-1 whitespace-nowrap rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] py-1 pl-1 pr-2 text-[10.5px] text-[var(--vco-text)]"
+          className="tap vco-nickname-pill flex max-w-[110px] items-center gap-1 whitespace-nowrap rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] py-1 pl-1 pr-2 text-[10.5px] text-[var(--vco-text)]"
         >
           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--vco-green)] text-[10px]">
             {emoji}
