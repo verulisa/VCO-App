@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Mail } from "lucide-react";
+import { X, Share2, Smartphone, HelpCircle, Info, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Mail } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
 import { APP_URL } from "../utils/appUrl";
@@ -29,7 +29,6 @@ function Section({ icon: Icon, title, children }) {
 export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastBackupAt, onOpenProfile, largeText, onToggleLargeText }) {
   const [qrDataUrl, setQrDataUrl] = useState(null);
   const [supportQrDataUrl, setSupportQrDataUrl] = useState(null);
-  const [copied, setCopied] = useState(false);
   const [showQr, setShowQr] = useState(false);
   // Collapsed by default once already installed — the instructions are
   // dead weight at that point. Still open by default for anyone who hasn't
@@ -53,21 +52,11 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
     QRCode.toDataURL(SUPPORT_URL, { margin: 1, width: 180, color: { dark: "#12160f", light: "#f2ede0" } }).then(setSupportQrDataUrl);
   }, []);
 
-  function copyLink() {
-    navigator.clipboard?.writeText(APP_URL);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1800);
-  }
-
   async function shareApp() {
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: "Vegan Camp Out — Unofficial Fan App", url: APP_URL });
-      } catch {
-        // User cancelled the share sheet — nothing to do.
-      }
-    } else {
-      copyLink();
+    try {
+      await navigator.share({ title: "Vegan Camp Out — Unofficial Fan App", url: APP_URL });
+    } catch {
+      // User cancelled the share sheet — nothing to do.
     }
   }
 
@@ -142,15 +131,6 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
                 Share via…
               </button>
             )}
-            <button
-              type="button"
-              onClick={copyLink}
-              className="tap mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--vco-surface-raised)] py-2 text-[11.5px] font-semibold text-[var(--vco-text)]"
-            >
-              <Clipboard size={13} />
-              {copied ? "Copied!" : "Copy link"}
-            </button>
-
             <button
               type="button"
               onClick={() => setShowQr((v) => !v)}
