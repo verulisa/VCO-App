@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CalendarPlus, Clipboard, Share2, Sparkles } from "lucide-react";
+import { CalendarPlus, Clipboard, HelpCircle, Share2, Sparkles } from "lucide-react";
 import ActCard from "../components/ActCard";
 import BreakRow from "../components/BreakRow";
 import ClashBanner from "../components/ClashBanner";
@@ -10,12 +10,14 @@ import { buildPlanText } from "../utils/planText";
 import { formatDayHeading } from "../utils/time";
 
 const isAndroid = typeof navigator !== "undefined" && /Android/i.test(navigator.userAgent);
+const isIOS = typeof navigator !== "undefined" && /iPhone|iPad|iPod/i.test(navigator.userAgent);
 const canNativeShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
 
 export default function SchedulePage({ schedule, toggleSave, lineup }) {
   const { savedIds, savedActs, scheduleRows, clashPairs, importIds } = schedule;
   const now = useNow();
   const [copied, setCopied] = useState(false);
+  const [showIcsHelp, setShowIcsHelp] = useState(false);
 
   async function sharePlanText() {
     const text = buildPlanText(savedActs);
@@ -82,6 +84,37 @@ export default function SchedulePage({ schedule, toggleSave, lineup }) {
         Adds a 15-min-before alarm to each — your phone's own Calendar app reminds you even offline and locked.
         {isAndroid && " On Android it downloads a file — open it from your notification shade or Downloads to add it."}
       </p>
+
+      {savedActs.length > 0 && (isAndroid || isIOS) && (
+        <div className="-mt-2 flex flex-col items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setShowIcsHelp((v) => !v)}
+            className="flex items-center gap-1 text-[10.5px] font-semibold text-[var(--vco-text-faint)] underline decoration-dotted underline-offset-2"
+          >
+            <HelpCircle size={12} />
+            Not sure how to add it? Tap here
+          </button>
+          {showIcsHelp && (
+            <ol className="reveal-in w-full list-decimal space-y-1.5 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] p-3 pl-7 text-[11px] leading-relaxed text-[var(--vco-text-muted)]">
+              {isAndroid ? (
+                <>
+                  <li>Tap "Add schedule to Calendar" above — it downloads a small file.</li>
+                  <li>Open it from the download notification, or from your Downloads.</li>
+                  <li>If you've got more than one calendar app, you'll be asked which one to open it with — pick your calendar app.</li>
+                  <li>It'll list every event — tap "Add all" to add them in one go.</li>
+                </>
+              ) : (
+                <>
+                  <li>Tap "Add schedule to Calendar" above.</li>
+                  <li>It opens straight into your Calendar app — tap to expand and check the events.</li>
+                  <li>Tap "Add" to add them all to your calendar.</li>
+                </>
+              )}
+            </ol>
+          )}
+        </div>
+      )}
 
       {savedActs.length > 0 && (
         <button

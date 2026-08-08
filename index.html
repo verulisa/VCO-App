@@ -53,6 +53,33 @@
         #vco-splash img { animation: none; }
       }
     </style>
+    <script>
+      // GitHub Pages only ever serves the latest build — it doesn't keep old
+      // hashed JS/CSS files around after a new deploy. If a browser is still
+      // holding an older cached copy of this HTML (from before a deploy) its
+      // <script type="module"> tag points at a bundle filename that no
+      // longer exists, the fetch 404s, nothing ever renders, and all that's
+      // left on screen is this page's plain background colour — a "blank
+      // screen" with no error visible to the user. Catch that one failure
+      // and force a real reload (once per tab) to fetch the current shell.
+      (function () {
+        try {
+          if (sessionStorage.getItem("vco-stale-reload")) return;
+        } catch (e) {}
+        window.addEventListener(
+          "error",
+          function (e) {
+            if (e.target && e.target.tagName === "SCRIPT" && e.target.type === "module") {
+              try {
+                sessionStorage.setItem("vco-stale-reload", "1");
+              } catch (e) {}
+              location.reload();
+            }
+          },
+          true
+        );
+      })();
+    </script>
   </head>
   <body class="bg-[--vco-bg] text-[--vco-text]" style="background: #151b10">
     <div id="root"></div>
