@@ -1,224 +1,165 @@
 <svg width="1400" height="1751" viewBox="0 0 1400 1751" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, sans-serif">
-  <defs>
-    <style>
-      .zone { stroke: #0e1209; stroke-width: 3; stroke-linejoin: round; }
-      .amenity { fill: #f2ede0; stroke: #12160f; stroke-width: 2; }
-      .amenity-txt { fill: #12160f; font-size: 18px; font-weight: 800; text-anchor: middle; }
-    </style>
-
-    <!-- Simple original pictograms (not copied from any real map) so the
-         eye has actual landmarks to recognise — a tent, a stall, a stage —
-         instead of only flat colour + text. -->
-    <symbol id="ico-tent" viewBox="0 0 60 50">
-      <path d="M30,2 L58,46 L2,46 Z" fill="#e4dcc0" stroke="#12160f" stroke-width="2.5" stroke-linejoin="round"/>
-      <path d="M30,2 L30,46" stroke="#12160f" stroke-width="2"/>
-      <path d="M30,22 L22,46 M30,22 L38,46" stroke="#12160f" stroke-width="2"/>
-    </symbol>
-    <symbol id="ico-bigtop" viewBox="0 0 70 56">
-      <path d="M35,2 L66,50 L4,50 Z" fill="#d6553f" stroke="#12160f" stroke-width="2.5" stroke-linejoin="round"/>
-      <path d="M35,2 L35,50 M18,50 L35,20 L52,50" stroke="#f2ede0" stroke-width="3.5" fill="none"/>
-      <circle cx="35" cy="2" r="3" fill="#12160f"/>
-    </symbol>
-    <symbol id="ico-belltent" viewBox="0 0 60 50">
-      <path d="M30,2 C10,10 6,46 6,46 L54,46 C54,46 50,10 30,2 Z" fill="#ede3c8" stroke="#12160f" stroke-width="2.5"/>
-      <circle cx="30" cy="2" r="3" fill="#12160f"/>
-    </symbol>
-    <symbol id="ico-hut" viewBox="0 0 44 40">
-      <rect x="6" y="20" width="32" height="18" fill="#7a5233" stroke="#12160f" stroke-width="2"/>
-      <path d="M0,20 L22,4 L44,20 Z" fill="#5c3a22" stroke="#12160f" stroke-width="2" stroke-linejoin="round"/>
-    </symbol>
-    <symbol id="ico-van" viewBox="0 0 70 40">
-      <rect x="2" y="10" width="66" height="22" rx="6" fill="#e8e4d8" stroke="#12160f" stroke-width="2.5"/>
-      <rect x="6" y="14" width="18" height="10" rx="2" fill="#7fa8c9"/>
-      <circle cx="18" cy="34" r="6" fill="#12160f"/>
-      <circle cx="54" cy="34" r="6" fill="#12160f"/>
-    </symbol>
-    <symbol id="ico-car" viewBox="0 0 56 32">
-      <rect x="2" y="10" width="52" height="14" rx="6" fill="#5a6470" stroke="#12160f" stroke-width="2.5"/>
-      <path d="M14,10 L20,2 L38,2 L44,10 Z" fill="#5a6470" stroke="#12160f" stroke-width="2.5" stroke-linejoin="round"/>
-      <circle cx="14" cy="26" r="5.5" fill="#12160f"/>
-      <circle cx="44" cy="26" r="5.5" fill="#12160f"/>
-    </symbol>
-    <symbol id="ico-stage" viewBox="0 0 70 50">
-      <rect x="8" y="30" width="54" height="16" fill="#2b2b2b" stroke="#12160f" stroke-width="2.5"/>
-      <rect x="4" y="6" width="10" height="30" fill="#1c1c1c" stroke="#12160f" stroke-width="2"/>
-      <rect x="56" y="6" width="10" height="30" fill="#1c1c1c" stroke="#12160f" stroke-width="2"/>
-      <line x1="14" y1="8" x2="56" y2="8" stroke="#12160f" stroke-width="2.5"/>
-      <circle cx="35" cy="20" r="6" fill="#eeb43a"/>
-    </symbol>
-    <symbol id="ico-carousel" viewBox="0 0 60 56">
-      <path d="M30,2 L46,20 L14,20 Z" fill="#d6553f" stroke="#12160f" stroke-width="2.5" stroke-linejoin="round"/>
-      <rect x="28" y="18" width="4" height="18" fill="#12160f"/>
-      <line x1="30" y1="20" x2="10" y2="40" stroke="#12160f" stroke-width="2"/>
-      <line x1="30" y1="20" x2="50" y2="40" stroke="#12160f" stroke-width="2"/>
-      <line x1="30" y1="20" x2="30" y2="42" stroke="#12160f" stroke-width="2"/>
-      <ellipse cx="30" cy="44" rx="22" ry="6" fill="#eeb43a" stroke="#12160f" stroke-width="2.5"/>
-    </symbol>
-  </defs>
-
-  <rect width="1400" height="1751" fill="#0b2818" />
-
-  <!-- ===================== SITE SILHOUETTE ===================== -->
-  <!-- One continuous "grass" shape under everything, matching the real
-       site's outer boundary — this is what actually makes it read as one
-       connected festival ground instead of scattered floating shapes.
-       Any gap between the specific coloured zones below just shows this
-       same ground colour through, exactly like real grass/paths between
-       plots, instead of the black void. -->
-  <polygon points="420,40 690,75 940,365 1210,375 1210,660 1245,940 1415,915 1415,1465 940,1465
-                    630,1465 380,1100 85,1300 -20,990 -20,860 20,385 175,285 265,140"
-           fill="#2f5c3f" stroke="#0e1209" stroke-width="4" stroke-linejoin="round"/>
-
-  <!-- ===================== ROADS — one connected network ===================== -->
-  <g stroke="#d8caa0" stroke-width="15" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
-    <path d="M650,1610 L620,1470 L560,1250 L500,1000 L480,750 L470,540 L480,420 L420,270 L390,150"/>
-    <path d="M480,420 L620,415 L700,470 L790,530 L850,545"/>
-    <path d="M700,470 L800,430 L900,400"/>
-    <path d="M850,545 L900,600 L900,660"/>
-    <path d="M470,540 L330,560 L230,470 L170,400"/>
-    <path d="M500,1000 L620,900 L700,780 L720,660"/>
-    <path d="M720,660 L860,650 L960,655"/>
-    <path d="M500,1000 L350,1010 L230,970 L150,900"/>
-    <path d="M560,1250 L350,1230 L230,1150 L170,1000"/>
-    <path d="M560,1250 L750,1240 L850,1180 L900,1000"/>
-    <path d="M900,1000 L1000,970 L1080,935"/>
-    <path d="M900,1000 L950,1160 L950,1290 L900,1450"/>
-    <path d="M1080,935 L1150,1000 L1150,1160 L1150,1300 L1120,1440"/>
-    <path d="M620,1470 L500,1440 L400,1350"/>
-    <path d="M620,1470 L780,1450 L900,1450"/>
-    <path d="M650,1610 L450,1580 L340,1545 L250,1500"/>
-    <path d="M650,1610 L900,1580 L1070,1550"/>
-  </g>
-
-  <!-- ===================== ZONES ===================== -->
-  <polygon class="zone" points="430,55 680,90 685,375 450,415 190,300 280,155" fill="#4f9d4a"/>
-  <polygon class="zone" points="190,300 450,415 420,545 140,585 35,400" fill="#d16a3a"/>
-  <polygon class="zone" points="450,415 600,415 595,490 490,545" fill="#c1432c"/>
-  <polygon class="zone" points="685,375 850,400 935,440 830,545 700,470" fill="#b8c23a"/>
-  <polygon class="zone" points="935,440 1030,390 1195,420 1195,590 1050,650 935,530" fill="#b355c4"/>
-
-  <polygon class="zone" points="170,760 390,790 370,950 150,920" fill="#3f6fb8"/>
-  <polygon class="zone" points="0,880 170,850 150,1000 0,970" fill="#2d5490"/>
-
-  <polygon class="zone" points="400,850 600,830 750,860 700,1080 420,1080" fill="#6b3fa0"/>
-  <polygon class="zone" points="150,920 400,970 500,1150 350,1280 100,1200" fill="#20291c"/>
-
-  <polygon class="zone" points="650,1000 950,970 950,1150 700,1200" fill="#3fa08c"/>
-  <polygon class="zone" points="950,970 1230,950 1230,1150 950,1150" fill="#3fa08c"/>
-  <polygon class="zone" points="950,1150 1150,1130 1150,1280 950,1270" fill="#4bb09a"/>
-  <polygon class="zone" points="700,1200 950,1150 950,1350 650,1450" fill="#3fa08c"/>
-  <polygon class="zone" points="950,1270 1150,1280 1150,1420 950,1400" fill="#4bb09a"/>
-  <polygon class="zone" points="1150,950 1400,930 1400,1450 1150,1420" fill="#8a9280"/>
-
-  <!-- ===================== SCENE PICTOGRAMS ===================== -->
-  <g>
-    <use href="#ico-van" x="380" y="105" width="72" height="42"/>
-    <use href="#ico-van" x="545" y="90" width="72" height="42"/>
-    <use href="#ico-car" x="195" y="370" width="58" height="34"/>
-    <use href="#ico-tent" x="765" y="395" width="46" height="40"/>
-    <use href="#ico-belltent" x="1050" y="455" width="52" height="44"/>
-
-    <use href="#ico-bigtop" x="360" y="670" width="72" height="58"/>
-    <use href="#ico-bigtop" x="460" y="710" width="72" height="58"/>
-    <use href="#ico-stage" x="500" y="880" width="66" height="48"/>
-
-    <use href="#ico-hut" x="615" y="735" width="36" height="32"/>
-    <use href="#ico-hut" x="662" y="722" width="36" height="32"/>
-    <use href="#ico-hut" x="709" y="730" width="36" height="32"/>
-    <use href="#ico-hut" x="756" y="748" width="36" height="32"/>
-
-    <use href="#ico-carousel" x="930" y="675" width="54" height="50"/>
-
-    <use href="#ico-tent" x="248" y="792" width="38" height="32"/>
-    <use href="#ico-car" x="30" y="895" width="46" height="27"/>
-
-    <use href="#ico-tent" x="780" y="1000" width="36" height="30"/>
-    <use href="#ico-tent" x="1060" y="985" width="34" height="28"/>
-    <use href="#ico-tent" x="770" y="1220" width="36" height="30"/>
-
-    <use href="#ico-car" x="1225" y="1020" width="46" height="27"/>
-    <use href="#ico-car" x="1290" y="1130" width="46" height="27"/>
-  </g>
-
-  <!-- ===================== ZONE LABELS ===================== -->
-  <g fill="#12160f" font-weight="800" text-anchor="middle">
-    <text x="480" y="230" font-size="28">Motorhomes</text>
-    <text x="480" y="262" font-size="28">&amp; Caravans</text>
-    <text x="260" y="450" font-size="28">VIP Parking</text>
-    <text x="530" y="470" font-size="16" fill="#f2ede0">VIP Zone</text>
-    <text x="790" y="450" font-size="24">Pre-Pitched</text>
-    <text x="1075" y="530" font-size="26">Glamping</text>
-    <text x="790" y="580" font-size="22" fill="#f2ede0">Mind &amp; Body</text>
-
-    <text x="470" y="740" font-size="19" fill="#f2ede0">Music Stage</text>
-    <text x="470" y="820" font-size="19" fill="#f2ede0">Main Stage</text>
-    <text x="720" y="700" font-size="14" fill="#f2ede0">Education</text>
-    <text x="960" y="760" font-size="22" fill="#f2ede0">Family Arena</text>
-    <text x="730" y="790" font-size="20" fill="#f2ede0">Stalls &amp; Food</text>
-    <text x="270" y="860" font-size="19" fill="#f2ede0">Accessible</text>
-    <text x="75" y="925" font-size="14" fill="#f2ede0">Acc.</text>
-    <text x="75" y="942" font-size="14" fill="#f2ede0">Parking</text>
-    <text x="540" y="950" font-size="21" fill="#f2ede0">The Jungle</text>
-    <text x="250" y="1075" font-size="16" fill="#f2ede0">Showers &amp;</text>
-    <text x="250" y="1093" font-size="16" fill="#f2ede0">Toilets</text>
-    <text x="800" y="1075" font-size="17" fill="#f2ede0">General</text>
-    <text x="800" y="1093" font-size="17" fill="#f2ede0">Camping</text>
-    <text x="1080" y="1040" font-size="16" fill="#f2ede0">Family</text>
-    <text x="1080" y="1058" font-size="16" fill="#f2ede0">Camping</text>
-    <text x="1050" y="1198" font-size="12" fill="#f2ede0">Quiet</text>
-    <text x="1050" y="1212" font-size="12" fill="#f2ede0">Camping</text>
-    <text x="790" y="1285" font-size="17" fill="#f2ede0">General</text>
-    <text x="790" y="1303" font-size="17" fill="#f2ede0">Camping</text>
-    <text x="1050" y="1338" font-size="12" fill="#f2ede0">Solo</text>
-    <text x="1050" y="1352" font-size="12" fill="#f2ede0">Camping</text>
-    <text x="1270" y="1170" font-size="18">Day / Family</text>
-    <text x="1270" y="1192" font-size="18">Parking</text>
-  </g>
-
-  <!-- ===================== AMENITY ICONS ===================== -->
-  <g>
-    <circle class="amenity" cx="330" cy="230" r="20"/><text class="amenity-txt" x="330" y="237">T</text>
-    <circle class="amenity" cx="500" cy="330" r="20"/><text class="amenity-txt" x="500" y="337">W</text>
-    <circle class="amenity" cx="245" cy="360" r="20"/><text class="amenity-txt" x="245" y="367">W</text>
-    <circle class="amenity" cx="160" cy="560" r="20"/><text class="amenity-txt" x="160" y="567">W</text>
-    <circle class="amenity" cx="520" cy="500" r="18"/><text class="amenity-txt" x="520" y="507" font-size="15">A</text>
-    <circle class="amenity" cx="775" cy="500" r="18"/><text class="amenity-txt" x="775" y="507" font-size="15">A</text>
-    <circle class="amenity" cx="1000" cy="440" r="18"/><text class="amenity-txt" x="1000" y="447" font-size="15">S</text>
-    <circle class="amenity" cx="1135" cy="480" r="18"/><text class="amenity-txt" x="1135" y="487" font-size="15">A</text>
-    <circle class="amenity" cx="895" cy="618" r="18"/><text class="amenity-txt" x="895" y="625" font-size="15">+</text>
-    <circle class="amenity" cx="460" cy="690" r="18"/><text class="amenity-txt" x="460" y="697" font-size="15">B</text>
-    <circle class="amenity" cx="210" cy="820" r="18"/><text class="amenity-txt" x="210" y="827" font-size="15">T</text>
-    <circle class="amenity" cx="240" cy="1010" r="18"/><text class="amenity-txt" x="240" y="1017" font-size="15">S</text>
-    <circle class="amenity" cx="310" cy="1040" r="18"/><text class="amenity-txt" x="310" y="1047" font-size="15">T</text>
-    <circle class="amenity" cx="1000" cy="700" r="18"/><text class="amenity-txt" x="1000" y="707" font-size="15">T</text>
-    <circle class="amenity" cx="960" cy="1010" r="16"/><text class="amenity-txt" x="960" y="1016" font-size="13">W</text>
-    <circle class="amenity" cx="1080" cy="990" r="16"/><text class="amenity-txt" x="1080" y="996" font-size="13">C</text>
-    <circle class="amenity" cx="1130" cy="990" r="16"/><text class="amenity-txt" x="1130" y="996" font-size="13">T</text>
-    <circle class="amenity" cx="760" cy="1120" r="16"/><text class="amenity-txt" x="760" y="1126" font-size="13">T</text>
-    <circle class="amenity" cx="720" cy="1180" r="16"/><text class="amenity-txt" x="720" y="1186" font-size="13">C</text>
-    <circle class="amenity" cx="790" cy="1210" r="16"/><text class="amenity-txt" x="790" y="1216" font-size="13">W</text>
-    <circle class="amenity" cx="760" cy="1330" r="16"/><text class="amenity-txt" x="760" y="1336" font-size="13">W</text>
-    <circle class="amenity" cx="670" cy="1400" r="16"/><text class="amenity-txt" x="670" y="1406" font-size="13">B</text>
-  </g>
-
-  <!-- ===================== GATES (perimeter, below every zone) ===================== -->
-  <g>
-    <circle cx="250" cy="1500" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
-    <text x="250" y="1510" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">A</text>
-    <circle cx="340" cy="1545" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
-    <text x="340" y="1555" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">B</text>
-    <circle cx="450" cy="1580" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
-    <text x="450" y="1590" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">C</text>
-    <circle cx="650" cy="1610" r="32" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
-    <text x="650" y="1621" text-anchor="middle" font-size="28" font-weight="800" fill="#fff">D</text>
-    <circle cx="900" cy="1580" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
-    <text x="900" y="1590" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">E</text>
-    <circle cx="1070" cy="1550" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/>
-    <text x="1070" y="1560" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">F</text>
-  </g>
-
-  <!-- Legend -->
-  <g font-size="20" fill="#f2ede0" font-weight="700">
-    <text x="30" y="1700">+ Medical · T Toilets · A Accessible toilets · S Showers · W Water · B Bar/drinks · C Coffee</text>
-  </g>
+<defs>
+  <style>
+    .zone { stroke: #0e1209; stroke-width: 3; stroke-linejoin: round; }
+    .amenity { fill: #f2ede0; stroke: #12160f; stroke-width: 2; }
+    .amenity-txt { fill: #12160f; font-size: 17px; font-weight: 800; text-anchor: middle; }
+  </style>
+  <symbol id="ico-tent" viewBox="0 0 60 50">
+    <path d="M30,2 L58,46 L2,46 Z" fill="#e4dcc0" stroke="#12160f" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M30,2 L30,46" stroke="#12160f" stroke-width="2"/>
+    <path d="M30,22 L22,46 M30,22 L38,46" stroke="#12160f" stroke-width="2"/>
+  </symbol>
+  <symbol id="ico-bigtop" viewBox="0 0 70 56">
+    <path d="M35,2 L66,50 L4,50 Z" fill="#d6553f" stroke="#12160f" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M35,2 L35,50 M18,50 L35,20 L52,50" stroke="#f2ede0" stroke-width="3.5" fill="none"/>
+    <circle cx="35" cy="2" r="3" fill="#12160f"/>
+  </symbol>
+  <symbol id="ico-belltent" viewBox="0 0 60 50">
+    <path d="M30,2 C10,10 6,46 6,46 L54,46 C54,46 50,10 30,2 Z" fill="#ede3c8" stroke="#12160f" stroke-width="2.5"/>
+    <circle cx="30" cy="2" r="3" fill="#12160f"/>
+  </symbol>
+  <symbol id="ico-hut" viewBox="0 0 44 40">
+    <rect x="6" y="20" width="32" height="18" fill="#7a5233" stroke="#12160f" stroke-width="2"/>
+    <path d="M0,20 L22,4 L44,20 Z" fill="#5c3a22" stroke="#12160f" stroke-width="2" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="ico-van" viewBox="0 0 70 40">
+    <rect x="2" y="10" width="66" height="22" rx="6" fill="#e8e4d8" stroke="#12160f" stroke-width="2.5"/>
+    <rect x="6" y="14" width="18" height="10" rx="2" fill="#7fa8c9"/>
+    <circle cx="18" cy="34" r="6" fill="#12160f"/>
+    <circle cx="54" cy="34" r="6" fill="#12160f"/>
+  </symbol>
+  <symbol id="ico-car" viewBox="0 0 56 32">
+    <rect x="2" y="10" width="52" height="14" rx="6" fill="#5a6470" stroke="#12160f" stroke-width="2.5"/>
+    <path d="M14,10 L20,2 L38,2 L44,10 Z" fill="#5a6470" stroke="#12160f" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="14" cy="26" r="5.5" fill="#12160f"/>
+    <circle cx="44" cy="26" r="5.5" fill="#12160f"/>
+  </symbol>
+  <symbol id="ico-stage" viewBox="0 0 70 50">
+    <rect x="8" y="30" width="54" height="16" fill="#2b2b2b" stroke="#12160f" stroke-width="2.5"/>
+    <rect x="4" y="6" width="10" height="30" fill="#1c1c1c" stroke="#12160f" stroke-width="2"/>
+    <rect x="56" y="6" width="10" height="30" fill="#1c1c1c" stroke="#12160f" stroke-width="2"/>
+    <line x1="14" y1="8" x2="56" y2="8" stroke="#12160f" stroke-width="2.5"/>
+    <circle cx="35" cy="20" r="6" fill="#eeb43a"/>
+  </symbol>
+  <symbol id="ico-carousel" viewBox="0 0 60 56">
+    <path d="M30,2 L46,20 L14,20 Z" fill="#d6553f" stroke="#12160f" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="28" y="18" width="4" height="18" fill="#12160f"/>
+    <line x1="30" y1="20" x2="10" y2="40" stroke="#12160f" stroke-width="2"/>
+    <line x1="30" y1="20" x2="50" y2="40" stroke="#12160f" stroke-width="2"/>
+    <line x1="30" y1="20" x2="30" y2="42" stroke="#12160f" stroke-width="2"/>
+    <ellipse cx="30" cy="44" rx="22" ry="6" fill="#eeb43a" stroke="#12160f" stroke-width="2.5"/>
+  </symbol>
+</defs>
+<rect width="1400" height="1751" fill="#0b2818" />
+<polygon points="624,54 623,105 505,105 503,170 429,302 334,313 328,430 366,464 390,571 461,585 461,695 270,721 203,865 91,876 75,927 383,1022 382,1104 269,1126 248,1201 586,1298 608,1337 723,1340 905,1424 926,1465 988,1482 996,1530 1079,1543 1079,1623 1042,1649 1117,1662 1118,1750 1266,1750 1284,1660 1399,1660 1303,1622 1357,1313 1399,1312 1399,1142 1200,1125 1247,802 1221,794 1221,717 1210,768 1116,765 1114,682 1227,428 853,389 852,307 924,144 1399,144 1399,0 851,0 850,102 635,91" fill="#2f5c3f" stroke="#0e1209" stroke-width="4" stroke-linejoin="round"/>
+<g stroke="#d8caa0" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+  <path d="M250,1209 L245,1470"/>
+  <path d="M310,1420 Q330,1500 335,1560"/>
+  <path d="M420,1280 Q440,1400 448,1560"/>
+  <path d="M620,1330 Q630,1450 648,1600"/>
+  <path d="M900,1463 Q900,1520 898,1570"/>
+  <path d="M1070,1400 Q1075,1480 1068,1540"/>
+</g>
+<polygon class="zone" points="899,126 685,97 657,107 661,155 604,238 576,240 562,230 569,158 619,107 527,106 505,142 517,189 494,198 523,197 528,230 465,251 430,323 573,511 624,513 682,441 672,385 759,392 785,369" fill="#4f9d4a"/>
+<polygon class="zone" points="336,309 333,391 366,468 406,464 473,469 483,476 477,503 414,506 416,529 566,550 568,532 493,451 414,332 372,307" fill="#d16a3a"/>
+<polygon class="zone" points="811,566 775,566 774,545 782,544 778,533 768,544 755,545 747,564 727,564 724,543 709,525 682,529 679,544 671,551 640,553 619,563 600,605 629,604 624,570 648,566 660,576 660,602 644,605 667,608 675,618 677,637 687,636 692,628 716,632 720,613 748,614 759,605 774,604 809,576" fill="#c1432c"/>
+<polygon class="zone" points="811,389 770,436 765,454 787,437 807,437 815,474 801,482 772,481 773,489 817,498 834,519 896,517 958,417 946,411 946,430 936,437 817,437 811,433 811,413 818,408 928,404 860,389" fill="#b8c23a"/>
+<polygon class="zone" points="998,431 918,544 933,531 973,525 981,571 968,574 981,583 982,562 1019,564 1017,586 989,591 1020,635 1044,691 1056,697 1146,562 1122,506 1084,464 1037,438 1052,464 1046,494 1015,499 982,488 978,464" fill="#b355c4"/>
+<polygon class="zone" points="304,823 301,839 308,839 325,862 351,945 361,957 373,959 387,970 400,971 403,950 413,936 425,930 427,911 447,887 463,848 431,837 423,813 408,824" fill="#3f6fb8"/>
+<polygon class="zone" points="318,938 316,923 307,908 281,924 257,924 225,865 218,860 187,875 95,875 88,879 96,888 130,897 147,885 172,885 181,893 183,910 244,928 264,928 300,944 310,944" fill="#2d5490"/>
+<polygon class="zone" points="1060,870 993,960 1018,992 993,1056 972,1055 979,1011 967,996 954,1089 812,1092 801,1115 851,1147 897,1130 890,1160 921,1160 944,1183 1015,1189 1091,1227 1119,1128 1047,1104 1055,1042 1135,1054 1151,1020 1036,1016 1026,964 1039,951 1157,951 1173,966 1189,916 1107,904" fill="#3fa08c"/>
+<polygon class="zone" points="1241,900 1228,900 1152,1140 1130,1140 1130,1479 1254,1479 1276,1454 1300,1454 1301,1479 1313,1479 1383,1230 1399,1221 1399,1147 1183,1119" fill="#8a9280"/>
+<polygon class="zone" points="100,955 280,935 430,985 500,1080 470,1180 390,1260 220,1290 110,1220 85,1080" fill="#20291c"/>
+<g stroke="#12160f" stroke-width="3" fill="none">
+  <path d="M801,1040 L1190,1010"/>
+  <path d="M960,900 L960,1230"/>
+  <path d="M960,1120 L1190,1105"/>
+</g>
+<g>
+  <use href="#ico-van" x="600" y="145" width="66" height="40"/>
+  <use href="#ico-van" x="715" y="128" width="66" height="40"/>
+  <use href="#ico-car" x="380" y="375" width="54" height="30"/>
+  <use href="#ico-tent" x="845" y="392" width="40" height="34"/>
+  <use href="#ico-belltent" x="1010" y="455" width="48" height="40"/>
+  <use href="#ico-bigtop" x="600" y="670" width="62" height="50"/>
+  <use href="#ico-tent" x="365" y="850" width="34" height="28"/>
+  <use href="#ico-car" x="175" y="868" width="42" height="24"/>
+  <use href="#ico-stage" x="480" y="930" width="58" height="42"/>
+  <use href="#ico-hut" x="640" y="695" width="32" height="28"/>
+  <use href="#ico-hut" x="682" y="682" width="32" height="28"/>
+  <use href="#ico-hut" x="724" y="692" width="32" height="28"/>
+  <use href="#ico-hut" x="766" y="710" width="32" height="28"/>
+  <use href="#ico-carousel" x="1075" y="600" width="46" height="42"/>
+  <use href="#ico-tent" x="850" y="955" width="32" height="26"/>
+  <use href="#ico-tent" x="1090" y="945" width="28" height="24"/>
+  <use href="#ico-tent" x="840" y="1160" width="32" height="26"/>
+</g>
+<g>
+<text x="654" y="290" text-anchor="middle" font-size="25" font-weight="800" fill="#12160f">Motorhomes</text>
+<text x="654" y="318" text-anchor="middle" font-size="25" font-weight="800" fill="#12160f">&amp; Caravans</text>
+<text x="430" y="460" text-anchor="middle" font-size="23" font-weight="800" fill="#12160f">VIP Parking</text>
+<text x="700" y="590" text-anchor="middle" font-size="14" font-weight="800" fill="#f2ede0">VIP Zone</text>
+<text x="862" y="480" text-anchor="middle" font-size="21" font-weight="800" fill="#12160f">Pre-Pitched</text>
+<text x="1052" y="605" text-anchor="middle" font-size="23" font-weight="800" fill="#12160f">Glamping</text>
+<text x="384" y="910" text-anchor="middle" font-size="17" font-weight="800" fill="#f2ede0">Accessible</text>
+<text x="90" y="928" text-anchor="middle" font-size="12" font-weight="800" fill="#f2ede0">Acc.</text>
+<text x="90" y="944" text-anchor="middle" font-size="12" font-weight="800" fill="#f2ede0">Parking</text>
+<text x="870" y="530" text-anchor="middle" font-size="19" font-weight="800" fill="#f2ede0">Mind &amp; Body</text>
+<text x="600" y="740" text-anchor="middle" font-size="16" font-weight="800" fill="#f2ede0">Music Stage</text>
+<text x="500" y="790" text-anchor="middle" font-size="16" font-weight="800" fill="#f2ede0">Main Stage</text>
+<text x="770" y="660" text-anchor="middle" font-size="12" font-weight="800" fill="#f2ede0">Education</text>
+<text x="1075" y="660" text-anchor="middle" font-size="18" font-weight="800" fill="#f2ede0">Family Arena</text>
+<text x="720" y="760" text-anchor="middle" font-size="17" font-weight="800" fill="#f2ede0">Stalls &amp; Food</text>
+<text x="500" y="1000" text-anchor="middle" font-size="18" font-weight="800" fill="#f2ede0">The Jungle</text>
+<text x="270" y="1120" text-anchor="middle" font-size="15" font-weight="800" fill="#f2ede0">Showers &amp;</text>
+<text x="270" y="1138" text-anchor="middle" font-size="15" font-weight="800" fill="#f2ede0">Toilets</text>
+<text x="870" y="1000" text-anchor="middle" font-size="15" font-weight="800" fill="#f2ede0">General</text>
+<text x="870" y="1016" text-anchor="middle" font-size="15" font-weight="800" fill="#f2ede0">Camping</text>
+<text x="870" y="1190" text-anchor="middle" font-size="15" font-weight="800" fill="#f2ede0">General</text>
+<text x="870" y="1206" text-anchor="middle" font-size="15" font-weight="800" fill="#f2ede0">Camping</text>
+<text x="1080" y="900" text-anchor="middle" font-size="13" font-weight="800" fill="#f2ede0">Family</text>
+<text x="1080" y="915" text-anchor="middle" font-size="13" font-weight="800" fill="#f2ede0">Camping</text>
+<text x="1080" y="1075" text-anchor="middle" font-size="11" font-weight="800" fill="#f2ede0">Quiet</text>
+<text x="1080" y="1088" text-anchor="middle" font-size="11" font-weight="800" fill="#f2ede0">Camping</text>
+<text x="1080" y="1170" text-anchor="middle" font-size="11" font-weight="800" fill="#f2ede0">Solo</text>
+<text x="1080" y="1183" text-anchor="middle" font-size="11" font-weight="800" fill="#f2ede0">Camping</text>
+<text x="1290" y="1160" text-anchor="middle" font-size="16" font-weight="800" fill="#12160f">Day / Family</text>
+<text x="1290" y="1180" text-anchor="middle" font-size="16" font-weight="800" fill="#12160f">Parking</text>
+</g>
+<g>
+<circle class="amenity" cx="500" cy="175" r="17"/><text class="amenity-txt" x="500" y="179.2" font-size="14">T</text>
+<circle class="amenity" cx="700" cy="225" r="17"/><text class="amenity-txt" x="700" y="229.2" font-size="14">W</text>
+<circle class="amenity" cx="365" cy="340" r="17"/><text class="amenity-txt" x="365" y="344.2" font-size="14">W</text>
+<circle class="amenity" cx="430" cy="470" r="17"/><text class="amenity-txt" x="430" y="474.2" font-size="14">W</text>
+<circle class="amenity" cx="730" cy="515" r="17"/><text class="amenity-txt" x="730" y="519.2" font-size="14">A</text>
+<circle class="amenity" cx="855" cy="515" r="17"/><text class="amenity-txt" x="855" y="519.2" font-size="14">A</text>
+<circle class="amenity" cx="1000" cy="455" r="17"/><text class="amenity-txt" x="1000" y="459.2" font-size="14">S</text>
+<circle class="amenity" cx="1140" cy="505" r="17"/><text class="amenity-txt" x="1140" y="509.2" font-size="14">A</text>
+<circle class="amenity" cx="720" cy="650" r="17"/><text class="amenity-txt" x="720" y="654.2" font-size="14">+</text>
+<circle class="amenity" cx="650" cy="700" r="17"/><text class="amenity-txt" x="650" y="704.2" font-size="14">B</text>
+<circle class="amenity" cx="280" cy="858" r="17"/><text class="amenity-txt" x="280" y="862.2" font-size="14">T</text>
+<circle class="amenity" cx="250" cy="1035" r="17"/><text class="amenity-txt" x="250" y="1039.2" font-size="14">S</text>
+<circle class="amenity" cx="320" cy="1065" r="17"/><text class="amenity-txt" x="320" y="1069.2" font-size="14">T</text>
+<circle class="amenity" cx="1170" cy="610" r="17"/><text class="amenity-txt" x="1170" y="614.2" font-size="14">T</text>
+<circle class="amenity" cx="990" cy="955" r="17"/><text class="amenity-txt" x="990" y="959.2" font-size="14">W</text>
+<circle class="amenity" cx="1130" cy="900" r="17"/><text class="amenity-txt" x="1130" y="904.2" font-size="14">C</text>
+<circle class="amenity" cx="1150" cy="935" r="17"/><text class="amenity-txt" x="1150" y="939.2" font-size="14">T</text>
+<circle class="amenity" cx="830" cy="1130" r="17"/><text class="amenity-txt" x="830" y="1134.2" font-size="14">T</text>
+<circle class="amenity" cx="790" cy="1210" r="17"/><text class="amenity-txt" x="790" y="1214.2" font-size="14">C</text>
+<circle class="amenity" cx="900" cy="1090" r="17"/><text class="amenity-txt" x="900" y="1094.2" font-size="14">W</text>
+<circle class="amenity" cx="800" cy="1350" r="17"/><text class="amenity-txt" x="800" y="1354.2" font-size="14">W</text>
+<circle class="amenity" cx="700" cy="1400" r="17"/><text class="amenity-txt" x="700" y="1404.2" font-size="14">B</text>
+</g>
+<g>
+<circle cx="245" cy="1500" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/><text x="245" y="1509.1" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">A</text>
+<circle cx="335" cy="1590" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/><text x="335" y="1599.1" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">B</text>
+<circle cx="448" cy="1620" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/><text x="448" y="1629.1" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">C</text>
+<circle cx="648" cy="1650" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/><text x="648" y="1659.1" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">D</text>
+<circle cx="898" cy="1610" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/><text x="898" y="1619.1" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">E</text>
+<circle cx="1068" cy="1570" r="28" fill="#d6553f" stroke="#12160f" stroke-width="2"/><text x="1068" y="1579.1" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">F</text>
+</g>
+<g font-size="20" fill="#f2ede0" font-weight="700">
+<text x="30" y="1720">+ Medical &#183; T Toilets &#183; A Accessible toilets &#183; S Showers &#183; W Water &#183; B Bar/drinks &#183; C Coffee</text>
+</g>
 </svg>
