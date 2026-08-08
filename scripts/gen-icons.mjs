@@ -1,8 +1,9 @@
 import sharp from "sharp";
 import { fileURLToPath } from "node:url";
 
-// Sourced from the real VCO logo the festival team supplied (public/brand/logo.jpg),
-// not a hand-drawn approximation.
+// A custom-made emblem (public/brand/logo.jpg), deliberately not a reproduction
+// of the festival's own official logo — this is an unofficial fan app, so it
+// shouldn't visually borrow the organisers' actual branding/trademark.
 const source = fileURLToPath(new URL("../public/brand/logo.jpg", import.meta.url));
 
 const targets = [
