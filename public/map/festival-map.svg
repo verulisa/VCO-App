@@ -56,24 +56,38 @@
     </symbol>
   </defs>
 
-  <rect width="1400" height="1751" fill="#12452f" />
+  <rect width="1400" height="1751" fill="#0b2818" />
 
-  <!-- ===================== ROADS (under zones' strokes but visually as paths between them) ===================== -->
-  <g stroke="#d8caa0" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.7">
-    <path d="M420,150 L360,420 L420,540"/>
-    <path d="M700,420 L790,470 L810,540"/>
-    <path d="M900,530 L830,650"/>
-    <path d="M480,545 L500,655"/>
-    <path d="M330,700 L280,900"/>
-    <path d="M620,700 L650,830"/>
-    <path d="M860,720 L900,900"/>
-    <path d="M280,950 L240,1150 L280,1250"/>
-    <path d="M550,1000 L600,1200 L580,1400"/>
-    <path d="M850,900 L820,1200 L900,1450"/>
-    <path d="M1050,900 L1080,1450"/>
-    <path d="M1150,950 L1170,1450"/>
-    <path d="M280,1250 Q350,1480 620,1560 Q850,1500 900,1450"/>
-    <path d="M900,1450 Q1000,1520 1080,1500"/>
+  <!-- ===================== SITE SILHOUETTE ===================== -->
+  <!-- One continuous "grass" shape under everything, matching the real
+       site's outer boundary — this is what actually makes it read as one
+       connected festival ground instead of scattered floating shapes.
+       Any gap between the specific coloured zones below just shows this
+       same ground colour through, exactly like real grass/paths between
+       plots, instead of the black void. -->
+  <polygon points="420,40 690,75 940,365 1210,375 1210,660 1245,940 1415,915 1415,1465 940,1465
+                    630,1465 380,1100 85,1300 -20,990 -20,860 20,385 175,285 265,140"
+           fill="#2f5c3f" stroke="#0e1209" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- ===================== ROADS — one connected network ===================== -->
+  <g stroke="#d8caa0" stroke-width="15" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+    <path d="M650,1610 L620,1470 L560,1250 L500,1000 L480,750 L470,540 L480,420 L420,270 L390,150"/>
+    <path d="M480,420 L620,415 L700,470 L790,530 L850,545"/>
+    <path d="M700,470 L800,430 L900,400"/>
+    <path d="M850,545 L900,600 L900,660"/>
+    <path d="M470,540 L330,560 L230,470 L170,400"/>
+    <path d="M500,1000 L620,900 L700,780 L720,660"/>
+    <path d="M720,660 L860,650 L960,655"/>
+    <path d="M500,1000 L350,1010 L230,970 L150,900"/>
+    <path d="M560,1250 L350,1230 L230,1150 L170,1000"/>
+    <path d="M560,1250 L750,1240 L850,1180 L900,1000"/>
+    <path d="M900,1000 L1000,970 L1080,935"/>
+    <path d="M900,1000 L950,1160 L950,1290 L900,1450"/>
+    <path d="M1080,935 L1150,1000 L1150,1160 L1150,1300 L1120,1440"/>
+    <path d="M620,1470 L500,1440 L400,1350"/>
+    <path d="M620,1470 L780,1450 L900,1450"/>
+    <path d="M650,1610 L450,1580 L340,1545 L250,1500"/>
+    <path d="M650,1610 L900,1580 L1070,1550"/>
   </g>
 
   <!-- ===================== ZONES ===================== -->
@@ -82,14 +96,9 @@
   <polygon class="zone" points="450,415 600,415 595,490 490,545" fill="#c1432c"/>
   <polygon class="zone" points="685,375 850,400 935,440 830,545 700,470" fill="#b8c23a"/>
   <polygon class="zone" points="935,440 1030,390 1195,420 1195,590 1050,650 935,530" fill="#b355c4"/>
-  <polygon class="zone" points="600,485 935,440 1050,650 650,660" fill="#2f5c3f"/>
 
-  <polygon class="zone" points="330,650 620,660 600,900 390,880 380,700" fill="#2f5c3f"/>
   <polygon class="zone" points="170,760 390,790 370,950 150,920" fill="#3f6fb8"/>
   <polygon class="zone" points="0,880 170,850 150,1000 0,970" fill="#2d5490"/>
-  <polygon class="zone" points="580,700 870,680 880,860 700,900 600,850" fill="#2f5c3f"/>
-  <polygon class="zone" points="850,650 1080,660 1080,850 900,860 830,750" fill="#2f5c3f"/>
-  <polygon class="zone" points="650,650 780,628 790,700 670,715" fill="#2f5c3f"/>
 
   <polygon class="zone" points="400,850 600,830 750,860 700,1080 420,1080" fill="#6b3fa0"/>
   <polygon class="zone" points="150,920 400,970 500,1150 350,1280 100,1200" fill="#20291c"/>
