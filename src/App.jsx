@@ -6,6 +6,7 @@ import InstallBanner from "./components/InstallBanner";
 import NicknamePrompt from "./components/NicknamePrompt";
 import ProfileSheet from "./components/ProfileSheet";
 import MoreMenu from "./components/MoreMenu";
+import MorningCard from "./components/MorningCard";
 import WelcomeIntro from "./components/WelcomeIntro";
 import SkeletonScreen from "./components/Skeleton";
 import HomePage from "./pages/HomePage";
@@ -22,11 +23,15 @@ import { useNotifications } from "./hooks/useNotifications";
 import { useVendorRatings } from "./hooks/useVendorRatings";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useAppUpdate } from "./hooks/useAppUpdate";
+import { useWeather } from "./hooks/useWeather";
 import { writeTentPin } from "./utils/backup";
+import { todayIso } from "./utils/time";
+import { weatherIconFor } from "./utils/weatherIcons";
 
 export default function App() {
   const { lineup, vendors, info, status, reload } = useFestivalData();
   const appUpdate = useAppUpdate();
+  const weather = useWeather();
   const { nickname, emoji, hasNickname, rename } = useNickname();
   const { theme, toggleTheme } = useTheme();
   const { largeText, toggleLargeText } = useTextScale();
@@ -35,6 +40,16 @@ export default function App() {
   const [showMenu, setShowMenu] = useState(false);
   const [lastBackupAt, setLastBackupAt] = useLocalStorage("vco_last_backup_at", null);
   const [welcomeSeen, setWelcomeSeen] = useLocalStorage("vco_welcome_seen", false);
+  const [morningCardSeenDate, setMorningCardSeenDate] = useLocalStorage("vco_morning_card_seen_date", null);
+  // Lazy-initialised once from the stored date — a fresh calendar day (or a
+  // first-ever open) starts with the card due; closing it stamps today's
+  // date so it won't pop up again on its own until tomorrow.
+  const [showMorningCard, setShowMorningCard] = useState(() => morningCardSeenDate !== todayIso());
+
+  function closeMorningCard() {
+    setShowMorningCard(false);
+    setMorningCardSeenDate(todayIso());
+  }
 
   const schedule = useSchedule(lineup);
   const vendorRatings = useVendorRatings();
@@ -79,6 +94,8 @@ export default function App() {
         notifPermission={notifications.permission}
         notifEnabled={notifications.enabled}
         onToggleNotif={notifications.toggleEnabled}
+        weatherIcon={weather ? weatherIconFor(weather.current.code) : null}
+        onOpenMorningCard={() => setShowMorningCard(true)}
       />
       <div className="header-spacer">
         <InstallBanner />
@@ -141,6 +158,17 @@ export default function App() {
           onBackedUp={() => setLastBackupAt(new Date().toISOString())}
           onRestore={handleRestore}
           onClose={() => setShowProfile(false)}
+        />
+      )}
+
+      {welcomeSeen && showMorningCard && status === "ready" && (
+        <MorningCard
+          lineup={lineup}
+          isSaved={schedule.isSaved}
+          vendors={vendors}
+          vendorRatings={vendorRatings}
+          weather={weather}
+          onClose={closeMorningCard}
         />
       )}
 

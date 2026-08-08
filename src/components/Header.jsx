@@ -1,4 +1,4 @@
-import { Bell, BellOff, Menu, Moon, Sun } from "lucide-react";
+import { Bell, BellOff, Cloud, Menu, Moon, Sun } from "lucide-react";
 
 export default function Header({
   nickname,
@@ -10,7 +10,10 @@ export default function Header({
   notifPermission,
   notifEnabled,
   onToggleNotif,
+  weatherIcon,
+  onOpenMorningCard,
 }) {
+  const WeatherIcon = weatherIcon?.Icon || Cloud;
   return (
     <header className="header-fixed flex items-center justify-between gap-2 border-b border-[var(--vco-border)] bg-[var(--vco-bg)]/90 px-3 backdrop-blur-md">
       <div className="flex min-w-0 items-center gap-2">
@@ -35,6 +38,15 @@ export default function Header({
       </div>
 
       <div className="flex shrink-0 items-center gap-1">
+        <button
+          type="button"
+          onClick={onOpenMorningCard}
+          aria-label="Today's weather & plan"
+          className="tap flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[var(--vco-text-faint)]"
+        >
+          <WeatherIcon size={15} />
+        </button>
+
         {notifPermission === "granted" && (
           <button
             type="button"
