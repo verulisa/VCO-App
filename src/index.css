@@ -208,22 +208,35 @@ body {
   border-radius: 6px;
 }
 
-@keyframes vco-page-in {
+/* Direction-aware tab switches — sliding in from the side the destination
+   tab actually sits on (right of the bottom nav = "forward", left = "back")
+   reads as real navigation instead of every tab just fading in the same way
+   regardless of which direction you moved. */
+@keyframes vco-page-in-forward {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.99);
+    transform: translateX(18px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateX(0);
   }
 }
-.page-in {
-  /* forwards, not both — if the animation ever fails to start (seen on some
-     WebKit builds when a keyed element remounts), the page falls back to its
-     normal opacity:1 instead of staying stuck invisible until another tap
-     forces a repaint. */
-  animation: vco-page-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+@keyframes vco-page-in-back {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.page-in-forward {
+  animation: vco-page-in-forward 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.page-in-back {
+  animation: vco-page-in-back 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Backdrop fade-in for modal/drawer overlays. */
@@ -237,6 +250,17 @@ body {
 }
 .modal-backdrop {
   animation: vco-backdrop-in 0.2s ease forwards;
+}
+@keyframes vco-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.modal-backdrop.is-closing {
+  animation: vco-backdrop-out 0.18s ease forwards;
 }
 
 /* Bottom/center sheet entrance — slides up and settles with a soft
@@ -254,6 +278,19 @@ body {
 .sheet-in {
   animation: vco-sheet-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+@keyframes vco-sheet-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+}
+.sheet-in.is-closing {
+  animation: vco-sheet-out 0.18s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
 
 /* Right-side drawer (More menu) slides in from the real screen edge. */
 @keyframes vco-drawer-in {
@@ -268,6 +305,19 @@ body {
 }
 .drawer-in {
   animation: vco-drawer-in 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes vco-drawer-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+.drawer-in.is-closing {
+  animation: vco-drawer-out 0.18s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
 /* Accordion answer / any content revealed on toggle. */

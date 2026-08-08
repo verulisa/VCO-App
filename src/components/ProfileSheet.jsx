@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
 import { Shuffle, X, Download, Upload, ShieldCheck } from "lucide-react";
+import { useDismiss } from "../hooks/useDismiss";
 import { generateNickname, nicknameEmoji } from "../utils/nicknameWords";
 import { buildBackupPayload, downloadBackupFile, readBackupFile, readTentPin } from "../utils/backup";
 
 export default function ProfileSheet({ nickname, onRename, savedIds, vendorRatings, lastBackupAt, onBackedUp, onRestore, onClose }) {
+  const { closing, dismiss } = useDismiss(onClose);
   const [draftNickname, setDraftNickname] = useState(nickname);
   const [customInput, setCustomInput] = useState("");
   const [restoreMessage, setRestoreMessage] = useState("");
@@ -40,11 +42,11 @@ export default function ProfileSheet({ nickname, onRename, savedIds, vendorRatin
   }
 
   return (
-    <div className="modal-backdrop fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center">
-      <div className="sheet-in max-h-[85vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5">
+    <div className={`modal-backdrop fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center ${closing ? "is-closing" : ""}`}>
+      <div className={`sheet-in max-h-[85vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5 ${closing ? "is-closing" : ""}`}>
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-extrabold text-[16px] text-[var(--vco-text)]">Profile</h2>
-          <button type="button" onClick={onClose} aria-label="Close">
+          <button type="button" onClick={dismiss} aria-label="Close">
             <X size={18} className="text-[var(--vco-text-faint)]" />
           </button>
         </div>

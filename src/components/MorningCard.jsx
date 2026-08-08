@@ -1,4 +1,5 @@
 import { Bookmark, Star, Sun, Umbrella, X } from "lucide-react";
+import { useDismiss } from "../hooks/useDismiss";
 import { useNow } from "../hooks/useNow";
 import { sortByStart, todayIso } from "../utils/time";
 import { weatherIconFor } from "../utils/weatherIcons";
@@ -19,6 +20,7 @@ function clothingTip(daily) {
 
 export default function MorningCard({ lineup, isSaved, vendors, vendorRatings, weather, onClose }) {
   const now = useNow();
+  const { closing, dismiss } = useDismiss(onClose);
   const today = todayIso(now);
   const myDay = sortByStart(lineup.filter((a) => isSaved(a.id) && a.date === today));
   const wishlistVendors = (vendors || []).filter((v) => vendorRatings?.getRating(v.id).wishlist).slice(0, 2);
@@ -26,9 +28,12 @@ export default function MorningCard({ lineup, isSaved, vendors, vendorRatings, w
   const weatherIcon = weather ? weatherIconFor(weather.current.code) : null;
 
   return (
-    <div className="modal-backdrop fixed inset-0 z-[60] flex items-end justify-center bg-black/60 p-4 sm:items-center" onClick={onClose}>
+    <div
+      className={`modal-backdrop fixed inset-0 z-[60] flex items-end justify-center bg-black/60 p-4 sm:items-center ${closing ? "is-closing" : ""}`}
+      onClick={dismiss}
+    >
       <div
-        className="sheet-in max-h-[85vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5"
+        className={`sheet-in max-h-[85vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5 ${closing ? "is-closing" : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-1 flex items-start justify-between">
@@ -38,7 +43,7 @@ export default function MorningCard({ lineup, isSaved, vendors, vendorRatings, w
               {now.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}
             </p>
           </div>
-          <button type="button" onClick={onClose} aria-label="Close" className="tap">
+          <button type="button" onClick={dismiss} aria-label="Close" className="tap">
             <X size={20} className="text-[var(--vco-text-faint)]" />
           </button>
         </div>
@@ -101,7 +106,7 @@ export default function MorningCard({ lineup, isSaved, vendors, vendorRatings, w
 
         <button
           type="button"
-          onClick={onClose}
+          onClick={dismiss}
           className="tap mt-5 flex w-full items-center justify-center rounded-xl bg-[var(--vco-green)] py-3 text-[13px] font-bold text-white"
         >
           Let's go

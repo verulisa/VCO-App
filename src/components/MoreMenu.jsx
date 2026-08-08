@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { X, Share2, Smartphone, HelpCircle, Info, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Mail } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
+import { useDismiss } from "../hooks/useDismiss";
 import { APP_URL } from "../utils/appUrl";
 import { buildFeedbackMailto } from "../utils/feedback";
 
@@ -27,6 +28,7 @@ function Section({ icon: Icon, title, children }) {
 }
 
 export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastBackupAt, onOpenProfile, largeText, onToggleLargeText }) {
+  const { closing, dismiss } = useDismiss(onClose);
   const [qrDataUrl, setQrDataUrl] = useState(null);
   const [supportQrDataUrl, setSupportQrDataUrl] = useState(null);
   const [showQr, setShowQr] = useState(false);
@@ -61,14 +63,14 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
   }
 
   return (
-    <div className="modal-backdrop fixed inset-0 z-50 bg-black/60" onClick={onClose}>
+    <div className={`modal-backdrop fixed inset-0 z-50 bg-black/60 ${closing ? "is-closing" : ""}`} onClick={dismiss}>
       <div
-        className="drawer-col-right drawer-in safe-top ml-auto flex w-[86%] max-w-sm flex-col overflow-y-auto bg-[var(--vco-bg)] p-5 shadow-[var(--vco-shadow)]"
+        className={`drawer-col-right drawer-in safe-top ml-auto flex w-[86%] max-w-sm flex-col overflow-y-auto bg-[var(--vco-bg)] p-5 shadow-[var(--vco-shadow)] ${closing ? "is-closing" : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-1 flex items-center justify-between">
           <h2 className="font-extrabold text-[16px] text-[var(--vco-text)]">Menu</h2>
-          <button type="button" onClick={onClose} aria-label="Close menu" className="tap">
+          <button type="button" onClick={dismiss} aria-label="Close menu" className="tap">
             <X size={20} className="text-[var(--vco-text-faint)]" />
           </button>
         </div>

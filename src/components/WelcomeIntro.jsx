@@ -1,4 +1,5 @@
 import { CalendarPlus, Coffee, ListMusic, Lock, Share2, Smartphone, Star, X } from "lucide-react";
+import { useDismiss } from "../hooks/useDismiss";
 
 const POINTS = [
   {
@@ -16,18 +17,19 @@ const POINTS = [
 ];
 
 export default function WelcomeIntro({ onClose }) {
+  const { closing, dismiss } = useDismiss(onClose);
   return (
     <div
-      className="modal-backdrop fixed inset-0 z-[60] flex items-end justify-center bg-black/60 p-4 sm:items-center"
-      onClick={onClose}
+      className={`modal-backdrop fixed inset-0 z-[60] flex items-end justify-center bg-black/60 p-4 sm:items-center ${closing ? "is-closing" : ""}`}
+      onClick={dismiss}
     >
       <div
-        className="sheet-in max-h-[85vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5"
+        className={`sheet-in max-h-[85vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-5 ${closing ? "is-closing" : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-1 flex items-center justify-between">
           <h2 className="font-extrabold text-[16px] text-[var(--vco-text)]">Welcome 👋</h2>
-          <button type="button" onClick={onClose} aria-label="Close" className="tap">
+          <button type="button" onClick={dismiss} aria-label="Close" className="tap">
             <X size={20} className="text-[var(--vco-text-faint)]" />
           </button>
         </div>
@@ -53,7 +55,7 @@ export default function WelcomeIntro({ onClose }) {
 
         <button
           type="button"
-          onClick={onClose}
+          onClick={dismiss}
           className="tap flex w-full items-center justify-center rounded-xl bg-[var(--vco-green)] py-3 text-[13px] font-bold text-white"
         >
           Got it, thanks!
