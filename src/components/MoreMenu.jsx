@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Trash2 } from "lucide-react";
+import { X, Share2, Smartphone, HelpCircle, Info, Clipboard, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Trash2, Mail } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
 import { APP_URL } from "../utils/appUrl";
+import { buildFeedbackMailto } from "../utils/feedback";
 
 const SUPPORT_URL = "https://revolut.me/veroni1wc6?currency=GBP&amount=300&note=";
 
@@ -211,11 +212,22 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
         </Section>
 
         <Section icon={Trash2} title="Troubleshooting">
+          <a
+            href={buildFeedbackMailto()}
+            className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)]"
+          >
+            <Mail size={15} />
+            Report a problem
+          </a>
+          <p className="mt-1.5 text-center text-[10.5px] text-[var(--vco-text-faint)]">
+            Opens your email app with the technical details already filled in — just describe what happened.
+          </p>
+
           <button
             type="button"
             onClick={handleHardReset}
             disabled={resetting}
-            className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)] disabled:opacity-60"
+            className="tap mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)] disabled:opacity-60"
           >
             <Trash2 size={15} className={resetting ? "animate-spin" : ""} />
             {resetting ? "Clearing…" : "Hard reset (clear cache)"}

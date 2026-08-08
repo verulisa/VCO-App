@@ -1,5 +1,6 @@
 import { Component } from "react";
-import { RotateCcw } from "lucide-react";
+import { Mail, RotateCcw } from "lucide-react";
+import { buildFeedbackMailto } from "../utils/feedback";
 
 // Without this, any uncaught render error anywhere in the tree unmounts the
 // whole app to a blank screen with no way back short of a manual reload —
@@ -8,11 +9,17 @@ import { RotateCcw } from "lucide-react";
 export default class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, errorDetails: "" };
   }
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
+  static getDerivedStateFromError(error) {
+    return { hasError: true, errorDetails: error?.message || String(error) };
+  }
+
+  componentDidCatch(error, info) {
+    if (info?.componentStack) {
+      this.setState({ errorDetails: `${this.state.errorDetails}\n${info.componentStack.trim().split("\n").slice(0, 4).join("\n")}` });
+    }
   }
 
   render() {
@@ -31,6 +38,13 @@ export default class ErrorBoundary extends Component {
             <RotateCcw size={14} />
             Reload
           </button>
+          <a
+            href={buildFeedbackMailto({ errorDetails: this.state.errorDetails })}
+            className="tap flex items-center gap-1.5 text-[12px] font-semibold text-[var(--vco-text-muted)] underline decoration-dotted underline-offset-2"
+          >
+            <Mail size={13} />
+            Report this
+          </a>
         </div>
       );
     }
