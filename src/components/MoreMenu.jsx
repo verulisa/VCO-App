@@ -40,12 +40,14 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
 
   async function handleRefresh() {
     setRefreshState("checking");
-    // Re-fetch data bypassing cache, force a real (no-store) check for a
-    // newer service worker, then hard-reload — the same effect as closing
-    // and reopening the app, which is the only thing that reliably shows
-    // the latest version regardless of how GitHub Pages' caching behaves.
-    await Promise.all([onReloadData?.(), appUpdate?.checkNow()]);
-    setTimeout(() => window.location.reload(), 400);
+    // Used to just re-check for a new service worker and hope it activated
+    // in time for the reload — in practice that race was unreliable and
+    // could still land back on the old version. Unregistering and clearing
+    // Cache Storage outright (same as "Hard reset" below) is what actually
+    // works every time, and it's just as safe for saved data since neither
+    // touches localStorage.
+    await onReloadData?.();
+    await appUpdate?.hardReset();
   }
 
   function handleHardReset() {
