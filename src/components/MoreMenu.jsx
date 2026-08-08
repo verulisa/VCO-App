@@ -6,6 +6,13 @@ import { APP_URL } from "../utils/appUrl";
 
 const SUPPORT_URL = "https://revolut.me/veroni1wc6?currency=GBP&amount=300&note=";
 
+function isStandalone() {
+  return (
+    typeof window !== "undefined" &&
+    (window.matchMedia?.("(display-mode: standalone)").matches || window.navigator.standalone === true)
+  );
+}
+
 function Section({ icon: Icon, title, children }) {
   return (
     <div className="border-t border-[var(--vco-border)] py-4 first:border-t-0 first:pt-0">
@@ -23,6 +30,10 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
   const [supportQrDataUrl, setSupportQrDataUrl] = useState(null);
   const [copied, setCopied] = useState(false);
   const [showQr, setShowQr] = useState(false);
+  // Collapsed by default once already installed — the instructions are
+  // dead weight at that point. Still open by default for anyone who hasn't
+  // installed yet, so they see how right away.
+  const [showInstall, setShowInstall] = useState(() => !isStandalone());
   const [refreshState, setRefreshState] = useState("idle"); // idle | checking
 
   async function handleRefresh() {
@@ -167,16 +178,28 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
         </Section>
 
         <Section icon={Smartphone} title="Install as an app">
-          <div className="flex flex-col gap-2.5 text-[12px] leading-relaxed text-[var(--vco-text-muted)]">
-            <div className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3">
-              <p className="mb-1 font-bold text-[var(--vco-text)]">iPhone (Safari)</p>
-              Tap the Share icon, then "Add to Home Screen". Opens like a real app and works fully offline.
+          <button
+            type="button"
+            onClick={() => setShowInstall((v) => !v)}
+            className="tap flex w-full items-center justify-center gap-1.5 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-2.5 text-[11.5px] font-semibold text-[var(--vco-text-muted)]"
+          >
+            <Smartphone size={13} />
+            {showInstall ? "Hide instructions" : isStandalone() ? "Show instructions (already installed)" : "Show instructions"}
+            <ChevronDown size={13} className={`transition-transform ${showInstall ? "rotate-180" : ""}`} />
+          </button>
+
+          {showInstall && (
+            <div className="reveal-in mt-2.5 flex flex-col gap-2.5 text-[12px] leading-relaxed text-[var(--vco-text-muted)]">
+              <div className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3">
+                <p className="mb-1 font-bold text-[var(--vco-text)]">iPhone (Safari)</p>
+                Tap the Share icon, then "Add to Home Screen". Opens like a real app and works fully offline.
+              </div>
+              <div className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3">
+                <p className="mb-1 font-bold text-[var(--vco-text)]">Android (Chrome)</p>
+                Tap the ⋮ menu, then "Install app" (or "Add to Home Screen").
+              </div>
             </div>
-            <div className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3">
-              <p className="mb-1 font-bold text-[var(--vco-text)]">Android (Chrome)</p>
-              Tap the ⋮ menu, then "Install app" (or "Add to Home Screen").
-            </div>
-          </div>
+          )}
         </Section>
 
         {info && (
