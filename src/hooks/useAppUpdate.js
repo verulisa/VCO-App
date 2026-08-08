@@ -58,5 +58,21 @@ export function useAppUpdate() {
     };
   }, [forceCheck]);
 
-  return { checkNow: forceCheck };
+  // A blunter tool than checkNow(), for when the update dance above still
+  // isn't enough (or for testing it) — unregisters the service worker(s)
+  // and wipes everything in Cache Storage, then reloads straight from the
+  // network. Deliberately doesn't touch localStorage, so saved acts,
+  // nickname, ratings and the tent pin all survive it.
+  const hardReset = useCallback(async () => {
+    try {
+      const regs = await navigator.serviceWorker?.getRegistrations();
+      await Promise.all((regs || []).map((r) => r.unregister()));
+      const keys = await window.caches?.keys();
+      await Promise.all((keys || []).map((k) => window.caches.delete(k)));
+    } finally {
+      window.location.reload();
+    }
+  }, []);
+
+  return { checkNow: forceCheck, hardReset };
 }
