@@ -1,9 +1,11 @@
-import { Bell, Bookmark, CalendarClock, ChevronRight, Music } from "lucide-react";
+import { Bell, Bookmark, CalendarClock, ChevronRight, Music, X } from "lucide-react";
 import ActCard from "../components/ActCard";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useNow } from "../hooks/useNow";
 import { daysUntil, isLiveNow, isUpcoming, sortByStart } from "../utils/time";
 
 export default function HomePage({ lineup, info, isSaved, toggleSave, notifications, vendors, vendorRatings, onGoToFood }) {
+  const [reminderNudgeDismissed, setReminderNudgeDismissed] = useLocalStorage("vco_reminder_nudge_dismissed", false);
   const now = useNow();
   const live = sortByStart(lineup.filter((a) => isLiveNow(a, now)));
   const upNext = sortByStart(lineup.filter((a) => !isLiveNow(a, now) && isUpcoming(a, now, 120))).slice(0, 4);
@@ -32,15 +34,16 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
         </div>
       )}
 
-      {notifications && notifications.supported && notifications.permission === "default" && (
-        <button
-          type="button"
-          onClick={notifications.requestPermission}
-          className="flex items-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-3.5 py-2.5 text-left text-[12px] text-[var(--vco-text-muted)]"
-        >
-          <Bell size={15} className="shrink-0 text-[var(--vco-green-strong)]" />
-          Turn on reminders — we'll nudge you 15 min before saved acts. Won't work in the background or locked screen (browser limitation).
-        </button>
+      {notifications && notifications.supported && notifications.permission === "default" && !reminderNudgeDismissed && (
+        <div className="flex items-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-3.5 py-2.5 text-left text-[12px] text-[var(--vco-text-muted)]">
+          <button type="button" onClick={notifications.requestPermission} className="flex flex-1 items-center gap-2 text-left">
+            <Bell size={15} className="shrink-0 text-[var(--vco-green-strong)]" />
+            Turn on reminders — we'll nudge you 15 min before saved acts. Won't work in the background or locked screen (browser limitation).
+          </button>
+          <button type="button" onClick={() => setReminderNudgeDismissed(true)} aria-label="Dismiss" className="shrink-0 self-start">
+            <X size={15} />
+          </button>
+        </div>
       )}
 
       <section>
