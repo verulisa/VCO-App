@@ -3,14 +3,27 @@ import { MapPin, Navigation, Share2, X, ZoomIn, ZoomOut } from "lucide-react";
 import Accordion from "../components/Accordion";
 import CollapsibleSection from "../components/CollapsibleSection";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { MAP_AREAS, MAP_GATES } from "../data/mapAreas";
+import { AccessibleToiletsIcon, BarIcon, CoffeeIcon, MedicalIcon, MerchIcon, ShowerIcon, ToiletsIcon, WaterIcon } from "../components/AmenityIcons";
 
 const NAV_URL = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Walesby Forest, Nottinghamshire, NG22 9NG");
-const MAP_SRC = "map/festival-map.svg";
+const MAP_SRC = "map/festival-map.jpg";
 
-// Draws the map (its zone/gate labels are already part of the SVG artwork)
-// plus a red pin at the dropped spot into an offscreen canvas, entirely
-// client-side (everything's already service-worker cached) so it works with
-// zero signal, then shares or downloads it as an image.
+const AMENITY_LEGEND = [
+  { Icon: MedicalIcon, label: "Medical" },
+  { Icon: ToiletsIcon, label: "Toilets" },
+  { Icon: AccessibleToiletsIcon, label: "Accessible toilets" },
+  { Icon: ShowerIcon, label: "Showers" },
+  { Icon: WaterIcon, label: "Water points" },
+  { Icon: BarIcon, label: "Bar / drinks" },
+  { Icon: CoffeeIcon, label: "Coffee / hot drinks" },
+  { Icon: MerchIcon, label: "Festival merch" },
+];
+
+// Draws the map, its numbered area markers and gate letters, plus a red pin
+// at the dropped spot, into an offscreen canvas, entirely client-side
+// (everything's already service-worker cached) so it works with zero
+// signal, then shares or downloads it as an image.
 async function shareMapPin(pin, setSharing) {
   setSharing(true);
   try {
@@ -26,6 +39,36 @@ async function shareMapPin(pin, setSharing) {
     canvas.height = img.naturalHeight;
     const ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0);
+
+    const areaR = canvas.width * 0.016;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = `800 ${areaR}px ui-sans-serif, system-ui, sans-serif`;
+    for (const { n, xPct, yPct } of MAP_AREAS) {
+      const x = (xPct / 100) * canvas.width;
+      const y = (yPct / 100) * canvas.height;
+      ctx.fillStyle = "rgba(18,22,15,0.85)";
+      ctx.beginPath();
+      ctx.arc(x, y, areaR, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#f2ede0";
+      ctx.lineWidth = areaR * 0.12;
+      ctx.stroke();
+      ctx.fillStyle = "#f2ede0";
+      ctx.fillText(String(n), x, y + areaR * 0.08);
+    }
+    const gateR = canvas.width * 0.014;
+    ctx.font = `800 ${gateR}px ui-sans-serif, system-ui, sans-serif`;
+    for (const { letter, xPct, yPct } of MAP_GATES) {
+      const x = (xPct / 100) * canvas.width;
+      const y = (yPct / 100) * canvas.height;
+      ctx.fillStyle = "#d6553f";
+      ctx.beginPath();
+      ctx.arc(x, y, gateR, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.fillText(letter, x, y + gateR * 0.08);
+    }
 
     const x = (pin.xPct / 100) * canvas.width;
     const y = (pin.yPct / 100) * canvas.height;
@@ -142,6 +185,25 @@ export default function MapPage({ info }) {
           >
             <img src={MAP_SRC} alt="Vegan Camp Out festival map (unofficial, hand-drawn layout)" className="w-full select-none" draggable={false} />
 
+            {MAP_AREAS.map((area) => (
+              <span
+                key={area.n}
+                className="pointer-events-none absolute flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#12160fd9] text-[10px] font-extrabold text-[#f2ede0] shadow"
+                style={{ left: `${area.xPct}%`, top: `${area.yPct}%` }}
+              >
+                {area.n}
+              </span>
+            ))}
+            {MAP_GATES.map((gate) => (
+              <span
+                key={gate.letter}
+                className="pointer-events-none absolute flex h-4 w-4 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--vco-red)] text-[9px] font-extrabold text-white shadow"
+                style={{ left: `${gate.xPct}%`, top: `${gate.yPct}%` }}
+              >
+                {gate.letter}
+              </span>
+            ))}
+
             {pin && (
               <button
                 type="button"
@@ -175,6 +237,29 @@ export default function MapPage({ info }) {
           </div>
         )}
       </div>
+
+      <CollapsibleSection title="Map key">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+          {MAP_AREAS.map((area) => (
+            <div key={area.n} className="flex items-center gap-1.5">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--vco-surface-raised)] text-[10px] font-extrabold text-[var(--vco-text)]">
+                {area.n}
+              </span>
+              <span className="truncate text-[11.5px] text-[var(--vco-text-muted)]">{area.name}</span>
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 border-t border-dashed border-[var(--vco-border)] pt-3">
+          {AMENITY_LEGEND.map(({ Icon, label }) => (
+            <div key={label} className="flex items-center gap-1.5">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center text-[var(--vco-green-strong)]">
+                <Icon />
+              </span>
+              <span className="truncate text-[11.5px] text-[var(--vco-text-muted)]">{label}</span>
+            </div>
+          ))}
+        </div>
+      </CollapsibleSection>
 
       {info && (
         <CollapsibleSection title="Gates">
