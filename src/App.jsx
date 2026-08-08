@@ -102,6 +102,7 @@ export default function App() {
                 vendors={vendors}
                 vendorRatings={vendorRatings}
                 onGoToFood={() => setTab("food")}
+                onGoToLineup={() => setTab("lineup")}
               />
             )}
             {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}

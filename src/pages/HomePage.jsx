@@ -1,17 +1,21 @@
-import { Bell, Bookmark, CalendarClock, ChevronRight, Music, X } from "lucide-react";
+import { Bell, Bookmark, CalendarClock, CalendarDays, ChevronRight, Music, Star, X } from "lucide-react";
 import ActCard from "../components/ActCard";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useNow } from "../hooks/useNow";
-import { daysUntil, isLiveNow, isUpcoming, sortByStart } from "../utils/time";
+import { actStart, daysUntil, isLiveNow, isUpcoming, sortByStart, todayIso } from "../utils/time";
 
-export default function HomePage({ lineup, info, isSaved, toggleSave, notifications, vendors, vendorRatings, onGoToFood }) {
+export default function HomePage({ lineup, info, isSaved, toggleSave, notifications, vendors, vendorRatings, onGoToFood, onGoToLineup }) {
   const [reminderNudgeDismissed, setReminderNudgeDismissed] = useLocalStorage("vco_reminder_nudge_dismissed", false);
   const now = useNow();
   const live = sortByStart(lineup.filter((a) => isLiveNow(a, now)));
   const upNext = sortByStart(lineup.filter((a) => !isLiveNow(a, now) && isUpcoming(a, now, 120))).slice(0, 4);
   const days = info ? daysUntil(info.event.startDate, now) : null;
   const stageCount = new Set(lineup.map((a) => a.stage)).size;
-  const savedCount = lineup.filter((a) => isSaved(a.id)).length;
+
+  const savedActs = lineup.filter((a) => isSaved(a.id));
+  const savedCount = savedActs.length;
+  const nextForMe = sortByStart(savedActs.filter((a) => actStart(a) > now))[0] || null;
+  const myDay = sortByStart(savedActs.filter((a) => a.date === todayIso(now)));
 
   const wishlistVendors = (vendors || []).filter((v) => vendorRatings?.getRating(v.id).wishlist);
 
@@ -45,6 +49,27 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
           </button>
         </div>
       )}
+
+      <section>
+        <p className="mb-2.5 flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-text-faint)]">
+          <Star size={12} className="fill-[var(--vco-yellow)] stroke-[var(--vco-yellow)]" />
+          Next for me
+        </p>
+        {nextForMe ? (
+          <ActCard act={nextForMe} saved onToggleSave={toggleSave} now={now} />
+        ) : (
+          <button
+            type="button"
+            onClick={onGoToLineup}
+            className="tap flex w-full items-center gap-2.5 rounded-xl border border-dashed border-[var(--vco-border)] px-3.5 py-3 text-left"
+          >
+            <Star size={16} className="shrink-0 text-[var(--vco-text-faint)]" />
+            <p className="text-[12.5px] text-[var(--vco-text-muted)]">
+              {savedCount > 0 ? "Nothing else starred coming up." : "Nothing starred yet — head to Lineup and tap the star on what you don't want to miss."}
+            </p>
+          </button>
+        )}
+      </section>
 
       <section>
         <p className="mb-2.5 flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-text-faint)]">
@@ -120,6 +145,28 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
             {wishlistVendors.length > 4 && (
               <p className="text-center text-[10.5px] text-[var(--vco-text-faint)]">+{wishlistVendors.length - 4} more</p>
             )}
+          </div>
+        )}
+      </section>
+
+      <section>
+        <p className="mb-2.5 flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-text-faint)]">
+          <CalendarDays size={12} />
+          My day
+        </p>
+        {myDay.length === 0 ? (
+          <button
+            type="button"
+            onClick={onGoToLineup}
+            className="tap w-full rounded-xl border border-dashed border-[var(--vco-border)] px-3.5 py-3 text-left text-[12px] text-[var(--vco-text-muted)]"
+          >
+            Nothing starred for today yet — head to Lineup to plan your day.
+          </button>
+        ) : (
+          <div className="flex flex-col gap-2.5">
+            {myDay.map((act) => (
+              <ActCard key={act.id} act={act} saved onToggleSave={toggleSave} now={now} />
+            ))}
           </div>
         )}
       </section>
