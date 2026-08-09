@@ -208,36 +208,6 @@ body {
   border-radius: 6px;
 }
 
-/* Direction-aware tab switches — sliding in from the side the destination
-   tab actually sits on (right of the bottom nav = "forward", left = "back")
-   reads as real navigation instead of every tab just fading in the same way
-   regardless of which direction you moved. */
-@keyframes vco-page-in-forward {
-  from {
-    opacity: 0;
-    transform: translateX(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-@keyframes vco-page-in-back {
-  from {
-    opacity: 0;
-    transform: translateX(-18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-.page-in-forward {
-  animation: vco-page-in-forward 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.page-in-back {
-  animation: vco-page-in-back 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
 
 /* Backdrop fade-in for modal/drawer overlays. */
 @keyframes vco-backdrop-in {

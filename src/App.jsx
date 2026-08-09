@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { RotateCcw } from "lucide-react";
 import Header from "./components/Header";
 import BottomNav from "./components/BottomNav";
@@ -28,8 +28,6 @@ import { writeTentPin } from "./utils/backup";
 import { todayIso } from "./utils/time";
 import { weatherIconFor } from "./utils/weatherIcons";
 
-const TAB_ORDER = ["home", "lineup", "schedule", "food", "map"];
-
 export default function App() {
   const { lineup, vendors, info, status, reload } = useFestivalData();
   const appUpdate = useAppUpdate();
@@ -38,17 +36,6 @@ export default function App() {
   const { theme, toggleTheme } = useTheme();
   const { largeText, toggleLargeText } = useTextScale();
   const [tab, setTab] = useState("home");
-  // Which side the next tab's content should slide in from — "forward" (from
-  // the right) when moving to a tab further along the bottom nav, "back"
-  // (from the left) when moving to one before it, so switching tabs reads as
-  // real navigation instead of every tab fading in identically.
-  const [tabDirection, setTabDirection] = useState("forward");
-  const tabRef = useRef(tab);
-  function changeTab(next) {
-    setTabDirection(TAB_ORDER.indexOf(next) >= TAB_ORDER.indexOf(tabRef.current) ? "forward" : "back");
-    tabRef.current = next;
-    setTab(next);
-  }
   const [showProfile, setShowProfile] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [lastBackupAt, setLastBackupAt] = useLocalStorage("vco_last_backup_at", null);
@@ -121,7 +108,7 @@ export default function App() {
         )}
 
         {status === "ready" && (
-          <div key={tab} className={tabDirection === "forward" ? "page-in-forward" : "page-in-back"}>
+          <div key={tab}>
             {tab === "home" && (
               <HomePage
                 lineup={lineup}
@@ -131,8 +118,8 @@ export default function App() {
                 notifications={notifications}
                 vendors={vendors}
                 vendorRatings={vendorRatings}
-                onGoToFood={() => changeTab("food")}
-                onGoToLineup={() => changeTab("lineup")}
+                onGoToFood={() => setTab("food")}
+                onGoToLineup={() => setTab("lineup")}
               />
             )}
             {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}
@@ -143,7 +130,7 @@ export default function App() {
         )}
       </div>
 
-      <BottomNav active={tab} onChange={changeTab} />
+      <BottomNav active={tab} onChange={setTab} />
 
       {showMenu && (
         <MoreMenu
