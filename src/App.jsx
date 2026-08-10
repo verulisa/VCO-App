@@ -1,19 +1,13 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { RotateCcw } from "lucide-react";
 import Header from "./components/Header";
 import BottomNav from "./components/BottomNav";
 import InstallBanner from "./components/InstallBanner";
 import NicknamePrompt from "./components/NicknamePrompt";
-import ProfileSheet from "./components/ProfileSheet";
-import MoreMenu from "./components/MoreMenu";
 import MorningCard from "./components/MorningCard";
 import WelcomeIntro from "./components/WelcomeIntro";
 import SkeletonScreen from "./components/Skeleton";
 import HomePage from "./pages/HomePage";
-import LineupPage from "./pages/LineupPage";
-import SchedulePage from "./pages/SchedulePage";
-import FoodPage from "./pages/FoodPage";
-import MapPage from "./pages/MapPage";
 import { useFestivalData } from "./hooks/useFestivalData";
 import { useNickname } from "./hooks/useNickname";
 import { useTheme } from "./hooks/useTheme";
@@ -27,6 +21,16 @@ import { useWeather } from "./hooks/useWeather";
 import { writeTentPin } from "./utils/backup";
 import { todayIso } from "./utils/time";
 import { weatherIconFor } from "./utils/weatherIcons";
+
+// Split out of the initial bundle — each pulls in its own weight (ScheduleShare's
+// QR camera scanner alone is a big chunk of JS) that a phone loading Home for
+// the first time has no reason to download and parse up front.
+const LineupPage = lazy(() => import("./pages/LineupPage"));
+const SchedulePage = lazy(() => import("./pages/SchedulePage"));
+const FoodPage = lazy(() => import("./pages/FoodPage"));
+const MapPage = lazy(() => import("./pages/MapPage"));
+const ProfileSheet = lazy(() => import("./components/ProfileSheet"));
+const MoreMenu = lazy(() => import("./components/MoreMenu"));
 
 export default function App() {
   const { lineup, vendors, info, status, reload } = useFestivalData();
@@ -108,57 +112,63 @@ export default function App() {
         )}
 
         {status === "ready" && (
-          <div key={tab}>
-            {tab === "home" && (
-              <HomePage
-                lineup={lineup}
-                info={info}
-                isSaved={schedule.isSaved}
-                toggleSave={schedule.toggleSave}
-                notifications={notifications}
-                vendors={vendors}
-                vendorRatings={vendorRatings}
-                onGoToFood={() => setTab("food")}
-                onGoToLineup={() => setTab("lineup")}
-              />
-            )}
-            {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}
-            {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} lineup={lineup} />}
-            {tab === "food" && <FoodPage vendors={vendors} vendorRatings={vendorRatings} nickname={nickname} />}
-            {tab === "map" && <MapPage info={info} />}
-          </div>
+          <Suspense fallback={<SkeletonScreen />}>
+            <div key={tab}>
+              {tab === "home" && (
+                <HomePage
+                  lineup={lineup}
+                  info={info}
+                  isSaved={schedule.isSaved}
+                  toggleSave={schedule.toggleSave}
+                  notifications={notifications}
+                  vendors={vendors}
+                  vendorRatings={vendorRatings}
+                  onGoToFood={() => setTab("food")}
+                  onGoToLineup={() => setTab("lineup")}
+                />
+              )}
+              {tab === "lineup" && <LineupPage lineup={lineup} isSaved={schedule.isSaved} toggleSave={schedule.toggleSave} />}
+              {tab === "schedule" && <SchedulePage schedule={schedule} toggleSave={schedule.toggleSave} lineup={lineup} />}
+              {tab === "food" && <FoodPage vendors={vendors} vendorRatings={vendorRatings} nickname={nickname} />}
+              {tab === "map" && <MapPage info={info} />}
+            </div>
+          </Suspense>
         )}
       </div>
 
       <BottomNav active={tab} onChange={setTab} />
 
       {showMenu && (
-        <MoreMenu
-          info={info}
-          onClose={() => setShowMenu(false)}
-          onReloadData={reload}
-          appUpdate={appUpdate}
-          lastBackupAt={lastBackupAt}
-          onOpenProfile={() => {
-            setShowMenu(false);
-            setShowProfile(true);
-          }}
-          largeText={largeText}
-          onToggleLargeText={toggleLargeText}
-        />
+        <Suspense fallback={null}>
+          <MoreMenu
+            info={info}
+            onClose={() => setShowMenu(false)}
+            onReloadData={reload}
+            appUpdate={appUpdate}
+            lastBackupAt={lastBackupAt}
+            onOpenProfile={() => {
+              setShowMenu(false);
+              setShowProfile(true);
+            }}
+            largeText={largeText}
+            onToggleLargeText={toggleLargeText}
+          />
+        </Suspense>
       )}
 
       {showProfile && (
-        <ProfileSheet
-          nickname={nickname}
-          onRename={rename}
-          savedIds={schedule.savedIds}
-          vendorRatings={vendorRatings.ratings}
-          lastBackupAt={lastBackupAt}
-          onBackedUp={() => setLastBackupAt(new Date().toISOString())}
-          onRestore={handleRestore}
-          onClose={() => setShowProfile(false)}
-        />
+        <Suspense fallback={null}>
+          <ProfileSheet
+            nickname={nickname}
+            onRename={rename}
+            savedIds={schedule.savedIds}
+            vendorRatings={vendorRatings.ratings}
+            lastBackupAt={lastBackupAt}
+            onBackedUp={() => setLastBackupAt(new Date().toISOString())}
+            onRestore={handleRestore}
+            onClose={() => setShowProfile(false)}
+          />
+        </Suspense>
       )}
 
       {welcomeSeen && showMorningCard && status === "ready" && (
