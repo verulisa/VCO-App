@@ -1,4 +1,5 @@
 import { AlertTriangle } from "lucide-react";
+import { overlapRange } from "../utils/time";
 
 export default function ClashBanner({ clashPairs }) {
   if (!clashPairs.length) return null;
@@ -9,7 +10,7 @@ export default function ClashBanner({ clashPairs }) {
         <div key={`${a.id}-${b.id}`} className="flex items-start gap-2">
           <AlertTriangle size={15} className="mt-0.5 shrink-0" />
           <span>
-            Clash: <b>{a.name}</b> and <b>{b.name}</b> overlap ({a.startTime}–{b.endTime})
+            Clash: <b>{a.name}</b> and <b>{b.name}</b> overlap ({overlapRange(a, b)})
           </span>
         </div>
       ))}

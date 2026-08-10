@@ -40,6 +40,18 @@ export function overlaps(a, b) {
   return actStart(a) < actEnd(b) && actStart(b) < actEnd(a);
 }
 
+// The actual overlapping window between two clashing acts — not just
+// "first act's start to second act's end", which overstates the clash
+// whenever one act merely tails into the start of the other rather than
+// fully containing it.
+export function overlapRange(a, b) {
+  const start = new Date(Math.max(actStart(a), actStart(b)));
+  const end = new Date(Math.min(actEnd(a), actEnd(b)));
+  const pad = (n) => String(n).padStart(2, "0");
+  const clock = (d) => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  return `${clock(start)}–${clock(end)}`;
+}
+
 export function gapMinutes(prevAct, nextAct) {
   return Math.round((actStart(nextAct).getTime() - actEnd(prevAct).getTime()) / 60000);
 }
