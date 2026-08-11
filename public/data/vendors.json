@@ -35,7 +35,7 @@
   { "id": "ven-34", "name": "Fluff Pancakes", "category": "Food", "cuisine": ["Sweets & Drinks"], "tags": ["Gluten-Free", "Desserts"], "description": "Fluffy pancakes.", "location": "Stalls" },
   { "id": "ven-35", "name": "The Green Grill", "category": "Food", "cuisine": ["Fast Food & Burgers"], "tags": ["Gluten-Free"], "description": "Grilled burgers in colourful buns.", "location": "Stalls" },
   { "id": "ven-36", "name": "Gulp Coffee", "category": "Food", "cuisine": ["Sweets & Drinks"], "tags": ["Gluten-Free"], "description": "Specialty coffee.", "location": "Stalls" },
-  { "id": "ven-37", "name": "Indo-Vegan", "category": "Food", "cuisine": ["Curries & India"], "tags": ["Gluten-Free"], "description": "Traditional Indonesian spiced curries and street food.", "location": "Stalls" },
+  { "id": "ven-37", "name": "Indo-Vegan", "category": "Food", "cuisine": ["Asian & Curry"], "tags": ["Gluten-Free"], "description": "Traditional Indonesian spiced curries and street food.", "location": "Stalls" },
   { "id": "ven-38", "name": "Mac Majesty", "category": "Food", "cuisine": ["Pizza & Pasta","Fast Food & Burgers"], "tags": ["Gluten-Free"], "description": "Creamy baked mac & cheese.", "location": "Stalls" },
   { "id": "ven-39", "name": "Nourish & Nosh", "category": "Food", "cuisine": ["Mediterranean, Kebabs & Bowls"], "tags": ["Gluten-Free"], "description": "Nourishing warm and cold buddha bowls.", "location": "Stalls" },
   { "id": "ven-40", "name": "Tam's Kitchen", "category": "Food", "cuisine": ["Fast Food & Burgers","Asian & Curry"], "tags": ["Gluten-Free"], "description": "Seitan strips, burgers and dirty fries, plus katsu curry and spiced Asian bowls.", "location": "Stalls" },
