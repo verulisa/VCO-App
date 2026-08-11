@@ -131,15 +131,15 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
             {wishlistVendors.slice(0, 4).map((v) => (
               <div
                 key={v.id}
-                className="flex items-center justify-between rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] px-3.5 py-2.5 shadow-[var(--vco-shadow)]"
+                className="flex items-start justify-between gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] px-3.5 py-2.5 shadow-[var(--vco-shadow)]"
               >
                 <div className="min-w-0">
-                  <p className="truncate text-[12.5px] font-bold text-[var(--vco-text)]">{v.name}</p>
+                  <p className="text-[12.5px] font-bold leading-snug text-[var(--vco-text)]">{v.name}</p>
                   {(v.description || (v.location && v.location !== "Stalls")) && (
-                    <p className="truncate text-[10.5px] text-[var(--vco-text-muted)]">{v.description || v.location}</p>
+                    <p className="text-[10.5px] leading-snug text-[var(--vco-text-muted)]">{v.description || v.location}</p>
                   )}
                 </div>
-                <Bookmark size={14} className="shrink-0 fill-[var(--vco-yellow)] stroke-[var(--vco-yellow)]" />
+                <Bookmark size={14} className="mt-0.5 shrink-0 fill-[var(--vco-yellow)] stroke-[var(--vco-yellow)]" />
               </div>
             ))}
             {wishlistVendors.length > 4 && (

@@ -79,9 +79,9 @@ export default function MorningCard({ lineup, isSaved, vendors, vendorRatings, w
           ) : (
             <div className="flex flex-col gap-1.5">
               {myDay.map((act) => (
-                <div key={act.id} className="flex items-center gap-2 rounded-lg border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-2.5 py-1.5">
-                  <span className="shrink-0 font-mono text-[11px] tabular-nums text-[var(--vco-text-muted)]">{act.startTime}</span>
-                  <span className="truncate text-[12px] font-semibold text-[var(--vco-text)]">{act.name}</span>
+                <div key={act.id} className="flex items-start gap-2 rounded-lg border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-2.5 py-1.5">
+                  <span className="shrink-0 pt-px font-mono text-[11px] tabular-nums text-[var(--vco-text-muted)]">{act.startTime}</span>
+                  <span className="text-[12px] font-semibold leading-snug text-[var(--vco-text)]">{act.name}</span>
                 </div>
               ))}
             </div>
@@ -96,7 +96,7 @@ export default function MorningCard({ lineup, isSaved, vendors, vendorRatings, w
             </p>
             <div className="flex flex-col gap-1.5">
               {wishlistVendors.map((v) => (
-                <p key={v.id} className="truncate text-[12px] font-semibold text-[var(--vco-text)]">
+                <p key={v.id} className="text-[12px] font-semibold leading-snug text-[var(--vco-text)]">
                   {v.name}
                 </p>
               ))}

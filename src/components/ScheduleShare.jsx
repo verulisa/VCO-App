@@ -295,10 +295,10 @@ export default function ScheduleShare({ savedIds, onImport, lineup }) {
                     key={act.id}
                     type="button"
                     onClick={() => toggleSelected(act.id)}
-                    className="tap flex items-center gap-2.5 rounded-lg bg-[var(--vco-surface)] px-2.5 py-2 text-left"
+                    className="tap flex items-start gap-2.5 rounded-lg bg-[var(--vco-surface)] px-2.5 py-2 text-left"
                   >
                     <span
-                      className={`flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-md border ${
+                      className={`mt-px flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-md border ${
                         checked
                           ? "border-[var(--vco-green)] bg-[var(--vco-green)]"
                           : "border-[var(--vco-border)] bg-transparent"
@@ -307,7 +307,7 @@ export default function ScheduleShare({ savedIds, onImport, lineup }) {
                       {checked && <Check size={11} className="text-white" />}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[12.5px] font-semibold text-[var(--vco-text)]">{act.name}</span>
+                      <span className="block text-[12.5px] font-semibold leading-snug text-[var(--vco-text)]">{act.name}</span>
                       <span className="block text-[10.5px] text-[var(--vco-text-muted)]">
                         {act.stage} · {formatTimeRange(act)}
                       </span>
