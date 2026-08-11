@@ -2,11 +2,16 @@ import { useState } from "react";
 import { Star, Check, Bookmark } from "lucide-react";
 import ShareQR from "./ShareQR";
 import { tapFeedback } from "../utils/haptics";
+import { stageColor } from "../utils/stageColor";
 
 export default function VendorCard({ vendor, ratingState, onRate, onToggleVisited, onToggleWishlist, onSetNote, nickname }) {
   const [editingNote, setEditingNote] = useState(false);
   const { rating, visited, wishlist, note } = ratingState;
   const isTopRated = visited && rating === 5;
+  // Same deterministic hash-to-colour trick the Lineup stage tags use — a
+  // fixed cuisine label always lands on the same colour without hand-mapping
+  // every cuisine that shows up in the data.
+  const cuisine = vendor.cuisine ? stageColor(vendor.cuisine) : null;
 
   const shareText = visited
     ? `${vendor.name} (Vegan Camp Out) — ${vendor.description ? `${vendor.description} — ` : ""}${"★".repeat(
@@ -24,18 +29,26 @@ export default function VendorCard({ vendor, ratingState, onRate, onToggleVisite
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="truncate font-bold text-[14px] text-[var(--vco-text)]">{vendor.name}</p>
+          <p className="font-bold leading-snug text-[14px] text-[var(--vco-text)]">{vendor.name}</p>
           {vendor.location && vendor.location !== "Stalls" && (
             <p className="text-[11.5px] text-[var(--vco-text-muted)]">{vendor.location}</p>
           )}
         </div>
       </div>
 
-      {(vendor.subcategory || vendor.tags.length > 0 || vendor.description) && (
+      {(vendor.subcategory || vendor.cuisine || vendor.tags.length > 0 || vendor.description) && (
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
           {vendor.subcategory && (
             <span className="rounded-full border border-[var(--vco-green)]/35 bg-[var(--vco-green-soft)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--vco-green-strong)]">
               {vendor.subcategory}
+            </span>
+          )}
+          {vendor.cuisine && (
+            <span
+              className="rounded-full border px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide"
+              style={{ backgroundColor: cuisine.bg, borderColor: cuisine.border, color: cuisine.text }}
+            >
+              {vendor.cuisine}
             </span>
           )}
           {vendor.tags.map((tag) => (

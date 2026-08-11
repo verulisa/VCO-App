@@ -12,6 +12,7 @@ export default function FoodPage({ vendors, vendorRatings, nickname }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [traderSubcategory, setTraderSubcategory] = useState("All");
+  const [cuisine, setCuisine] = useState("All");
   const [tags, setTags] = useState([]);
   const [status, setStatus] = useState("All");
   const { ratings, getRating, rate, toggleVisited, toggleWishlist, setNote } = vendorRatings;
@@ -27,12 +28,22 @@ export default function FoodPage({ vendors, vendorRatings, nickname }) {
     [vendors]
   );
 
+  // Star ratings for festival food stalls all cluster near the top (bad ones
+  // don't survive the circuit), so they don't actually help decide what to
+  // eat — cuisine type does. Same "second row, built from the data" pattern
+  // as the trader subcategories above.
+  const cuisines = useMemo(
+    () => ["All", ...new Set(vendors.filter((v) => v.category === "Food" && v.cuisine).map((v) => v.cuisine))],
+    [vendors]
+  );
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     return vendors
       .filter((v) => {
         if (category !== "All" && v.category !== category) return false;
         if (category === "Trader" && traderSubcategory !== "All" && v.subcategory !== traderSubcategory) return false;
+        if (category === "Food" && cuisine !== "All" && v.cuisine !== cuisine) return false;
         if (tags.length > 0 && !tags.every((t) => v.tags.includes(t))) return false;
         if (q && !v.name.toLowerCase().includes(q)) return false;
         const r = getRating(v.id);
@@ -41,7 +52,7 @@ export default function FoodPage({ vendors, vendorRatings, nickname }) {
         return true;
       })
       .sort((a, b) => a.name.localeCompare(b.name));
-  }, [vendors, search, category, traderSubcategory, tags, status, ratings, getRating]);
+  }, [vendors, search, category, traderSubcategory, cuisine, tags, status, ratings, getRating]);
 
   return (
     <div className="flex flex-col gap-3.5 px-4 pb-28 pt-4">
@@ -52,11 +63,13 @@ export default function FoodPage({ vendors, vendorRatings, nickname }) {
         onChange={(next) => {
           setCategory(next);
           if (next !== "Trader") setTraderSubcategory("All");
+          if (next !== "Food") setCuisine("All");
         }}
       />
       {category === "Trader" && traderSubcategories.length > 1 && (
         <FilterChips options={traderSubcategories} value={traderSubcategory} onChange={setTraderSubcategory} />
       )}
+      {category === "Food" && cuisines.length > 1 && <FilterChips options={cuisines} value={cuisine} onChange={setCuisine} />}
       {category !== "Trader" && <FilterChips options={DIET_TAGS} value={tags} onChange={setTags} multi />}
 
       <div className="flex items-center justify-between">
