@@ -31,8 +31,13 @@ export default function VendorCard({ vendor, ratingState, onRate, onToggleVisite
         </div>
       </div>
 
-      {(vendor.tags.length > 0 || vendor.description) && (
+      {(vendor.subcategory || vendor.tags.length > 0 || vendor.description) && (
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          {vendor.subcategory && (
+            <span className="rounded-full border border-[var(--vco-green)]/35 bg-[var(--vco-green-soft)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--vco-green-strong)]">
+              {vendor.subcategory}
+            </span>
+          )}
           {vendor.tags.map((tag) => (
             <span
               key={tag}

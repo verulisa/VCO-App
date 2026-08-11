@@ -11,17 +11,28 @@ const STATUS_FILTERS = ["All", "Want to try", "Been here"];
 export default function FoodPage({ vendors, vendorRatings, nickname }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const [traderSubcategory, setTraderSubcategory] = useState("All");
   const [tags, setTags] = useState([]);
   const [status, setStatus] = useState("All");
   const { ratings, getRating, rate, toggleVisited, toggleWishlist, setNote } = vendorRatings;
 
   const wishlistCount = useMemo(() => Object.values(ratings).filter((r) => r.wishlist).length, [ratings]);
 
+  // Traders span everything from charities to skincare brands, so a single
+  // flat "Trader" bucket wasn't useful for finding anything — this second
+  // row lets it narrow down further, built from whatever subcategories are
+  // actually present in the data rather than a hardcoded list.
+  const traderSubcategories = useMemo(
+    () => ["All", ...new Set(vendors.filter((v) => v.category === "Trader" && v.subcategory).map((v) => v.subcategory))],
+    [vendors]
+  );
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     return vendors
       .filter((v) => {
         if (category !== "All" && v.category !== category) return false;
+        if (category === "Trader" && traderSubcategory !== "All" && v.subcategory !== traderSubcategory) return false;
         if (tags.length > 0 && !tags.every((t) => v.tags.includes(t))) return false;
         if (q && !v.name.toLowerCase().includes(q)) return false;
         const r = getRating(v.id);
@@ -30,13 +41,23 @@ export default function FoodPage({ vendors, vendorRatings, nickname }) {
         return true;
       })
       .sort((a, b) => a.name.localeCompare(b.name));
-  }, [vendors, search, category, tags, status, ratings, getRating]);
+  }, [vendors, search, category, traderSubcategory, tags, status, ratings, getRating]);
 
   return (
     <div className="flex flex-col gap-3.5 px-4 pb-28 pt-4">
       <SearchBar value={search} onChange={setSearch} placeholder="Search a stall…" />
-      <FilterChips options={CATEGORIES} value={category} onChange={setCategory} />
-      <FilterChips options={DIET_TAGS} value={tags} onChange={setTags} multi />
+      <FilterChips
+        options={CATEGORIES}
+        value={category}
+        onChange={(next) => {
+          setCategory(next);
+          if (next !== "Trader") setTraderSubcategory("All");
+        }}
+      />
+      {category === "Trader" && traderSubcategories.length > 1 && (
+        <FilterChips options={traderSubcategories} value={traderSubcategory} onChange={setTraderSubcategory} />
+      )}
+      {category !== "Trader" && <FilterChips options={DIET_TAGS} value={tags} onChange={setTags} multi />}
 
       <div className="flex items-center justify-between">
         <FilterChips options={STATUS_FILTERS} value={status} onChange={setStatus} />
