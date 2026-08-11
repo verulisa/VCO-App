@@ -8,10 +8,9 @@ export default function VendorCard({ vendor, ratingState, onRate, onToggleVisite
   const [editingNote, setEditingNote] = useState(false);
   const { rating, visited, wishlist, note } = ratingState;
   const isTopRated = visited && rating === 5;
-  // Same deterministic hash-to-colour trick the Lineup stage tags use — a
-  // fixed cuisine label always lands on the same colour without hand-mapping
-  // every cuisine that shows up in the data.
-  const cuisine = vendor.cuisine ? stageColor(vendor.cuisine) : null;
+  // A stall can genuinely span two cuisines (e.g. loaded mac & cheese is
+  // both "fast food" and "pasta"), so cuisine is a list, not a single value.
+  const cuisines = vendor.cuisine || [];
 
   const shareText = visited
     ? `${vendor.name} (Vegan Camp Out) — ${vendor.description ? `${vendor.description} — ` : ""}${"★".repeat(
@@ -36,21 +35,25 @@ export default function VendorCard({ vendor, ratingState, onRate, onToggleVisite
         </div>
       </div>
 
-      {(vendor.subcategory || vendor.cuisine || vendor.tags.length > 0 || vendor.description) && (
+      {(vendor.subcategory || cuisines.length > 0 || vendor.tags.length > 0 || vendor.description) && (
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
           {vendor.subcategory && (
             <span className="rounded-full border border-[var(--vco-green)]/35 bg-[var(--vco-green-soft)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--vco-green-strong)]">
               {vendor.subcategory}
             </span>
           )}
-          {vendor.cuisine && (
-            <span
-              className="rounded-full border px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide"
-              style={{ backgroundColor: cuisine.bg, borderColor: cuisine.border, color: cuisine.text }}
-            >
-              {vendor.cuisine}
-            </span>
-          )}
+          {cuisines.map((c) => {
+            const color = stageColor(c);
+            return (
+              <span
+                key={c}
+                className="rounded-full border px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide"
+                style={{ backgroundColor: color.bg, borderColor: color.border, color: color.text }}
+              >
+                {c}
+              </span>
+            );
+          })}
           {vendor.tags.map((tag) => (
             <span
               key={tag}

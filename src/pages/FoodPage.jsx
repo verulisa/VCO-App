@@ -33,7 +33,7 @@ export default function FoodPage({ vendors, vendorRatings, nickname }) {
   // eat — cuisine type does. Same "second row, built from the data" pattern
   // as the trader subcategories above.
   const cuisines = useMemo(
-    () => ["All", ...new Set(vendors.filter((v) => v.category === "Food" && v.cuisine).map((v) => v.cuisine))],
+    () => ["All", ...new Set(vendors.filter((v) => v.category === "Food").flatMap((v) => v.cuisine || []))],
     [vendors]
   );
 
@@ -43,7 +43,7 @@ export default function FoodPage({ vendors, vendorRatings, nickname }) {
       .filter((v) => {
         if (category !== "All" && v.category !== category) return false;
         if (category === "Trader" && traderSubcategory !== "All" && v.subcategory !== traderSubcategory) return false;
-        if (category === "Food" && cuisine !== "All" && v.cuisine !== cuisine) return false;
+        if (category === "Food" && cuisine !== "All" && !(v.cuisine || []).includes(cuisine)) return false;
         if (tags.length > 0 && !tags.every((t) => v.tags.includes(t))) return false;
         if (q && !v.name.toLowerCase().includes(q)) return false;
         const r = getRating(v.id);
