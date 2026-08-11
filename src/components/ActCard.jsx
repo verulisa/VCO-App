@@ -27,7 +27,7 @@ function ActCard({ act, saved, onToggleSave, now = new Date() }) {
       </div>
 
       <div className="min-w-0 px-3 py-3">
-        <p className="truncate font-bold text-[13.5px] text-[var(--vco-text)]">{act.name}</p>
+        <p className="font-bold leading-snug text-[13.5px] text-[var(--vco-text)]">{act.name}</p>
         <div className="mt-1 flex flex-wrap items-center gap-1.5">
           {live && (
             <span className="flex items-center gap-1 rounded-full border border-[var(--vco-red)]/40 bg-[var(--vco-red-soft)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide text-[var(--vco-red)]">
