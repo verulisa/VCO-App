@@ -35,7 +35,7 @@
   { "id": "ven-34", "name": "Fluff Pancakes", "category": "Food", "cuisine": "Sweets & Drinks", "tags": ["Gluten-Free", "Desserts"], "description": "Fluffy pancakes.", "location": "Stalls" },
   { "id": "ven-35", "name": "The Green Grill", "category": "Food", "cuisine": "Fast Food", "tags": ["Gluten-Free"], "description": "Grilled burgers on colourful buns — a Walthamstow original since 2017, with chkn bitez & kimchi hot dawgs.", "location": "Stalls" },
   { "id": "ven-36", "name": "Gulp Coffee", "category": "Food", "cuisine": "Sweets & Drinks", "tags": ["Gluten-Free"], "description": "Specialty coffee and drinks.", "location": "Stalls" },
-  { "id": "ven-37", "name": "Indo-Vegan", "category": "Food", "cuisine": "Curries & India", "tags": ["Gluten-Free"], "description": "Traditional Indian spiced curries and street food.", "location": "Stalls" },
+  { "id": "ven-37", "name": "Indo-Vegan", "category": "Food", "cuisine": "Curries & India", "tags": ["Gluten-Free"], "description": "Traditional Indonesian spiced curries and street food.", "location": "Stalls" },
   { "id": "ven-38", "name": "Mac Majesty", "category": "Food", "cuisine": "Pizza & Pasta", "tags": ["Gluten-Free"], "description": "Loaded vegan mac & cheese, baked to order.", "location": "Stalls" },
   { "id": "ven-39", "name": "Nourish & Nosh", "category": "Food", "cuisine": "Speciality & Comfort Food", "tags": ["Gluten-Free"], "description": "Nourishing, warming comfort bowls.", "location": "Stalls" },
   { "id": "ven-40", "name": "Tam's Kitchen", "category": "Food", "cuisine": "Curries & India", "tags": ["Gluten-Free"], "description": "Asian fusion — Paignton favourite's spiced loaded Korean BBQ chick'n fries and vegan mac and cheese.", "location": "Stalls" },
