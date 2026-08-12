@@ -42,6 +42,15 @@ function ActCard({ act, saved, onToggleSave, now = new Date() }) {
             {act.stage}
           </span>
           <span className="text-[11px] text-[var(--vco-text-muted)]">{act.category}</span>
+          {act.bsl && (
+            <span
+              className="rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-1.5 py-0.5 text-[10px]"
+              title="BSL interpreted"
+              aria-label="BSL interpreted"
+            >
+              🧏
+            </span>
+          )}
         </div>
         {act.description && (
           <p className="mt-1 line-clamp-2 text-[11px] leading-snug text-[var(--vco-text-muted)]">{act.description}</p>

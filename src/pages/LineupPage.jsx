@@ -7,6 +7,7 @@ import { useNow } from "../hooks/useNow";
 import { dayKeyForDate, formatDayHeading, sortByStart, todayIso } from "../utils/time";
 
 const DAYS = ["All", "Thu", "Fri", "Sat", "Sun"];
+const BSL_OPTIONS = ["All", "🧏 BSL interpreted"];
 
 export default function LineupPage({ lineup, isSaved, toggleSave }) {
   const now = useNow();
@@ -18,6 +19,7 @@ export default function LineupPage({ lineup, isSaved, toggleSave }) {
   const [day, setDay] = useState(() => todayKey || "All");
   const [stage, setStage] = useState("All");
   const [categories, setCategories] = useState([]);
+  const [bsl, setBsl] = useState("All");
 
   const stages = useMemo(() => ["All", ...new Set(lineup.map((a) => a.stage))], [lineup]);
   const allCategories = useMemo(() => [...new Set(lineup.map((a) => a.category))].sort(), [lineup]);
@@ -29,11 +31,12 @@ export default function LineupPage({ lineup, isSaved, toggleSave }) {
         if (day !== "All" && act.day !== day) return false;
         if (stage !== "All" && act.stage !== stage) return false;
         if (categories.length > 0 && !categories.includes(act.category)) return false;
+        if (bsl !== "All" && !act.bsl) return false;
         if (q && !act.name.toLowerCase().includes(q)) return false;
         return true;
       })
     );
-  }, [lineup, search, day, stage, categories]);
+  }, [lineup, search, day, stage, categories, bsl]);
 
   // Insert a day heading whenever the date changes — acts are already
   // sorted chronologically, so with "All" days selected it's otherwise
@@ -57,6 +60,13 @@ export default function LineupPage({ lineup, isSaved, toggleSave }) {
       <FilterChips options={DAYS} value={day} onChange={setDay} highlight={todayKey} />
       <FilterChips options={stages} value={stage} onChange={setStage} />
       <FilterChips options={allCategories} value={categories} onChange={setCategories} multi />
+      <FilterChips options={BSL_OPTIONS} value={bsl} onChange={setBsl} />
+      {bsl !== "All" && (
+        <p className="-mt-2 text-[10.5px] leading-relaxed text-[var(--vco-text-faint)]">
+          🧏 List shared by We The Free, not the festival's published lineup artwork — an act without the mark may still
+          have an interpreter, it just hasn't been confirmed to us.
+        </p>
+      )}
 
       <div className="flex flex-col gap-2.5">
         {filtered.length === 0 ? (
