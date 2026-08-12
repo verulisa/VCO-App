@@ -10,9 +10,9 @@ export default defineConfig({
       registerType: "autoUpdate",
       injectRegister: false,
       includeAssets: [
-        "favicon.ico",
-        "icons/favicon-16x16.png",
-        "icons/favicon-32x32.png",
+        "favicon-v2.ico",
+        "icons/favicon-16x16-v2.png",
+        "icons/favicon-32x32-v2.png",
         "icons/apple-touch-icon.png",
         "map/festival-map.jpg",
         "brand/logo.jpg",

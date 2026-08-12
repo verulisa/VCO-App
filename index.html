@@ -10,9 +10,13 @@
     <meta property="og:image" content="https://verulisa.github.io/VCO-App/brand/logo.jpg" />
     <meta property="og:type" content="website" />
     <meta name="robots" content="noai, noimageai" />
-    <link rel="icon" href="favicon.ico" sizes="any" />
-    <link rel="icon" href="icons/favicon-32x32.png" sizes="32x32" type="image/png" />
-    <link rel="icon" href="icons/favicon-16x16.png" sizes="16x16" type="image/png" />
+    <!-- Filenames carry a version suffix on purpose: browsers (especially
+         iOS Safari) cache favicons very persistently by URL, independent of
+         normal cache headers, so updating the icon needs a new filename to
+         actually take effect — bump the suffix whenever it changes again. -->
+    <link rel="icon" href="favicon-v2.ico" sizes="any" />
+    <link rel="icon" href="icons/favicon-32x32-v2.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="icons/favicon-16x16-v2.png" sizes="16x16" type="image/png" />
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
