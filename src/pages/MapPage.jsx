@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { MapPin, Navigation, Share2, X, ZoomIn, ZoomOut } from "lucide-react";
 import Accordion from "../components/Accordion";
 import CollapsibleSection from "../components/CollapsibleSection";
+import LocationShare from "../components/LocationShare";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const NAV_URL = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("Walesby Forest, Nottinghamshire, NG22 9NG");
@@ -70,7 +71,7 @@ async function shareMapPin(pin, setSharing) {
   }
 }
 
-export default function MapPage({ info }) {
+export default function MapPage({ info, lineup, vendors }) {
   const [pin, setPin] = useLocalStorage("vco_tent_pin", null);
   const [zoom, setZoom] = useState(1);
   const [sharing, setSharing] = useState(false);
@@ -174,6 +175,10 @@ export default function MapPage({ info }) {
           </div>
         )}
       </div>
+
+      <CollapsibleSection title="Share where you are">
+        <LocationShare lineup={lineup} vendors={vendors} gates={info?.gates} campingZones={info?.campingZones} />
+      </CollapsibleSection>
 
       {info && (
         <CollapsibleSection title="Gates">

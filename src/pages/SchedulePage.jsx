@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { CalendarPlus, Clipboard, HelpCircle, Share2, Sparkles } from "lucide-react";
+import { CalendarPlus, Clipboard, HelpCircle, Share2, Sparkles, X } from "lucide-react";
 import ActCard from "../components/ActCard";
 import BreakRow from "../components/BreakRow";
 import ClashBanner from "../components/ClashBanner";
 import ScheduleShare from "../components/ScheduleShare";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useNow } from "../hooks/useNow";
 import { downloadIcs } from "../utils/ics";
 import { buildPlanText } from "../utils/planText";
@@ -18,6 +19,7 @@ export default function SchedulePage({ schedule, toggleSave, lineup }) {
   const now = useNow();
   const [copied, setCopied] = useState(false);
   const [showIcsHelp, setShowIcsHelp] = useState(false);
+  const [tipDismissed, setTipDismissed] = useLocalStorage("vco_schedule_tip_dismissed", false);
 
   async function sharePlanText() {
     const text = buildPlanText(savedActs);
@@ -36,6 +38,18 @@ export default function SchedulePage({ schedule, toggleSave, lineup }) {
 
   return (
     <div className="flex flex-col gap-3.5 px-4 pb-28 pt-4">
+      {!tipDismissed && (
+        <div className="flex items-start gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-3.5 py-2.5 text-[11.5px] leading-relaxed text-[var(--vco-text-muted)]">
+          <HelpCircle size={14} className="mt-0.5 shrink-0 text-[var(--vco-text-faint)]" />
+          <p className="flex-1">
+            Everything you star in the Lineup tab shows up here, in time order. Once you've got a plan, add it to your
+            phone's Calendar or share it with the group below.
+          </p>
+          <button type="button" onClick={() => setTipDismissed(true)} aria-label="Dismiss" className="shrink-0">
+            <X size={14} className="text-[var(--vco-text-faint)]" />
+          </button>
+        </div>
+      )}
       <ClashBanner clashPairs={clashPairs} />
 
       {scheduleRows.length === 0 ? (

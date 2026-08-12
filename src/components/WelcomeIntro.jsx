@@ -1,4 +1,4 @@
-import { CalendarPlus, Coffee, ListMusic, Lock, Share2, Smartphone, Star, X } from "lucide-react";
+import { Bell, CalendarPlus, Coffee, ListMusic, Lock, Share2, Smartphone, Star, Utensils, X } from "lucide-react";
 import { useDismiss } from "../hooks/useDismiss";
 
 const POINTS = [
@@ -8,7 +8,9 @@ const POINTS = [
   },
   { icon: ListMusic, text: "Browse the full lineup, schedule & festival info." },
   { icon: Star, text: "Tap the star on any act to save it to My Schedule." },
-  { icon: CalendarPlus, text: "Export your saved schedule to your phone's Calendar app for reminders." },
+  { icon: CalendarPlus, text: "Export your saved schedule to your phone's Calendar app — the most reliable way to get reminders." },
+  { icon: Bell, text: "The app can also nudge you 15 min before a saved act while it's open — turn it on any time in the menu." },
+  { icon: Utensils, text: "In Food, bookmark stalls to try and rate the ones you've visited." },
   { icon: Share2, text: "Recommend food stalls and share your schedule with friends." },
   {
     icon: Smartphone,

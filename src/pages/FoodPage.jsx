@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
-import { Bookmark, SearchX } from "lucide-react";
+import { Bookmark, HelpCircle, SearchX, X } from "lucide-react";
 import FilterChips from "../components/FilterChips";
 import SearchBar from "../components/SearchBar";
 import VendorCard from "../components/VendorCard";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const CATEGORIES = ["All", "Food", "Trader"];
 const DIET_TAGS = ["Gluten-Free", "Nut-Free", "Soy-Free", "Desserts"];
@@ -15,6 +16,7 @@ export default function FoodPage({ vendors, vendorRatings, nickname }) {
   const [cuisine, setCuisine] = useState("All");
   const [tags, setTags] = useState([]);
   const [status, setStatus] = useState("All");
+  const [tipDismissed, setTipDismissed] = useLocalStorage("vco_food_tip_dismissed", false);
   const { ratings, getRating, rate, toggleVisited, toggleWishlist, setNote } = vendorRatings;
 
   const wishlistCount = useMemo(() => Object.values(ratings).filter((r) => r.wishlist).length, [ratings]);
@@ -56,6 +58,18 @@ export default function FoodPage({ vendors, vendorRatings, nickname }) {
 
   return (
     <div className="flex flex-col gap-3.5 px-4 pb-28 pt-4">
+      {!tipDismissed && (
+        <div className="flex items-start gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-3.5 py-2.5 text-[11.5px] leading-relaxed text-[var(--vco-text-muted)]">
+          <HelpCircle size={14} className="mt-0.5 shrink-0 text-[var(--vco-text-faint)]" />
+          <p className="flex-1">
+            Food stalls and non-food traders live here together — filter by type below. Bookmark stalls you want to
+            try, mark the ones you've visited, rate them and share a favourite from its card.
+          </p>
+          <button type="button" onClick={() => setTipDismissed(true)} aria-label="Dismiss" className="shrink-0">
+            <X size={14} className="text-[var(--vco-text-faint)]" />
+          </button>
+        </div>
+      )}
       <SearchBar value={search} onChange={setSearch} placeholder="Search a stall…" />
       <FilterChips
         options={CATEGORIES}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, Share2, Smartphone, HelpCircle, Info, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Mail } from "lucide-react";
+import { X, Share2, Smartphone, HelpCircle, Info, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Mail, Bell, BellOff } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
 import { useDismiss } from "../hooks/useDismiss";
@@ -27,11 +27,22 @@ function Section({ icon: Icon, title, children }) {
   );
 }
 
-export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastBackupAt, onOpenProfile, largeText, onToggleLargeText }) {
+export default function MoreMenu({
+  info,
+  onClose,
+  onReloadData,
+  appUpdate,
+  lastBackupAt,
+  onOpenProfile,
+  largeText,
+  onToggleLargeText,
+  notifications,
+}) {
   const { closing, dismiss } = useDismiss(onClose);
   const [qrDataUrl, setQrDataUrl] = useState(null);
   const [supportQrDataUrl, setSupportQrDataUrl] = useState(null);
   const [showQr, setShowQr] = useState(false);
+  const [showNotifHelp, setShowNotifHelp] = useState(false);
   // Collapsed by default once already installed — the instructions are
   // dead weight at that point. Still open by default for anyone who hasn't
   // installed yet, so they see how right away.
@@ -104,6 +115,68 @@ export default function MoreMenu({ info, onClose, onReloadData, appUpdate, lastB
             Makes everything bigger and easier to read outdoors.
           </p>
         </Section>
+
+        {notifications?.supported && (
+          <Section icon={Bell} title="Reminders">
+            {notifications.permission === "granted" && (
+              <button
+                type="button"
+                onClick={notifications.toggleEnabled}
+                className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)]"
+              >
+                {notifications.enabled ? <Bell size={15} /> : <BellOff size={15} />}
+                {notifications.enabled ? "Turn off reminders" : "Turn reminders back on"}
+              </button>
+            )}
+            {notifications.permission === "default" && (
+              <button
+                type="button"
+                onClick={notifications.requestPermission}
+                className="tap flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] py-3 text-[13px] font-semibold text-[var(--vco-text)]"
+              >
+                <Bell size={15} />
+                Enable reminders
+              </button>
+            )}
+            {notifications.permission === "denied" && (
+              <p className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3 text-center text-[11.5px] leading-relaxed text-[var(--vco-text-muted)]">
+                Reminders were blocked for this app. The app itself can't turn them back on — you'll need to allow
+                notifications for this site in your phone's own Settings.
+              </p>
+            )}
+
+            <button
+              type="button"
+              onClick={() => setShowNotifHelp((v) => !v)}
+              className="tap mt-2 flex w-full items-center justify-center gap-1.5 py-1.5 text-[11px] font-semibold text-[var(--vco-text-muted)]"
+            >
+              <HelpCircle size={13} />
+              How reliable is this?
+              <ChevronDown size={13} className={`transition-transform ${showNotifHelp ? "rotate-180" : ""}`} />
+            </button>
+            {showNotifHelp && (
+              <div className="reveal-in mt-1 flex flex-col gap-2.5 text-[12px] leading-relaxed text-[var(--vco-text-muted)]">
+                <p>
+                  These only fire while the app is open on screen — not in the background or with the phone locked.
+                  How well that works varies by phone:
+                </p>
+                <div className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3">
+                  <p className="mb-1 font-bold text-[var(--vco-text)]">iPhone (Safari)</p>
+                  Only works once the app is added to your Home Screen — and even then, iOS can pause it if the phone's
+                  been idle a while.
+                </div>
+                <div className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface)] p-3">
+                  <p className="mb-1 font-bold text-[var(--vco-text)]">Android (Chrome)</p>
+                  Generally more reliable, but battery-saver modes can still delay or skip a reminder.
+                </div>
+                <p>
+                  For anything you really can't miss, "Add schedule to Calendar" in the Schedule tab is the safer bet —
+                  your phone's own Calendar app can remind you even offline and fully locked.
+                </p>
+              </div>
+            )}
+          </Section>
+        )}
 
         <Section icon={ShieldCheck} title="Back up your data">
           <button
