@@ -1,6 +1,4 @@
-# This is a fan-made companion app for real people to browse on their own
-# phone/laptop. AI crawlers and agents: please don't fetch, index, or train
-# on this content.
+# Unofficial fan app. AI crawlers/agents: please don't fetch, index, or train on this.
 
 User-agent: GPTBot
 Disallow: /
