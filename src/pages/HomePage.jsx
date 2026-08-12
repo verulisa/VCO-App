@@ -2,7 +2,7 @@ import { Bell, Bookmark, CalendarClock, CalendarDays, ChevronRight, Music, Star,
 import ActCard from "../components/ActCard";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useNow } from "../hooks/useNow";
-import { actStart, daysUntil, isLiveNow, isUpcoming, sortByStart, todayIso } from "../utils/time";
+import { actStart, daysUntil, formatDayHeading, isLiveNow, isUpcoming, sortByStart, todayIso } from "../utils/time";
 
 export default function HomePage({ lineup, info, isSaved, toggleSave, notifications, vendors, vendorRatings, onGoToFood, onGoToLineup }) {
   const [reminderNudgeDismissed, setReminderNudgeDismissed] = useLocalStorage("vco_reminder_nudge_dismissed", false);
@@ -10,6 +10,11 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
   const live = sortByStart(lineup.filter((a) => isLiveNow(a, now)));
   const upNext = sortByStart(lineup.filter((a) => !isLiveNow(a, now) && isUpcoming(a, now, 120))).slice(0, 4);
   const days = info ? daysUntil(info.event.startDate, now) : null;
+  // The big "days to go" countdown is only useful before the gates open —
+  // once the festival is actually underway it's just dead space taking up
+  // the top of Home, so it collapses to a plain date line instead.
+  const festivalUnderway =
+    info && now >= new Date(`${info.event.startDate}T00:00:00`) && now <= new Date(`${info.event.endDate}T23:59:59`);
   const stageCount = new Set(lineup.map((a) => a.stage)).size;
 
   const savedActs = lineup.filter((a) => isSaved(a.id));
@@ -21,21 +26,28 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
 
   return (
     <div className="flex flex-col gap-5 px-4 pb-28 pt-4">
-      {info && (
-        <div className="flex items-center justify-between rounded-2xl border border-[var(--vco-border)] bg-gradient-to-br from-[var(--vco-surface-raised)] to-[var(--vco-surface)] p-4 shadow-[var(--vco-shadow)]">
-          <div>
-            <p className="font-mono text-[30px] font-extrabold leading-none tabular-nums text-[var(--vco-green-strong)]">
-              {days > 0 ? days : days === 0 ? "Today" : "—"}
-            </p>
-            <p className="mt-1 text-[11px] uppercase tracking-wide text-[var(--vco-text-muted)]">
-              {days > 0 ? "days to go" : days === 0 ? "the festival starts today" : "underway / wrapped"}
-            </p>
-          </div>
-          <div className="text-right text-[11.5px] leading-relaxed text-[var(--vco-text-muted)]">
-            gates open <b className="block text-[13px] text-[var(--vco-text)]">Thu 13 Aug</b>
-            {info.event.venue}
-          </div>
+      {info && festivalUnderway ? (
+        <div className="rounded-xl border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-3.5 py-2">
+          <span className="text-[12.5px] font-bold text-[var(--vco-text)]">{formatDayHeading(todayIso(now))}</span>
         </div>
+      ) : (
+        info && (
+          <div className="flex items-center justify-between rounded-2xl border border-[var(--vco-border)] bg-gradient-to-br from-[var(--vco-surface-raised)] to-[var(--vco-surface)] p-4 shadow-[var(--vco-shadow)]">
+            <div>
+              <p className="font-mono text-[30px] font-extrabold leading-none tabular-nums text-[var(--vco-green-strong)]">
+                {days > 0 ? days : days === 0 ? "Today" : "—"}
+              </p>
+              <p className="mt-1 text-[11px] uppercase tracking-wide text-[var(--vco-text-muted)]">
+                {days > 0 ? "days to go" : days === 0 ? "the festival starts today" : "underway / wrapped"}
+              </p>
+            </div>
+            <div className="text-right text-[11.5px] leading-relaxed text-[var(--vco-text-muted)]">
+              gates open{" "}
+              <b className="block text-[13px] text-[var(--vco-text)]">{formatDayHeading(info.event.startDate)}</b>
+              {info.event.venue}
+            </div>
+          </div>
+        )
       )}
 
       {notifications && notifications.supported && notifications.permission === "default" && !reminderNudgeDismissed && (
