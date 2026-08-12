@@ -176,6 +176,52 @@ export default function MapPage({ info, lineup, vendors }) {
         )}
       </div>
 
+      {info?.shuttleBus && (
+        <CollapsibleSection title="Shuttle Bus" defaultOpen>
+          <p className="mb-3 text-[11.5px] leading-relaxed text-[var(--vco-text-muted)]">{info.shuttleBus.price}</p>
+
+          <p className="mb-1.5 text-[10.5px] font-bold uppercase tracking-wide text-[var(--vco-text-faint)]">
+            {info.shuttleBus.pickup} → the festival
+          </p>
+          {info.shuttleBus.toFestival.map((row) => (
+            <div key={row.day} className="mb-2.5">
+              <p className="mb-1 text-[12px] font-bold text-[var(--vco-text)]">{row.day}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {row.times.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-lg border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-2 py-1 font-mono text-[11px] tabular-nums text-[var(--vco-text)]"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <p className="mb-1.5 mt-1 text-[10.5px] font-bold uppercase tracking-wide text-[var(--vco-text-faint)]">
+            The festival → {info.shuttleBus.pickup}
+          </p>
+          {info.shuttleBus.fromFestival.map((row) => (
+            <div key={row.day} className="mb-2.5">
+              <p className="mb-1 text-[12px] font-bold text-[var(--vco-text)]">{row.day}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {row.times.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-lg border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-2 py-1 font-mono text-[11px] tabular-nums text-[var(--vco-text)]"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <p className="mt-1 text-[10.5px] leading-relaxed text-[var(--vco-text-faint)]">{info.shuttleBus.note}</p>
+        </CollapsibleSection>
+      )}
+
       <CollapsibleSection title="Share where you are">
         <LocationShare lineup={lineup} vendors={vendors} gates={info?.gates} campingZones={info?.campingZones} />
       </CollapsibleSection>

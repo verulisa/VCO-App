@@ -1,8 +1,19 @@
-import { Bell, Bookmark, CalendarClock, CalendarDays, ChevronRight, Music, Star, X } from "lucide-react";
+import { Bell, Bookmark, CalendarClock, CalendarDays, ChevronRight, Music, Share2, Star, X } from "lucide-react";
 import ActCard from "../components/ActCard";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useNow } from "../hooks/useNow";
+import { APP_URL } from "../utils/appUrl";
 import { actStart, daysUntil, formatDayHeading, isLiveNow, isUpcoming, sortByStart, todayIso } from "../utils/time";
+
+const canNativeShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
+
+async function shareApp() {
+  try {
+    await navigator.share({ title: "Vegan Camp Out — Unofficial Fan App", url: APP_URL });
+  } catch {
+    // User cancelled the share sheet — nothing to do.
+  }
+}
 
 export default function HomePage({ lineup, info, isSaved, toggleSave, notifications, vendors, vendorRatings, onGoToFood, onGoToLineup }) {
   const [reminderNudgeDismissed, setReminderNudgeDismissed] = useLocalStorage("vco_reminder_nudge_dismissed", false);
@@ -188,6 +199,17 @@ export default function HomePage({ lineup, info, isSaved, toggleSave, notificati
         <Stat label="Stages / areas" value={stageCount} />
         <Stat label="Total acts" value={lineup.length} />
       </div>
+
+      {canNativeShare && (
+        <button
+          type="button"
+          onClick={shareApp}
+          className="tap flex items-center justify-center gap-2 rounded-xl border border-dashed border-[var(--vco-border)] py-3 text-[12px] text-[var(--vco-text-muted)]"
+        >
+          <Share2 size={14} />
+          Someone in your group is going to miss something — send them this app
+        </button>
+      )}
     </div>
   );
 }
