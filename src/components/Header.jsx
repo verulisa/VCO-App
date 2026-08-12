@@ -14,6 +14,7 @@ export default function Header({
   onOpenMorningCard,
 }) {
   const WeatherIcon = weatherIcon?.Icon || Cloud;
+  const weatherColor = weatherIcon?.color || "var(--vco-text-faint)";
   return (
     <header className="header-fixed flex items-center justify-between gap-2 border-b border-[var(--vco-border)] bg-[var(--vco-bg)]/90 px-3 backdrop-blur-md">
       <div className="flex min-w-0 items-center gap-2">
@@ -42,7 +43,8 @@ export default function Header({
           type="button"
           onClick={onOpenMorningCard}
           aria-label="Today's weather & plan"
-          className="tap flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[var(--vco-text-faint)]"
+          className="tap flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
+          style={{ color: weatherColor }}
         >
           <WeatherIcon size={15} />
         </button>
