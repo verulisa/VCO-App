@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { Star } from "lucide-react";
+import BslIcon from "./icons/BslIcon";
 import { formatTimeRange, isLiveNow, progressPercent } from "../utils/time";
 import { tapFeedback } from "../utils/haptics";
 import { stageColor } from "../utils/stageColor";
@@ -43,12 +44,8 @@ function ActCard({ act, saved, onToggleSave, now = new Date() }) {
           </span>
           <span className="text-[11px] text-[var(--vco-text-muted)]">{act.category}</span>
           {act.bsl && (
-            <span
-              className="rounded-full border border-[var(--vco-border)] bg-[var(--vco-surface-raised)] px-1.5 py-0.5 text-[10px]"
-              title="BSL interpreted"
-              aria-label="BSL interpreted"
-            >
-              🧏
+            <span title="BSL interpreted" aria-label="BSL interpreted" className="shrink-0">
+              <BslIcon size={15} />
             </span>
           )}
         </div>

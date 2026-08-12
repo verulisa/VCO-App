@@ -1,13 +1,14 @@
 import { useMemo, useState } from "react";
 import { SearchX } from "lucide-react";
 import ActCard from "../components/ActCard";
+import BslIcon from "../components/icons/BslIcon";
 import FilterChips from "../components/FilterChips";
 import SearchBar from "../components/SearchBar";
+import { tapFeedback } from "../utils/haptics";
 import { useNow } from "../hooks/useNow";
 import { dayKeyForDate, formatDayHeading, sortByStart, todayIso } from "../utils/time";
 
 const DAYS = ["All", "Thu", "Fri", "Sat", "Sun"];
-const BSL_OPTIONS = ["All", "🧏 BSL interpreted"];
 
 export default function LineupPage({ lineup, isSaved, toggleSave }) {
   const now = useNow();
@@ -19,7 +20,7 @@ export default function LineupPage({ lineup, isSaved, toggleSave }) {
   const [day, setDay] = useState(() => todayKey || "All");
   const [stage, setStage] = useState("All");
   const [categories, setCategories] = useState([]);
-  const [bsl, setBsl] = useState("All");
+  const [bslOnly, setBslOnly] = useState(false);
 
   const stages = useMemo(() => ["All", ...new Set(lineup.map((a) => a.stage))], [lineup]);
   const allCategories = useMemo(() => [...new Set(lineup.map((a) => a.category))].sort(), [lineup]);
@@ -31,12 +32,12 @@ export default function LineupPage({ lineup, isSaved, toggleSave }) {
         if (day !== "All" && act.day !== day) return false;
         if (stage !== "All" && act.stage !== stage) return false;
         if (categories.length > 0 && !categories.includes(act.category)) return false;
-        if (bsl !== "All" && !act.bsl) return false;
+        if (bslOnly && !act.bsl) return false;
         if (q && !act.name.toLowerCase().includes(q)) return false;
         return true;
       })
     );
-  }, [lineup, search, day, stage, categories, bsl]);
+  }, [lineup, search, day, stage, categories, bslOnly]);
 
   // Insert a day heading whenever the date changes — acts are already
   // sorted chronologically, so with "All" days selected it's otherwise
@@ -60,10 +61,25 @@ export default function LineupPage({ lineup, isSaved, toggleSave }) {
       <FilterChips options={DAYS} value={day} onChange={setDay} highlight={todayKey} />
       <FilterChips options={stages} value={stage} onChange={setStage} />
       <FilterChips options={allCategories} value={categories} onChange={setCategories} multi />
-      <FilterChips options={BSL_OPTIONS} value={bsl} onChange={setBsl} />
-      {bsl !== "All" && (
+
+      <button
+        type="button"
+        onClick={() => {
+          tapFeedback();
+          setBslOnly((v) => !v);
+        }}
+        className={`tap flex w-fit shrink-0 items-center gap-1.5 rounded-full border py-1 pl-1 pr-3.5 text-[12px] transition-colors duration-150 ${
+          bslOnly
+            ? "border-[var(--vco-green)] bg-[var(--vco-green)] font-bold text-white shadow-[0_2px_10px_-4px_var(--vco-green)]"
+            : "border-[var(--vco-border)] bg-[var(--vco-surface)] text-[var(--vco-text-muted)]"
+        }`}
+      >
+        <BslIcon size={20} />
+        BSL interpreted
+      </button>
+      {bslOnly && (
         <p className="-mt-2 text-[10.5px] leading-relaxed text-[var(--vco-text-faint)]">
-          🧏 List shared by We The Free, not the festival's published lineup artwork — an act without the mark may still
+          List shared by We The Free, not the festival's published lineup artwork — an act without the mark may still
           have an interpreter, it just hasn't been confirmed to us.
         </p>
       )}
