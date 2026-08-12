@@ -58,14 +58,12 @@ export default function LineupPage({ lineup, isSaved, toggleSave }) {
   return (
     <div className="flex flex-col gap-3.5 px-4 pb-28 pt-4">
       <SearchBar value={search} onChange={setSearch} placeholder="Search artist, speaker…" />
+      <p className="-mb-1 text-[10.5px] leading-relaxed text-[var(--vco-text-faint)]">
+        Every time here is typed in by hand from the official Vegan Camp Out website — if the two ever disagree, theirs
+        is right.
+      </p>
       <FilterChips options={DAYS} value={day} onChange={setDay} highlight={todayKey} />
       <FilterChips options={stages} value={stage} onChange={setStage} />
-      {stage === "We The Free" && (
-        <p className="-mt-2 text-[10.5px] leading-relaxed text-[var(--vco-text-faint)]">
-          Copied by hand from We The Free's own printed schedule, not the festival's official lineup — trust a sign on
-          site over this if they ever disagree.
-        </p>
-      )}
       <FilterChips options={allCategories} value={categories} onChange={setCategories} multi />
 
       <button
