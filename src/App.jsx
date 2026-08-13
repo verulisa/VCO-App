@@ -2,6 +2,7 @@ import { lazy, Suspense, useState } from "react";
 import { RotateCcw } from "lucide-react";
 import Header from "./components/Header";
 import BottomNav from "./components/BottomNav";
+import FirstSaveHint from "./components/FirstSaveHint";
 import InstallBanner from "./components/InstallBanner";
 import NicknamePrompt from "./components/NicknamePrompt";
 import MorningCard from "./components/MorningCard";
@@ -44,6 +45,7 @@ export default function App() {
   const [showMenu, setShowMenu] = useState(false);
   const [lastBackupAt, setLastBackupAt] = useLocalStorage("vco_last_backup_at", null);
   const [welcomeSeen, setWelcomeSeen] = useLocalStorage("vco_welcome_seen", false);
+  const [firstSaveHintSeen, setFirstSaveHintSeen] = useLocalStorage("vco_first_save_hint_seen", false);
   const [morningCardSeenDate, setMorningCardSeenDate] = useLocalStorage("vco_morning_card_seen_date", null);
   // Lazy-initialised once from the stored date — a fresh calendar day (or a
   // first-ever open) starts with the card due; closing it stamps today's
@@ -181,6 +183,10 @@ export default function App() {
           weather={weather}
           onClose={closeMorningCard}
         />
+      )}
+
+      {welcomeSeen && !firstSaveHintSeen && schedule.savedIds.length > 0 && (
+        <FirstSaveHint onClose={() => setFirstSaveHintSeen(true)} />
       )}
 
       {!welcomeSeen && <WelcomeIntro onClose={() => setWelcomeSeen(true)} />}
