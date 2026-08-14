@@ -81,20 +81,100 @@
       "answer": "Signal in Walesby Forest is patchy to non-existent in most of the camping and stage areas. Download this app and browse it once while you still have signal (e.g. before you leave home) — everything then keeps working offline for the whole weekend."
     },
     {
+      "question": "What age is the festival suitable for?",
+      "answer": "All ages — under 16s must be accompanied by an adult (18+)."
+    },
+    {
+      "question": "I can't find my ticket",
+      "answer": "Tickets are sent by e-ticket to the email you used when buying — check your inbox and spam/junk folder first. For any ticket issues, use the chat box at vegancampouttickets.com. Don't contact Viva (our partner) about tickets — they can't help with that."
+    },
+    {
+      "question": "Arrival & opening times",
+      "answer": "The car park opens at 12 midday Thursday or Friday (depending on whether you hold a Thursday pass) for everyone except VIP, who can arrive from 10am. The campsite opens at 1pm and the arena at 2pm. Please don't arrive earlier — it causes traffic queues that make entry slower for everyone. Have your vehicle/parking pass ready for scanning; if you didn't buy one online, you can pay on entry (card only) — £25 for the weekend or £15 for a day ticket. Once parked, follow the signs to the ticket exchange and have your weekend ticket ready on your phone or printed. Latest arrival is 10pm Thursday/Friday, or 8pm Saturday/Sunday — the festival wraps up by 2pm Monday, when everyone needs to have left (you're also welcome to head off Sunday evening if that suits better)."
+    },
+    {
+      "question": "Parking",
+      "answer": "The venue car park costs £17.50 for the whole weekend (£25 if paid on the day) — book it in advance via the tickets page; motorbikes park free. It's close to the entrance and has overnight security, but vehicles and their contents are left at your own risk. Have your parking e-ticket (not your festival ticket) ready to scan at the car park entrance."
+    },
+    {
+      "question": "Travel",
+      "answer": "By car: Walesby Forest, Nottinghamshire, NG22 9NG. More travel info is usually posted closer to the event."
+    },
+    {
+      "question": "Families & children",
+      "answer": "Everything on-site is open to all ages. Families get their own camping field — with its own toilets and showers — away from the noise, plus a bouncy castle, slide, face painting and a marquee for kids' activities, all free and run by The Vegan Society's Education Officer. If you're in the caravan field, you can still visit the family camping field and join in."
+    },
+    {
+      "question": "Camping",
+      "answer": "Camping gear isn't provided, but an on-site shop sells tents and camping equipment while stocks last. Please size your tent to your group — no 6-man tents for one person. There's a first-come-first-served Quiet Camping field for anyone who wants a quieter spot (no separate ticket needed, marked on the map) — noise levels there can't be guaranteed though. Camping is included in your ticket, but you're also welcome to go home each night, stay in a nearby hotel, or bring a caravan/campervan."
+    },
+    {
+      "question": "Caravans & campervans",
+      "answer": "There's a dedicated car park section for caravans/campervans, close to the entrance — passes (with or without electric hook-up) are on vegancampouttickets.com. You can still visit the family camping field if you're in the caravan area."
+    },
+    {
+      "question": "Smoking",
+      "answer": "No smoking inside any of the stages."
+    },
+    {
       "question": "What should I bring?",
-      "answer": "Wellies or waterproof boots, a power bank (there's no mains charging at pitches), cash and card for stalls, a reusable water bottle for the water points, warm layers for the evenings, and earplugs if you're near a stage or the Jungle."
+      "answer": "A decent tent (worth spending a bit more — split the cost with friends), an airbed, warm layers for after dark, and earplugs for a better night's sleep. A camping chair helps too. Leave valuables like your phone and money out of your tent during the day if you can, and keep a portable charger handy — a good one lasts 3–4 full charges. At night, tuck valuables inside your sleeping bag. Bring cash — not every stall takes card and there's no reliable nearby ATM. Also worth packing: toothbrush, toothpaste, hand soap, sunscreen, hat, sunglasses, hairbrush, eco-friendly wipes, spare toilet roll, a raincoat, and a water carrier to keep by your tent."
+    },
+    {
+      "question": "Food & stalls",
+      "answer": "Vegan food vendors from all over the country — pizza, kebab, smoothies, ice cream, Indian, Chinese, burgers, hotdogs, cakes, raw and gluten-free options and more. Over half the vendors usually offer gluten-free options. The vendor list is usually posted on social media closer to the event."
+    },
+    {
+      "question": "Is the whole site vegan?",
+      "answer": "Yes — Vegan Camp Out is a 100% vegan site, no animal products may be brought on site."
+    },
+    {
+      "question": "Stages",
+      "answer": "Main Stage (talks), Music Stage (live music all weekend), Mind & Body (yoga, meditation, fitness) and Education (talks and workshops, seated). The other stages are standing — it's meant to feel like a festival, not a lecture — though you're welcome to sit on the floor or bring a chair/cushion for daytime talks. Headline speakers require standing unless you're disabled. Seeing every speaker isn't guaranteed — stages close once they hit capacity, first come first served."
+    },
+    {
+      "question": "Disabled access",
+      "answer": "There's a dedicated Access team for individual access requirements and on-site access facilities — email vcoaccessibility@gmail.com."
+    },
+    {
+      "question": "BSL interpreter",
+      "answer": "There's a BSL interpreter on both the Main Stage and the Education Stage, with an area near each stage set aside for deaf attendees (or anyone who'd benefit) to see the interpreter clearly. Facing Main Stage from outside, enter through the left-hand door — it'll be signposted."
+    },
+    {
+      "question": "Toilets & showers",
+      "answer": "Proper toilet blocks on site, not just portaloos — still worth bringing spare toilet roll just in case. Hot showers are available but limited, so shower at a quieter time of day; queues are longest first thing in the morning."
     },
     {
       "question": "Where's the medical point?",
       "answer": "Marked with a red cross on the festival map, next to the Family Arena and Stalls area."
     },
     {
-      "question": "Emergency contacts",
-      "answer": "Check your ticket confirmation email or the printed event guide handed out at your entry gate for the current on-site welfare and emergency numbers — these can change year to year so we don't hardcode them here."
+      "question": "Alcohol & drinks",
+      "answer": "Bars run in the main arena, the food area, VIP, and The Jungle. You can bring alcohol for the campsite (not the arena) — up to 12 cans of beer/lager, or 70cl of spirits, or 1.5L of wine per person. Glass spirit bottles are fine, glass beer bottles aren't. Buying drinks at the festival bars directly supports the event."
     },
     {
-      "question": "Arrival & opening times",
-      "answer": "The car park opens at 12 midday Thursday or Friday (depending on whether you hold a Thursday pass) for everyone except VIP, who can arrive from 10am. The campsite opens at 1pm and the arena at 2pm. Please don't arrive earlier — it causes traffic queues that make entry slower for everyone. Have your vehicle/parking pass ready for scanning; if you didn't buy one online, you can pay on entry (card only) — £25 for the weekend or £15 for a day ticket."
+      "question": "Can I bring my dog?",
+      "answer": "If you can leave your dog at home or get a dog sitter, the organisers say that's appreciated — dogs aren't allowed into talks, so you may have to miss those. If you do bring them: everywhere outdoors is fine, but dogs must stay on a lead at all times and sleep in your tent/caravan with you. Keep them away from the Music Stage and afterparties (loud noise), and bring a dog bowl in case of hot weather. Pigs are not allowed on site, due to licensing restrictions."
+    },
+    {
+      "question": "Courtesy & speaker etiquette",
+      "answer": "Speakers each year may hold views you disagree with — that's expected. If you don't want to watch someone, that's fine; if you do, please be respectful to them and to the people around you. Anyone deliberately disrupting a talk, being violent, or engaging in illegal activity will be ejected."
+    },
+    {
+      "question": "Respect the place",
+      "answer": "Bins are placed around the site — all rubbish gets collected and 100% recycled. Bring a bin bag for your tent and take everything with you when you leave: tent, sleeping bag, rubbish, all of it."
+    },
+    {
+      "question": "Merch",
+      "answer": "Pre-ordered T-shirts/hoodies (with a voucher code from your email) are collected from the merch stand — gate staff won't have them. You can usually change size if stock allows, and merch (plus beanies, mugs, stickers, posters) is also on sale at the event. Everything is made from ethical clothing."
+    },
+    {
+      "question": "Afterparty",
+      "answer": "Each night the main stage becomes the afterparty room from 10pm to midnight. Lineup TBC."
+    },
+    {
+      "question": "Day tickets",
+      "answer": "Check availability on our ticketing partner's page (ticketpulse.co.uk/vco26) — day tickets aren't guaranteed every year and are usually only added closer to the event, depending on weekend ticket sales. A weekend ticket is the only sure way in, and lets you come and go as you please."
     },
     {
       "question": "Water points",
@@ -105,12 +185,36 @@
       "answer": "Campfires, camping stoves and disposable barbecues are prohibited. The only exception is gas stoves inside motorhomes and campervans."
     },
     {
-      "question": "Can I bring my dog?",
-      "answer": "If you can leave your dog at home or get a dog sitter, the organisers say that's appreciated — dogs aren't allowed into talks, so you may have to miss those. If you do bring them: everywhere outdoors is fine, but dogs must stay on a lead at all times and sleep in your tent/caravan with you. Keep them away from the Music Stage and afterparties (loud noise), and bring a dog bowl in case of hot weather. Pigs are not allowed on site, due to licensing restrictions."
+      "question": "Prohibited items",
+      "answer": "Not allowed anywhere on site: cameras/video gear with a lens over 6 inches, drones, generators, illegal substances or legal highs, unmarked medication (bring a doctor's note if needed), barbecues, glass beer bottles, gas cylinders, camping stoves (except inside motorhomes/campervans), campfires, candles, fireworks/flares/smoke canisters, spray paint or markers, sky lanterns, sound systems, weapons, airhorns, laser devices, loudhailers, unofficial hi-vis clothing, offensive signs or clothing, and scooters. Flag poles are fine in the campsite but not the arena. Extra items banned from the arena specifically: aerosols/pressurised canisters, alcohol not bought from an official VCO bar, flares, gas canisters, and knives (including locking knives)."
     },
     {
-      "question": "Is the whole site vegan?",
-      "answer": "Yes — Vegan Camp Out is a 100% vegan site, no animal products may be brought on site."
+      "question": "Bikes",
+      "answer": "Lock your bike to any of the barriers around the site — the festival and venue aren't responsible for it though."
+    },
+    {
+      "question": "Refunds",
+      "answer": "Tickets are non-refundable, as standard. If you can't make it, you can sell your ticket on by sending your e-ticket to the buyer's email address."
+    },
+    {
+      "question": "Diversity",
+      "answer": "See the festival's diversity declaration at vegancampout.co.uk/diversity."
+    },
+    {
+      "question": "Lost property",
+      "answer": "Email lostpropertyvco@outlook.com if you've lost or found something on site. The festival isn't liable for lost items."
+    },
+    {
+      "question": "Emergency contacts",
+      "answer": "Check your ticket confirmation email or the printed event guide handed out at your entry gate for the current on-site welfare and emergency numbers — these can change year to year so we don't hardcode them here."
+    },
+    {
+      "question": "Safeguarding",
+      "answer": "The festival's Safeguarding Policy & Procedure is published on vegancampout.co.uk."
+    },
+    {
+      "question": "Want to perform, run a workshop, or host a family activity?",
+      "answer": "Musicians: vcomusicians@hotmail.com. Mind & Body workshops: mindandbody@vegancampout.co.uk. Family marquee activities: family@vegancampout.co.uk. Food vendors/stalls: info@vegancampout.co.uk."
     },
     {
       "question": "Question not covered here?",

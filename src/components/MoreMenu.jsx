@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { X, Share2, Smartphone, HelpCircle, Info, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Mail, Bell, BellOff } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { X, Share2, Smartphone, HelpCircle, Info, RefreshCw, ShieldCheck, Coffee, Share, Type, QrCode, ChevronDown, Mail, Bell, BellOff, SearchX } from "lucide-react";
 import QRCode from "qrcode";
 import Accordion from "./Accordion";
+import SearchBar from "./SearchBar";
 import { useDismiss } from "../hooks/useDismiss";
 import { APP_URL } from "../utils/appUrl";
 import { buildFeedbackMailto } from "../utils/feedback";
@@ -43,6 +44,7 @@ export default function MoreMenu({
   const [supportQrDataUrl, setSupportQrDataUrl] = useState(null);
   const [showQr, setShowQr] = useState(false);
   const [showNotifHelp, setShowNotifHelp] = useState(false);
+  const [faqSearch, setFaqSearch] = useState("");
   // Collapsed by default once already installed — the instructions are
   // dead weight at that point. Still open by default for anyone who hasn't
   // installed yet, so they see how right away.
@@ -64,6 +66,14 @@ export default function MoreMenu({
     QRCode.toDataURL(APP_URL, { margin: 1, width: 220, color: { dark: "#12160f", light: "#f2ede0" } }).then(setQrDataUrl);
     QRCode.toDataURL(SUPPORT_URL, { margin: 1, width: 180, color: { dark: "#12160f", light: "#f2ede0" } }).then(setSupportQrDataUrl);
   }, []);
+
+  const filteredFaq = useMemo(() => {
+    const q = faqSearch.trim().toLowerCase();
+    if (!q) return info?.faq ?? [];
+    return (info?.faq ?? []).filter(
+      (item) => item.question.toLowerCase().includes(q) || item.answer.toLowerCase().includes(q)
+    );
+  }, [info, faqSearch]);
 
   async function shareApp() {
     try {
@@ -272,7 +282,17 @@ export default function MoreMenu({
             </Section>
 
             <Section icon={HelpCircle} title="FAQ & essentials">
-              <Accordion items={info.faq} />
+              <SearchBar value={faqSearch} onChange={setFaqSearch} placeholder="Search the FAQ…" />
+              {filteredFaq.length === 0 ? (
+                <div className="mt-3 flex flex-col items-center gap-2 py-6 text-center">
+                  <SearchX size={22} className="text-[var(--vco-text-faint)]" />
+                  <p className="text-[11.5px] text-[var(--vco-text-muted)]">No questions match "{faqSearch}".</p>
+                </div>
+              ) : (
+                <div className="mt-3">
+                  <Accordion items={filteredFaq} />
+                </div>
+              )}
             </Section>
           </>
         )}
