@@ -85,6 +85,32 @@ export function sortByStart(acts) {
   return [...acts].sort((a, b) => actStart(a) - actStart(b));
 }
 
+// Interleaves a chronologically-sorted list of acts with day-heading rows and
+// "break" rows describing the gap to the next act — but only within the same
+// day, so a gap that crosses into a new day gets a day heading instead of a
+// nonsensical multi-hour break. Works on any subset (e.g. just the upcoming
+// acts) since it only looks at consecutive elements of whatever list it's given.
+export function buildScheduleRows(acts, clashIds) {
+  const rows = [];
+  let lastDate = null;
+  for (let i = 0; i < acts.length; i++) {
+    const act = acts[i];
+    if (act.date !== lastDate) {
+      rows.push({ type: "day", date: act.date, key: `day-${act.date}` });
+      lastDate = act.date;
+    }
+    rows.push({ type: "act", act, isClash: clashIds.has(act.id) });
+    const next = acts[i + 1];
+    if (next && next.date === act.date) {
+      const gap = gapMinutes(act, next);
+      if (gap > 0) {
+        rows.push({ type: "break", minutes: gap, key: `gap-${act.id}-${next.id}` });
+      }
+    }
+  }
+  return rows;
+}
+
 export function todayIso(now = new Date()) {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 }

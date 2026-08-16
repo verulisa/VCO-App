@@ -1,25 +1,55 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { CalendarPlus, Clipboard, HelpCircle, Share2, Sparkles, X } from "lucide-react";
 import ActCard from "../components/ActCard";
 import BreakRow from "../components/BreakRow";
 import ClashBanner from "../components/ClashBanner";
+import CollapsibleSection from "../components/CollapsibleSection";
 import ScheduleShare from "../components/ScheduleShare";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useNow } from "../hooks/useNow";
 import { downloadIcs } from "../utils/ics";
 import { buildPlanText } from "../utils/planText";
-import { formatDayHeading } from "../utils/time";
+import { actEnd, buildScheduleRows, formatDayHeading } from "../utils/time";
 
 const isAndroid = typeof navigator !== "undefined" && /Android/i.test(navigator.userAgent);
 const isIOS = typeof navigator !== "undefined" && /iPhone|iPad|iPod/i.test(navigator.userAgent);
 const canNativeShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
 
+function renderRows(rows, toggleSave, now) {
+  return rows.map((row) => {
+    if (row.type === "day") {
+      return (
+        <p key={row.key} className="mb-2.5 mt-1 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-green-strong)] first:mt-0">
+          {formatDayHeading(row.date)}
+        </p>
+      );
+    }
+    if (row.type === "act") {
+      return (
+        <div key={row.act.id} className="mb-2.5">
+          <ActCard act={row.act} saved onToggleSave={toggleSave} now={now} />
+        </div>
+      );
+    }
+    return <BreakRow key={row.key} minutes={row.minutes} />;
+  });
+}
+
 export default function SchedulePage({ schedule, toggleSave, lineup }) {
-  const { savedIds, savedActs, scheduleRows, clashPairs, importIds } = schedule;
+  const { savedIds, savedActs, clashIds, clashPairs, importIds } = schedule;
   const now = useNow();
   const [copied, setCopied] = useState(false);
   const [showIcsHelp, setShowIcsHelp] = useState(false);
   const [tipDismissed, setTipDismissed] = useLocalStorage("vco_schedule_tip_dismissed", false);
+
+  // Past acts sink to a collapsed section at the end instead of sitting at
+  // the top of the list — by Sunday, most of a saved plan has already
+  // happened, and nobody wants to scroll past a full weekend of done-with
+  // acts just to see what's still coming up.
+  const upcomingActs = useMemo(() => savedActs.filter((act) => actEnd(act) > now), [savedActs, now]);
+  const pastActs = useMemo(() => savedActs.filter((act) => actEnd(act) <= now), [savedActs, now]);
+  const upcomingRows = useMemo(() => buildScheduleRows(upcomingActs, clashIds), [upcomingActs, clashIds]);
+  const pastRows = useMemo(() => buildScheduleRows(pastActs, clashIds), [pastActs, clashIds]);
 
   async function sharePlanText() {
     const text = buildPlanText(savedActs);
@@ -52,36 +82,28 @@ export default function SchedulePage({ schedule, toggleSave, lineup }) {
       )}
       <ClashBanner clashPairs={clashPairs} />
 
-      {scheduleRows.length === 0 ? (
+      {savedActs.length === 0 ? (
         <div className="flex flex-col items-center gap-2 py-14 text-center">
           <Sparkles size={28} className="text-[var(--vco-text-faint)]" />
           <p className="max-w-[240px] text-[12.5px] leading-relaxed text-[var(--vco-text-muted)]">
             Nothing saved yet. Head to the Lineup tab and tap the star on anything you don't want to miss.
           </p>
         </div>
-      ) : (
-        <div className="flex flex-col">
-          {scheduleRows.map((row) => {
-            if (row.type === "day") {
-              return (
-                <p
-                  key={row.key}
-                  className="mb-2.5 mt-1 text-[11px] font-extrabold uppercase tracking-wide text-[var(--vco-green-strong)] first:mt-0"
-                >
-                  {formatDayHeading(row.date)}
-                </p>
-              );
-            }
-            if (row.type === "act") {
-              return (
-                <div key={row.act.id} className="mb-2.5">
-                  <ActCard act={row.act} saved onToggleSave={toggleSave} now={now} />
-                </div>
-              );
-            }
-            return <BreakRow key={row.key} minutes={row.minutes} />;
-          })}
+      ) : upcomingActs.length === 0 ? (
+        <div className="flex flex-col items-center gap-2 py-10 text-center">
+          <Sparkles size={28} className="text-[var(--vco-text-faint)]" />
+          <p className="max-w-[240px] text-[12.5px] leading-relaxed text-[var(--vco-text-muted)]">
+            Nothing left to come — everything you saved has already happened.
+          </p>
         </div>
+      ) : (
+        <div className="flex flex-col">{renderRows(upcomingRows, toggleSave, now)}</div>
+      )}
+
+      {pastActs.length > 0 && (
+        <CollapsibleSection title={`Already happened (${pastActs.length})`}>
+          <div className="flex flex-col">{renderRows(pastRows, toggleSave, now)}</div>
+        </CollapsibleSection>
       )}
 
       {savedActs.length > 0 && (
